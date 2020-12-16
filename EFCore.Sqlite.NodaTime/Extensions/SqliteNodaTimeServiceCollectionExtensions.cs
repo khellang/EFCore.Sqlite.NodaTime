@@ -2,6 +2,8 @@ using System;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Sqlite.Query.Internal;
+using Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal;
+using Microsoft.EntityFrameworkCore.Storage;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
@@ -17,6 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             new EntityFrameworkRelationalServicesBuilder(services)
                 .TryAddProviderSpecificServices(x => x
+                    .TryAddSingletonEnumerable<IRelationalTypeMappingSourcePlugin, SqliteNodaTimeTypeMappingSourcePlugin>()
                     .TryAddSingletonEnumerable<IEvaluatableExpressionFilterPlugin, SqliteNodaTimeEvaluatableExpressionFilterPlugin>());
 
             return services;
