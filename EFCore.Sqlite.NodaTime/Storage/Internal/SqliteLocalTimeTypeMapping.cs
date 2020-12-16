@@ -44,8 +44,8 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
         private class LocalTimeValueConverter : ValueConverter<LocalTime, string>
         {
             public LocalTimeValueConverter() : base(
-                d => LocalTimePattern.GeneralIso.Format(d),
-                t => LocalTimePattern.GeneralIso.Parse(t).GetValueOrThrow())
+                d => LocalTimePattern.ExtendedIso.Format(d),
+                t => LocalTimePattern.ExtendedIso.Parse(t).GetValueOrThrow())
             {
             }
         }
