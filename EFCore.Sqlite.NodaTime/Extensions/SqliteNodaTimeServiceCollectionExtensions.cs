@@ -21,6 +21,7 @@ namespace Microsoft.Extensions.DependencyInjection
             new EntityFrameworkRelationalServicesBuilder(services)
                 .TryAddProviderSpecificServices(x => x
                     .TryAddSingletonEnumerable<IRelationalTypeMappingSourcePlugin, SqliteNodaTimeTypeMappingSourcePlugin>()
+                    .TryAddSingletonEnumerable<IMethodCallTranslatorPlugin, SqliteNodaTimeMethodCallTranslatorPlugin>()
                     .TryAddSingletonEnumerable<IMemberTranslatorPlugin, SqliteNodaTimeMemberTranslatorPlugin>()
                     .TryAddSingletonEnumerable<IEvaluatableExpressionFilterPlugin, SqliteNodaTimeEvaluatableExpressionFilterPlugin>());
 
