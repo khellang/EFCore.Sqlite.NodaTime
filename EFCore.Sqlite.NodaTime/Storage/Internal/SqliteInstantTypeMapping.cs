@@ -1,8 +1,10 @@
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
+using NodaTime.Text;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 {
@@ -29,7 +31,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
             => new SqliteInstantTypeMapping(parameters);
 
         protected override string GenerateNonNullSqlLiteral(object value)
-            => ((Instant)value).ToUnixTimeSeconds().ToString();
+            => ((long)value).ToString(CultureInfo.InvariantCulture);
 
         public override Expression GenerateCodeLiteral(object value)
             => GenerateCodeLiteral((Instant)value);
