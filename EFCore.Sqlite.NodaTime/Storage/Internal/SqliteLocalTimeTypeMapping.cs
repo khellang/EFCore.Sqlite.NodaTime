@@ -11,7 +11,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
     public class SqliteLocalTimeTypeMapping : RelationalTypeMapping
     {
         private static readonly ConstructorInfo _constructor =
-            typeof(LocalTime).GetConstructor(new[] { typeof(int), typeof(int), typeof(int) })!;
+            typeof(LocalTime).GetConstructor(new[] { typeof(int), typeof(int), typeof(int), typeof(int) })!;
 
         public SqliteLocalTimeTypeMapping() : base(CreateParameters())
         {
@@ -21,7 +21,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
         {
         }
 
-        protected override string SqlLiteralFormatString => "time('{0}')";
+        protected override string SqlLiteralFormatString => "strftime('%H:%M:%f', '{0}')";
 
         public override RelationalTypeMapping Clone(string storeType, int? size)
             => new SqliteLocalTimeTypeMapping(Parameters.WithStoreTypeAndSize(storeType, size));
@@ -36,7 +36,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
             => GenerateCodeLiteral((LocalTime)value);
 
         private static Expression GenerateCodeLiteral(LocalTime value)
-            => _constructor.ConstantNew(value.Hour, value.Minute, value.Second);
+            => _constructor.ConstantNew(value.Hour, value.Minute, value.Second, value.Millisecond);
 
         private static RelationalTypeMappingParameters CreateParameters()
             => new(new CoreTypeMappingParameters(typeof(LocalTime), new LocalTimeValueConverter()), "TEXT");

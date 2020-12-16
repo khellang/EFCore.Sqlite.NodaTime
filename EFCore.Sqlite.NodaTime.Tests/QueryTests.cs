@@ -32,10 +32,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             [Fact]
             public void GetCurrentInstant_From_Instance()
             {
-                var _ = Db.NodaTimeTypes
-                    .Where(t => t.Instant < SystemClock.Instance.GetCurrentInstant())
-                    .ToArray();
-
+                _ = Db.NodaTimeTypes.Single(x => x.Instant < SystemClock.Instance.GetCurrentInstant());
                 Assert.Contains(@"WHERE ""n"".""Instant"" < strftime('%s', 'now')", Db.Sql);
             }
         }
@@ -110,7 +107,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             public void Select_TimeOfDay()
             {
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.TimeOfDay == new LocalTime(23, 42, 16, 321));
-                Assert.Contains(@"WHERE time(""n"".""LocalDateTime"") = time('23:42:16.321')", Db.Sql);
+                Assert.Contains(@"WHERE CAST(strftime('%H:%M:%f', ""n"".""LocalDateTime"") AS TEXT) = strftime('%H:%M:%f', '23:42:16.321')", Db.Sql);
             }
 
             [Fact]
@@ -119,6 +116,85 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.DayOfWeek == IsoDayOfWeek.Saturday);
                 Assert.Contains("WHERE CASE WHEN CAST(strftime('%w', \"n\".\"LocalDateTime\") AS INTEGER) = 0 THEN 7 " +
                                 "ELSE CAST(strftime('%w', \"n\".\"LocalDateTime\") AS INTEGER) END = 6", Condense(Db.Sql));
+            }
+        }
+
+        public class LocalDateQueryTests : QueryTests
+        {
+            public static readonly LocalDate Value = LocalDateTimeQueryTests.Value.Date;
+
+            [Fact]
+            public void Roundtrip()
+            {
+                Assert.Equal(Value, Db.NodaTimeTypes.Single().LocalDate);
+            }
+
+            [Fact]
+            public void Select_Year()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalDate.Year == 2020);
+                Assert.Contains(@"WHERE CAST(strftime('%Y', ""n"".""LocalDate"") AS INTEGER) = 2020", Db.Sql);
+            }
+
+            [Fact]
+            public void Select_Month()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalDate.Month == 10);
+                Assert.Contains(@"WHERE CAST(strftime('%m', ""n"".""LocalDate"") AS INTEGER) = 10", Db.Sql);
+            }
+
+            [Fact]
+            public void Select_Day()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalDate.Day == 10);
+                Assert.Contains(@"WHERE CAST(strftime('%d', ""n"".""LocalDate"") AS INTEGER) = 10", Db.Sql);
+            }
+
+            [Fact]
+            public void Select_DayOfYear()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalDate.DayOfYear == 284);
+                Assert.Contains(@"WHERE CAST(strftime('%j', ""n"".""LocalDate"") AS INTEGER) = 284", Db.Sql);
+            }
+
+            [Fact]
+            public void Select_DayOfWeek()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalDate.DayOfWeek == IsoDayOfWeek.Saturday);
+                Assert.Contains("WHERE CASE WHEN CAST(strftime('%w', \"n\".\"LocalDate\") AS INTEGER) = 0 THEN 7 " +
+                                "ELSE CAST(strftime('%w', \"n\".\"LocalDate\") AS INTEGER) END = 6", Condense(Db.Sql));
+            }
+        }
+
+        public class LocalTimeQueryTests : QueryTests
+        {
+            public static readonly LocalTime Value = LocalDateTimeQueryTests.Value.TimeOfDay;
+
+            [Fact]
+            public void Roundtrip()
+            {
+                Assert.Equal(Value, Db.NodaTimeTypes.Single().LocalTime);
+            }
+
+            [Fact]
+            public void Select_Hour()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalTime.Hour == 23);
+                Assert.Contains(@"WHERE CAST(strftime('%H', ""n"".""LocalTime"") AS INTEGER) = 23", Db.Sql);
+            }
+
+            [Fact]
+            public void Select_Minute()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalTime.Minute == 42);
+                Assert.Contains(@"WHERE CAST(strftime('%M', ""n"".""LocalTime"") AS INTEGER) = 42", Db.Sql);
+            }
+
+            [Fact]
+            public void Select_Second()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalTime.Second == 16);
+                Assert.Contains(@"WHERE CAST(strftime('%S', ""n"".""LocalTime"") AS INTEGER) = 16", Db.Sql);
             }
         }
 
@@ -149,6 +225,8 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
                     .HasData(new NodaTimeTypes
                     {
                         LocalDateTime = LocalDateTimeQueryTests.Value,
+                        LocalDate = LocalDateQueryTests.Value,
+                        LocalTime = LocalTimeQueryTests.Value,
                         Instant = InstantQueryTests.Value,
                         Id = 1,
                     });
@@ -159,8 +237,10 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         {
             public int Id { get; set; }
             public Instant Instant { get; set; }
-
+            public LocalTime LocalTime { get; set; }
+            public LocalDate LocalDate { get; set; }
             public LocalDateTime LocalDateTime { get; set; }
+
         }
     }
 }
