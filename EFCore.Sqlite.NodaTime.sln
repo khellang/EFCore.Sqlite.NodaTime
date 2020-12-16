@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCore.Sqlite.NodaTime", "EFCore.Sqlite.NodaTime\EFCore.Sqlite.NodaTime.csproj", "{30A44B9C-FD7E-4AF5-8F07-DF263ECCBA43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCore.Sqlite.NodaTime.Tests", "EFCore.Sqlite.NodaTime.Tests\EFCore.Sqlite.NodaTime.Tests.csproj", "{587CBF38-6FF9-4196-B5A7-FA8155DDE274}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{30A44B9C-FD7E-4AF5-8F07-DF263ECCBA43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30A44B9C-FD7E-4AF5-8F07-DF263ECCBA43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30A44B9C-FD7E-4AF5-8F07-DF263ECCBA43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30A44B9C-FD7E-4AF5-8F07-DF263ECCBA43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{587CBF38-6FF9-4196-B5A7-FA8155DDE274}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{587CBF38-6FF9-4196-B5A7-FA8155DDE274}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{587CBF38-6FF9-4196-B5A7-FA8155DDE274}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{587CBF38-6FF9-4196-B5A7-FA8155DDE274}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
