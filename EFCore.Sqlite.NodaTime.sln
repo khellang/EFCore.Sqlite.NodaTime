@@ -4,6 +4,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCore.Sqlite.NodaTime", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCore.Sqlite.NodaTime.Tests", "EFCore.Sqlite.NodaTime.Tests\EFCore.Sqlite.NodaTime.Tests.csproj", "{587CBF38-6FF9-4196-B5A7-FA8155DDE274}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DB76ADA8-B3F2-4B86-83A8-3E3D1903195F}"
+ProjectSection(SolutionItems) = preProject
+	global.json = global.json
+	Directory.Build.targets = Directory.Build.targets
+	LICENSE.md = LICENSE.md
+	Directory.Build.props = Directory.Build.props
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
