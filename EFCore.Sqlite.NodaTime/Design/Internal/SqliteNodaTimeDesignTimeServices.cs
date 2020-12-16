@@ -10,8 +10,8 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Design.Internal
     // ReSharper disable once UnusedType.Global
     public class SqliteNodaTimeDesignTimeServices : IDesignTimeServices
     {
-        public virtual void ConfigureDesignTimeServices(IServiceCollection serviceCollection)
-            => serviceCollection
+        public virtual void ConfigureDesignTimeServices(IServiceCollection services) =>
+            services
                 .AddSingleton<IRelationalTypeMappingSourcePlugin, SqliteNodaTimeTypeMappingSourcePlugin>()
                 .AddSingleton<IProviderCodeGeneratorPlugin, SqliteNodaTimeCodeGeneratorPlugin>();
     }

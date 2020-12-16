@@ -16,7 +16,8 @@ namespace Microsoft.EntityFrameworkCore
 
             var coreBuilder = ((IRelationalDbContextOptionsBuilderInfrastructure)builder).OptionsBuilder;
 
-            var extension = coreBuilder.Options.FindExtension<SqliteNodaTimeOptionsExtension>() ?? new SqliteNodaTimeOptionsExtension();
+            var extension = coreBuilder.Options.FindExtension<SqliteNodaTimeOptionsExtension>()
+                ?? new SqliteNodaTimeOptionsExtension();
 
             ((IDbContextOptionsBuilderInfrastructure)coreBuilder).AddOrUpdateExtension(extension);
 
