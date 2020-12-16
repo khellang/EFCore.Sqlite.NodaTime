@@ -1,8 +1,8 @@
 <Project>
   <ItemGroup>
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore" Version="5.0.1" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="5.0.1" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.1" />
+    <PackageReference Update="NodaTime" Version="3.0.3" />
 
     <!-- Test -->
     <PackageReference Update="xunit" Version="2.4.1" />
