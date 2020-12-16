@@ -1,0 +1,34 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "5.0.x"
+
+      - name: Test
+        run: dotnet test
+
+      - name: Pack NuGet packages (CI versions)
+        if: startsWith(github.ref, 'refs/heads/') && github.event_name == 'push' && startsWith(github.repository, 'khellang/')
+        run: dotnet pack --configuration Release --output nupkgs --version-suffix "ci.$(date -u +%Y%m%dT%H%M%S)+sha.${GITHUB_SHA:0:9}" -p:ContinuousIntegrationBuild=true
+
+      - name: Pack NuGet packages (Release versions)
+        if: startsWith(github.ref, 'refs/tags/v') && github.event_name == 'push' && startsWith(github.repository, 'khellang/')
+        run: dotnet pack --configuration Release --output nupkgs -p:ContinuousIntegrationBuild=true
+
+      - name: Upload artifacts
+        if: github.event_name == 'push' && startsWith(github.repository, 'khellang/')
+        uses: actions/upload-artifact@v1
+        with:
+          name: EFCore.Sqlite.NodaTime
+          path: nupkgs
