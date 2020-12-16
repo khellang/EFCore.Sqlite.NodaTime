@@ -1,18 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <VersionPrefix>5.0.0</VersionPrefix>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageTags>Entity Framework Core;entity-framework-core;ef;efcore;orm;sql;sqlite;NodaTime</PackageTags>
     <Description>Naming Conventions for Entity Framework Core Tables and Columns.</Description>
-    <Authors>Kristian Hellang</Authors>
-    <Copyright>Copyright 2020 © Kristian Hellang</Copyright>
-    <PackageTags>Entity Framework Core;entity-framework-core;ef;efcore;orm;sql</PackageTags>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryType>git</RepositoryType>
     <RepositoryUrl>git://github.com/khellang/EFCore.Sqlite.NodaTime</RepositoryUrl>
+    <RootNamespace>Microsoft.EntityFrameworkCore.Sqlite</RootNamespace>
+    <AssemblyName>EntityFrameworkCore.Sqlite.NodaTime</AssemblyName>
+    <Copyright>Copyright 2020 © Kristian Hellang, et al.</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Authors>Kristian Hellang, et al.</Authors>
+    <IncludeSymbols>true</IncludeSymbols>
+    <VersionPrefix>5.0.0</VersionPrefix>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
