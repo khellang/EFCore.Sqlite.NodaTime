@@ -4,6 +4,7 @@
     <IncludeSymbols>true</IncludeSymbols>
     <LangVersion>9.0</LangVersion>
     <Nullable>Enable</Nullable>
+    <Features>strict</Features>
   </PropertyGroup>
 
   <ItemGroup>
