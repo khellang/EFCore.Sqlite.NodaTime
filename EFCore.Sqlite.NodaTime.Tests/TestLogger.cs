@@ -8,7 +8,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
 {
     public class TestLogger : ILogger
     {
-        public string Sql { get; private set; }
+        public string Sql { get; private set; } = null!;
 
         public bool IsEnabled(LogLevel logLevel) => true;
 

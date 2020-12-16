@@ -16,6 +16,9 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
         private static readonly ConstructorInfo _constructorWithMinutes =
             typeof(LocalDateTime).GetConstructor(new[] { typeof(int), typeof(int), typeof(int), typeof(int), typeof(int) })!;
 
+        private static readonly LocalDateTimePattern _pattern =
+            LocalDateTimePattern.CreateWithInvariantCulture("uuuu'-'MM'-'dd' 'HH':'mm':'ss'.'FFFFFFFFF");
+
         public SqliteLocalDateTimeTypeMapping() : base(CreateParameters())
         {
         }
@@ -24,7 +27,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
         {
         }
 
-        protected override string SqlLiteralFormatString => "datetime('{0}')";
+        protected override string SqlLiteralFormatString => "strftime('%Y-%m-%d %H:%M:%f', '{0}')";
 
         public override RelationalTypeMapping Clone(string storeType, int? size)
             => new SqliteLocalDateTimeTypeMapping(Parameters.WithStoreTypeAndSize(storeType, size));
@@ -54,8 +57,8 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
         private class LocalDateTimeValueConverter : ValueConverter<LocalDateTime, string>
         {
             public LocalDateTimeValueConverter() : base(
-                d => LocalDateTimePattern.GeneralIso.Format(d),
-                t => LocalDateTimePattern.GeneralIso.Parse(t).GetValueOrThrow())
+                d => _pattern.Format(d),
+                t => _pattern.Parse(t).GetValueOrThrow())
             {
             }
         }
