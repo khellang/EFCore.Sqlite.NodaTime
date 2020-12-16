@@ -1,6 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Internal;
 using Microsoft.EntityFrameworkCore.Sqlite.Query.Internal;
 using Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -20,6 +21,7 @@ namespace Microsoft.Extensions.DependencyInjection
             new EntityFrameworkRelationalServicesBuilder(services)
                 .TryAddProviderSpecificServices(x => x
                     .TryAddSingletonEnumerable<IRelationalTypeMappingSourcePlugin, SqliteNodaTimeTypeMappingSourcePlugin>()
+                    .TryAddSingletonEnumerable<IMemberTranslatorPlugin, SqliteNodaTimeMemberTranslatorPlugin>()
                     .TryAddSingletonEnumerable<IEvaluatableExpressionFilterPlugin, SqliteNodaTimeEvaluatableExpressionFilterPlugin>());
 
             return services;
