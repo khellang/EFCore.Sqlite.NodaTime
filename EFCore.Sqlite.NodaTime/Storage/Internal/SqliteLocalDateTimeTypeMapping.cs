@@ -7,26 +7,30 @@ using NodaTime.Text;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 {
-    public class SqliteLocalDateTimeTypeMapping : RelationalTypeMapping
+    public class SqliteLocalDateTimeTypeMapping : SqliteTypeMapping<LocalDateTime>
     {
         private static readonly LocalDateTimePattern _pattern =
             LocalDateTimePattern.CreateWithInvariantCulture("uuuu'-'MM'-'dd' 'HH':'mm':'ss'.'FFFFFFFFF");
 
-        private static readonly ConstructorInfo _constructorWithSeconds =
-            typeof(LocalDateTime).GetConstructor(new[] { typeof(int), typeof(int), typeof(int), typeof(int), typeof(int), typeof(int) })!;
+        private static readonly ConstructorInfo _constructor =
+            typeof(LocalDateTime).GetConstructor(new[]
+            {
+                typeof(int), // year
+                typeof(int), // month
+                typeof(int), // day
+                typeof(int), // hour
+                typeof(int), // minute
+                typeof(int), // second
+                typeof(int), // millisecond
+            })!;
 
-        private static readonly ConstructorInfo _constructorWithMinutes =
-            typeof(LocalDateTime).GetConstructor(new[] { typeof(int), typeof(int), typeof(int), typeof(int), typeof(int) })!;
-
-        public SqliteLocalDateTimeTypeMapping() : this(CreateParameters())
+        public SqliteLocalDateTimeTypeMapping() : base(_pattern)
         {
         }
 
         protected SqliteLocalDateTimeTypeMapping(RelationalTypeMappingParameters parameters) : base(parameters)
         {
         }
-
-        protected override string SqlLiteralFormatString => "'{0}'";
 
         protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
             => new SqliteLocalDateTimeTypeMapping(parameters);
@@ -35,16 +39,13 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
             => GenerateCodeLiteral((LocalDateTime)value);
 
         private static Expression GenerateCodeLiteral(LocalDateTime value)
-        {
-            if (value.Second == 0 && value.NanosecondOfSecond == 0)
-            {
-                return _constructorWithMinutes.ConstantNew(value.Year, value.Month, value.Day, value.Hour, value.Minute);
-            }
-
-            return _constructorWithSeconds.ConstantNew(value.Year, value.Month, value.Day, value.Hour, value.Minute, value.Second);
-        }
-
-        private static RelationalTypeMappingParameters CreateParameters()
-            => new(new CoreTypeMappingParameters(typeof(LocalDateTime), _pattern.AsValueConverter()), "TEXT");
+            => _constructor.ConstantNew(
+                value.Year,
+                value.Month,
+                value.Day,
+                value.Hour,
+                value.Minute,
+                value.Second,
+                value.Millisecond);
     }
 }

@@ -7,20 +7,18 @@ using NodaTime.Text;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 {
-    public class SqliteLocalTimeTypeMapping : RelationalTypeMapping
+    public class SqliteLocalTimeTypeMapping : SqliteTypeMapping<LocalTime>
     {
         private static readonly ConstructorInfo _constructor =
             typeof(LocalTime).GetConstructor(new[] { typeof(int), typeof(int), typeof(int), typeof(int) })!;
 
-        public SqliteLocalTimeTypeMapping() : this(CreateParameters())
+        public SqliteLocalTimeTypeMapping() : base(LocalTimePattern.ExtendedIso)
         {
         }
 
         protected SqliteLocalTimeTypeMapping(RelationalTypeMappingParameters parameters) : base(parameters)
         {
         }
-
-        protected override string SqlLiteralFormatString => "'{0}'";
 
         protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
             => new SqliteLocalTimeTypeMapping(parameters);
@@ -30,8 +28,5 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 
         private static Expression GenerateCodeLiteral(LocalTime value)
             => _constructor.ConstantNew(value.Hour, value.Minute, value.Second, value.Millisecond);
-
-        private static RelationalTypeMappingParameters CreateParameters()
-            => new(new CoreTypeMappingParameters(typeof(LocalTime), LocalTimePattern.ExtendedIso.AsValueConverter()), "TEXT");
     }
 }

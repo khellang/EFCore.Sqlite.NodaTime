@@ -7,20 +7,18 @@ using NodaTime.Text;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 {
-    public class SqliteLocalDateTypeMapping : RelationalTypeMapping
+    public class SqliteLocalDateTypeMapping : SqliteTypeMapping<LocalDate>
     {
         private static readonly ConstructorInfo _constructor =
             typeof(LocalDate).GetConstructor(new[] { typeof(int), typeof(int), typeof(int) })!;
 
-        public SqliteLocalDateTypeMapping() : this(CreateParameters())
+        public SqliteLocalDateTypeMapping() : base(LocalDatePattern.Iso)
         {
         }
 
         protected SqliteLocalDateTypeMapping(RelationalTypeMappingParameters parameters) : base(parameters)
         {
         }
-
-        protected override string SqlLiteralFormatString => "'{0}'";
 
         protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
             => new SqliteLocalDateTypeMapping(parameters);
@@ -30,8 +28,5 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 
         private static Expression GenerateCodeLiteral(LocalDate value)
             => _constructor.ConstantNew(value.Year, value.Month, value.Day);
-
-        private static RelationalTypeMappingParameters CreateParameters()
-            => new(new CoreTypeMappingParameters(typeof(LocalDate), LocalDatePattern.Iso.AsValueConverter()), "TEXT");
     }
 }
