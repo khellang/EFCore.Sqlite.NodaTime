@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore.Sqlite.Extensions;
+using Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal.Converters;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
