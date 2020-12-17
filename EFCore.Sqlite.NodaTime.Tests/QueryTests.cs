@@ -67,6 +67,20 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             }
 
             [Fact]
+            public void Select_GreaterThan()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime > new LocalDateTime(2020, 10, 10, 23, 42, 16, 200));
+                Assert.Contains(@"WHERE ""n"".""LocalDateTime"" > '2020-10-10 23:42:16.2'", Db.Sql);
+            }
+
+            [Fact]
+            public void Select_LessThan()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime < new LocalDateTime(2020, 10, 10, 23, 42, 16, 500));
+                Assert.Contains(@"WHERE ""n"".""LocalDateTime"" < '2020-10-10 23:42:16.5'", Db.Sql);
+            }
+
+            [Fact]
             public void Update()
             {
                 RunUpdate(x => x.LocalDateTime = x.LocalDateTime.PlusDays(2));
@@ -164,6 +178,20 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             }
 
             [Fact]
+            public void Select_GreaterThan()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalDate > new LocalDate(2020, 09, 10));
+                Assert.Contains(@"WHERE ""n"".""LocalDate"" > '2020-09-10'", Db.Sql);
+            }
+
+            [Fact]
+            public void Select_LessThan()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalDate < new LocalDate(2020, 12, 13));
+                Assert.Contains(@"WHERE ""n"".""LocalDate"" < '2020-12-13'", Db.Sql);
+            }
+
+            [Fact]
             public void Update()
             {
                 RunUpdate(x => x.LocalDate = x.LocalDate.PlusDays(2));
@@ -223,6 +251,20 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             {
                 _ = Db.NodaTimeTypes.Single(x => x.LocalTime == new LocalTime(23, 42, 16, 321));
                 Assert.Contains(@"WHERE ""n"".""LocalTime"" = '23:42:16.321'", Db.Sql);
+            }
+
+            [Fact]
+            public void Select_GreaterThan()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalTime > new LocalTime(23, 42, 00));
+                Assert.Contains(@"WHERE ""n"".""LocalTime"" > '23:42:00'", Db.Sql);
+            }
+
+            [Fact]
+            public void Select_LessThan()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalTime < new LocalTime(23, 50, 00));
+                Assert.Contains(@"WHERE ""n"".""LocalTime"" < '23:50:00'", Db.Sql);
             }
 
             [Fact]
