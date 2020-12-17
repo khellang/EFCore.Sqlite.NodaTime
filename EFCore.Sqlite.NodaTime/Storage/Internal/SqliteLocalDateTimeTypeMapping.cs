@@ -27,7 +27,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
         {
         }
 
-        protected override string SqlLiteralFormatString => "strftime('%Y-%m-%d %H:%M:%f', '{0}')";
+        protected override string SqlLiteralFormatString => "'{0}'";
 
         public override RelationalTypeMapping Clone(string storeType, int? size)
             => new SqliteLocalDateTimeTypeMapping(Parameters.WithStoreTypeAndSize(storeType, size));

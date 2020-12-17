@@ -48,6 +48,13 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             }
 
             [Fact]
+            public void Select_Equal()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime == new LocalDateTime(2020, 10, 10, 23, 42, 16, 321));
+                Assert.Contains(@"WHERE ""n"".""LocalDateTime"" = '2020-10-10 23:42:16.321'", Db.Sql);
+            }
+
+            [Fact]
             public void Select_Year()
             {
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.Year == 2020);
@@ -100,14 +107,14 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             public void Select_Date()
             {
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.Date == new LocalDate(2020, 10, 10));
-                Assert.Contains(@"WHERE date(""n"".""LocalDateTime"") = date('2020-10-10')", Db.Sql);
+                Assert.Contains(@"WHERE date(""n"".""LocalDateTime"") = '2020-10-10'", Db.Sql);
             }
 
             [Fact]
             public void Select_TimeOfDay()
             {
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.TimeOfDay == new LocalTime(23, 42, 16, 321));
-                Assert.Contains(@"WHERE CAST(strftime('%H:%M:%f', ""n"".""LocalDateTime"") AS TEXT) = strftime('%H:%M:%f', '23:42:16.321')", Db.Sql);
+                Assert.Contains(@"WHERE CAST(strftime('%H:%M:%f', ""n"".""LocalDateTime"") AS TEXT) = '23:42:16.321'", Db.Sql);
             }
 
             [Fact]
@@ -127,6 +134,13 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             public void Roundtrip()
             {
                 Assert.Equal(Value, Db.NodaTimeTypes.Single().LocalDate);
+            }
+
+            [Fact]
+            public void Select_Equal()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalDate == new LocalDate(2020, 10, 10));
+                Assert.Contains(@"WHERE ""n"".""LocalDate"" = '2020-10-10'", Db.Sql);
             }
 
             [Fact]
@@ -174,6 +188,13 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             public void Roundtrip()
             {
                 Assert.Equal(Value, Db.NodaTimeTypes.Single().LocalTime);
+            }
+
+            [Fact]
+            public void Select_Equal()
+            {
+                _ = Db.NodaTimeTypes.Single(x => x.LocalTime == new LocalTime(23, 42, 16, 321));
+                Assert.Contains(@"WHERE ""n"".""LocalTime"" = '23:42:16.321'", Db.Sql);
             }
 
             [Fact]
