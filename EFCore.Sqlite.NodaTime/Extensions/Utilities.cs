@@ -18,8 +18,9 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Extensions
         internal static SqlExpression Date(this ISqlExpressionFactory factory, Type returnType, SqlExpression timestring, IEnumerable<SqlExpression>? modifiers = null)
             => factory.DateFunction("date", GetArguments(timestring, modifiers), returnType);
 
+        // Ideally this method would use the SQLite time function, but that doesn't support fractional seconds :(
         internal static SqlExpression Time(this ISqlExpressionFactory factory, Type returnType, SqlExpression timestring, IEnumerable<SqlExpression>? modifiers = null)
-            => factory.DateFunction("time", GetArguments(timestring, modifiers), returnType);
+            => factory.Strftime(returnType, "%H:%M:%f", timestring, modifiers);
 
         internal static SqlExpression DateTime(this ISqlExpressionFactory factory, Type returnType, SqlExpression timestring, IEnumerable<SqlExpression>? modifiers = null)
             => factory.DateFunction("datetime", GetArguments(timestring, modifiers), returnType);

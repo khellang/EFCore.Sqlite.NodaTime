@@ -255,6 +255,68 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             }
         }
 
+        public class LocalDateMethodQueryTests : QueryTests
+        {
+            [Fact]
+            public void PlusYears()
+            {
+                var value = Db.NodaTimeTypes.Select(x => x.LocalDate.PlusYears(2)).Single();
+                Assert.Equal(new LocalDate(2022, 10, 10), value);
+                Assert.Contains(@"SELECT date(""n"".""LocalDate"", '+2 years')", Db.Sql);
+            }
+
+            [Fact]
+            public void PlusMonths()
+            {
+                var value = Db.NodaTimeTypes.Select(x => x.LocalDate.PlusMonths(2)).Single();
+                Assert.Equal(new LocalDate(2020, 12, 10), value);
+                Assert.Contains(@"SELECT date(""n"".""LocalDate"", '+2 months')", Db.Sql);
+            }
+
+            [Fact]
+            public void PlusWeeks()
+            {
+                var value = Db.NodaTimeTypes.Select(x => x.LocalDate.PlusWeeks(2)).Single();
+                Assert.Equal(new LocalDate(2020, 10, 24), value);
+                Assert.Contains(@"SELECT date(""n"".""LocalDate"", '+14 days')", Db.Sql);
+            }
+
+            [Fact]
+            public void PlusDays()
+            {
+                var value = Db.NodaTimeTypes.Select(x => x.LocalDate.PlusDays(2)).Single();
+                Assert.Equal(new LocalDate(2020, 10, 12), value);
+                Assert.Contains(@"SELECT date(""n"".""LocalDate"", '+2 days')", Db.Sql);
+            }
+        }
+
+        public class LocalTimeMethodQueryTests : QueryTests
+        {
+            [Fact]
+            public void PlusHours()
+            {
+                var value = Db.NodaTimeTypes.Select(x => x.LocalTime.PlusHours(2)).Single();
+                Assert.Equal(new LocalTime(01, 42, 16, 321), value);
+                Assert.Contains(@"SELECT CAST(strftime('%H:%M:%f', ""n"".""LocalTime"", '+2 hours') AS TEXT)", Db.Sql);
+            }
+
+            [Fact]
+            public void PlusMinutes()
+            {
+                var value = Db.NodaTimeTypes.Select(x => x.LocalTime.PlusMinutes(2)).Single();
+                Assert.Equal(new LocalTime(23, 44, 16, 321), value);
+                Assert.Contains(@"SELECT CAST(strftime('%H:%M:%f', ""n"".""LocalTime"", '+2 minutes') AS TEXT)", Db.Sql);
+            }
+
+            [Fact]
+            public void PlusSeconds()
+            {
+                var value = Db.NodaTimeTypes.Select(x => x.LocalTime.PlusSeconds(2)).Single();
+                Assert.Equal(new LocalTime(23, 42, 18, 321), value);
+                Assert.Contains(@"SELECT CAST(strftime('%H:%M:%f', ""n"".""LocalTime"", '+2 seconds') AS TEXT)", Db.Sql);
+            }
+        }
+
         protected class NodaTimeContext : DbContext
         {
             private readonly TestLoggerFactory _loggerFactory = new();

@@ -58,7 +58,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
 
                 nameof(LocalDateTime.Date) => SqlExpressionFactory.Date(returnType, instance),
                 // Unfortunately we can't use the time convenience function if we want to support fractional seconds :(
-                nameof(LocalDateTime.TimeOfDay) => SqlExpressionFactory.Strftime(returnType, "%H:%M:%f", instance),
+                nameof(LocalDateTime.TimeOfDay) => SqlExpressionFactory.Time(returnType, instance),
 
                 _ => null
             };
