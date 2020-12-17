@@ -10,6 +10,8 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
     {
         public string Sql { get; private set; } = null!;
 
+        public string Parameters { get; private set; } = null!;
+
         public bool IsEnabled(LogLevel logLevel) => true;
 
         public IDisposable BeginScope<TState>(TState state) => NoOpDisposable.Instance;
@@ -24,6 +26,12 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
                     if (commandText is { Value: string sql })
                     {
                         Sql = sql;
+                    }
+
+                    var parameters = structure.FirstOrDefault(i => i.Key == "parameters");
+                    if (parameters is { Value: string values })
+                    {
+                        Parameters = values;
                     }
                 }
             }

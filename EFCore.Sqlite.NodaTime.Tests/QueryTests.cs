@@ -19,6 +19,12 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         private static string Condense(string str) =>
             string.Join(" ", str.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
 
+        protected void RunUpdate(Action<NodaTimeTypes> mutator)
+        {
+            mutator(Db.NodaTimeTypes.Single());
+            Db.SaveChanges();
+        }
+
         public void Dispose()
         {
             Db.Database.EnsureDeleted();
@@ -58,6 +64,14 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             {
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime == new LocalDateTime(2020, 10, 10, 23, 42, 16, 321));
                 Assert.Contains(@"WHERE ""n"".""LocalDateTime"" = '2020-10-10 23:42:16.321'", Db.Sql);
+            }
+
+            [Fact]
+            public void Update()
+            {
+                RunUpdate(x => x.LocalDateTime = x.LocalDateTime.PlusDays(2));
+                Assert.Contains(@"SET ""LocalDateTime"" = @p0", Db.Sql);
+                Assert.Contains(@"p0='2020-10-12 23:42:16.321'", Db.Parameters);
             }
 
             [Fact]
@@ -150,6 +164,14 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             }
 
             [Fact]
+            public void Update()
+            {
+                RunUpdate(x => x.LocalDate = x.LocalDate.PlusDays(2));
+                Assert.Contains(@"SET ""LocalDate"" = @p0", Db.Sql);
+                Assert.Contains(@"p0='2020-10-12'", Db.Parameters);
+            }
+
+            [Fact]
             public void Select_Year()
             {
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDate.Year == 2020);
@@ -204,6 +226,14 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             }
 
             [Fact]
+            public void Update()
+            {
+                RunUpdate(x => x.LocalTime = x.LocalTime.PlusSeconds(10));
+                Assert.Contains(@"SET ""LocalTime"" = @p0", Db.Sql);
+                Assert.Contains(@"p0='23:42:26.321'", Db.Parameters);
+            }
+
+            [Fact]
             public void Select_Hour()
             {
                 _ = Db.NodaTimeTypes.Single(x => x.LocalTime.Hour == 23);
@@ -231,6 +261,8 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
 
             public string Sql => _loggerFactory.Logger.Sql;
 
+            public string Parameters => _loggerFactory.Logger.Parameters;
+
             public DbSet<NodaTimeTypes> NodaTimeTypes { get; set; } = null!;
 
             protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -243,7 +275,8 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
 
                 options
                     .UseSqlite(builder.ConnectionString, x => x.UseNodaTime())
-                    .UseLoggerFactory(_loggerFactory);
+                    .UseLoggerFactory(_loggerFactory)
+                    .EnableSensitiveDataLogging();
             }
 
             protected override void OnModelCreating(ModelBuilder modelBuilder)
