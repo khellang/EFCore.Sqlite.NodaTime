@@ -3,7 +3,6 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
-using NodaTime.Text;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 {
@@ -11,9 +10,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
     {
         private static readonly MethodInfo _fromUnixTimeTicks =
             typeof(Instant).GetRuntimeMethod(nameof(Instant.FromUnixTimeTicks), new[] { typeof(long) })!;
-
-        private static readonly InstantPattern _pattern =
-            InstantPattern.CreateWithInvariantCulture("uuuu'-'MM'-'dd' 'HH':'mm':'ss'.'FFFFFFFFF");
 
         public SqliteInstantTypeMapping() : base(CreateParameters())
         {
@@ -41,15 +37,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
             => Expression.Call(_fromUnixTimeTicks, Expression.Constant(value.ToUnixTimeTicks()));
 
         private static RelationalTypeMappingParameters CreateParameters()
-            => new(new CoreTypeMappingParameters(typeof(Instant), new InstantValueConverter()), "TEXT");
-
-        private class InstantValueConverter : ValueConverter<Instant, string>
-        {
-            public InstantValueConverter() : base(
-                i => _pattern.Format(i),
-                t => _pattern.Parse(t).GetValueOrThrow())
-            {
-            }
-        }
+            => new(new CoreTypeMappingParameters(typeof(Instant), SqliteInstantValueConverter.Instance), "TEXT");
     }
 }

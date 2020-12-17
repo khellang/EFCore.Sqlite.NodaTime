@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore.Sqlite.Extensions;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
-using NodaTime.Text;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 {
@@ -39,15 +38,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
             => _constructor.ConstantNew(value.Year, value.Month, value.Day);
 
         private static RelationalTypeMappingParameters CreateParameters()
-            => new(new CoreTypeMappingParameters(typeof(LocalDate), new LocalDateValueConverter()), "TEXT");
-
-        private class LocalDateValueConverter : ValueConverter<LocalDate, string>
-        {
-            public LocalDateValueConverter() : base(
-                d => LocalDatePattern.Iso.Format(d),
-                t => LocalDatePattern.Iso.Parse(t).GetValueOrThrow())
-            {
-            }
-        }
+            => new(new CoreTypeMappingParameters(typeof(LocalDate), LocalDateValueConverter.Instance), "TEXT");
     }
 }

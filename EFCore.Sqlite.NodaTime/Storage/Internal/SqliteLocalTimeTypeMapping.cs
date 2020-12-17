@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore.Sqlite.Extensions;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
-using NodaTime.Text;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 {
@@ -39,15 +38,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
             => _constructor.ConstantNew(value.Hour, value.Minute, value.Second, value.Millisecond);
 
         private static RelationalTypeMappingParameters CreateParameters()
-            => new(new CoreTypeMappingParameters(typeof(LocalTime), new LocalTimeValueConverter()), "TEXT");
-
-        private class LocalTimeValueConverter : ValueConverter<LocalTime, string>
-        {
-            public LocalTimeValueConverter() : base(
-                d => LocalTimePattern.ExtendedIso.Format(d),
-                t => LocalTimePattern.ExtendedIso.Parse(t).GetValueOrThrow())
-            {
-            }
-        }
+            => new(new CoreTypeMappingParameters(typeof(LocalTime), LocalTimeValueConverter.Instance), "TEXT");
     }
 }
