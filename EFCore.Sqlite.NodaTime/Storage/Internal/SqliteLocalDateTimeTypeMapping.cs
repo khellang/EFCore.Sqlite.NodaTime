@@ -1,22 +1,24 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore.Sqlite.Extensions;
-using Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal.Converters;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
+using NodaTime.Text;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 {
     public class SqliteLocalDateTimeTypeMapping : RelationalTypeMapping
     {
+        private static readonly LocalDateTimePattern _pattern =
+            LocalDateTimePattern.CreateWithInvariantCulture("uuuu'-'MM'-'dd' 'HH':'mm':'ss'.'FFFFFFFFF");
+
         private static readonly ConstructorInfo _constructorWithSeconds =
             typeof(LocalDateTime).GetConstructor(new[] { typeof(int), typeof(int), typeof(int), typeof(int), typeof(int), typeof(int) })!;
 
         private static readonly ConstructorInfo _constructorWithMinutes =
             typeof(LocalDateTime).GetConstructor(new[] { typeof(int), typeof(int), typeof(int), typeof(int), typeof(int) })!;
 
-        public SqliteLocalDateTimeTypeMapping() : base(CreateParameters())
+        public SqliteLocalDateTimeTypeMapping() : this(CreateParameters())
         {
         }
 
@@ -25,12 +27,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
         }
 
         protected override string SqlLiteralFormatString => "'{0}'";
-
-        public override RelationalTypeMapping Clone(string storeType, int? size)
-            => new SqliteLocalDateTimeTypeMapping(Parameters.WithStoreTypeAndSize(storeType, size));
-
-        public override CoreTypeMapping Clone(ValueConverter converter)
-            => new SqliteLocalDateTimeTypeMapping(Parameters.WithComposedConverter(converter));
 
         protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
             => new SqliteLocalDateTimeTypeMapping(parameters);
@@ -49,6 +45,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
         }
 
         private static RelationalTypeMappingParameters CreateParameters()
-            => new(new CoreTypeMappingParameters(typeof(LocalDateTime), SqliteLocalDateTimeValueConverter.Instance), "TEXT");
+            => new(new CoreTypeMappingParameters(typeof(LocalDateTime), SqliteValueConverter.Create(_pattern)), "TEXT");
     }
 }

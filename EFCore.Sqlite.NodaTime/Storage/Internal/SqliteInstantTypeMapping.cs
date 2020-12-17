@@ -1,18 +1,20 @@
 using System.Linq.Expressions;
 using System.Reflection;
-using Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal.Converters;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
+using NodaTime.Text;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 {
     public class SqliteInstantTypeMapping : RelationalTypeMapping
     {
+        private static readonly InstantPattern _pattern =
+            InstantPattern.CreateWithInvariantCulture("uuuu'-'MM'-'dd' 'HH':'mm':'ss'.'FFFFFFFFF");
+
         private static readonly MethodInfo _fromUnixTimeTicks =
             typeof(Instant).GetRuntimeMethod(nameof(Instant.FromUnixTimeTicks), new[] { typeof(long) })!;
 
-        public SqliteInstantTypeMapping() : base(CreateParameters())
+        public SqliteInstantTypeMapping() : this(CreateParameters())
         {
         }
 
@@ -21,13 +23,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
         }
 
         protected override string SqlLiteralFormatString => "'{0}'";
-
-        public override RelationalTypeMapping Clone(string storeType, int? size)
-            => new SqliteInstantTypeMapping(Parameters.WithStoreTypeAndSize(storeType, size));
-
-        public override CoreTypeMapping Clone(ValueConverter converter)
-            => new SqliteInstantTypeMapping(Parameters.WithComposedConverter(converter));
-
         protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
             => new SqliteInstantTypeMapping(parameters);
 
@@ -38,6 +33,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
             => Expression.Call(_fromUnixTimeTicks, Expression.Constant(value.ToUnixTimeTicks()));
 
         private static RelationalTypeMappingParameters CreateParameters()
-            => new(new CoreTypeMappingParameters(typeof(Instant), SqliteInstantValueConverter.Instance), "TEXT");
+            => new(new CoreTypeMappingParameters(typeof(Instant), SqliteValueConverter.Create(_pattern)), "TEXT");
     }
 }

@@ -1,10 +1,9 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore.Sqlite.Extensions;
-using Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal.Converters;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
+using NodaTime.Text;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 {
@@ -13,7 +12,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
         private static readonly ConstructorInfo _constructor =
             typeof(LocalTime).GetConstructor(new[] { typeof(int), typeof(int), typeof(int), typeof(int) })!;
 
-        public SqliteLocalTimeTypeMapping() : base(CreateParameters())
+        public SqliteLocalTimeTypeMapping() : this(CreateParameters())
         {
         }
 
@@ -22,12 +21,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
         }
 
         protected override string SqlLiteralFormatString => "'{0}'";
-
-        public override RelationalTypeMapping Clone(string storeType, int? size)
-            => new SqliteLocalTimeTypeMapping(Parameters.WithStoreTypeAndSize(storeType, size));
-
-        public override CoreTypeMapping Clone(ValueConverter converter)
-            => new SqliteLocalTimeTypeMapping(Parameters.WithComposedConverter(converter));
 
         protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
             => new SqliteLocalTimeTypeMapping(parameters);
@@ -39,6 +32,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
             => _constructor.ConstantNew(value.Hour, value.Minute, value.Second, value.Millisecond);
 
         private static RelationalTypeMappingParameters CreateParameters()
-            => new(new CoreTypeMappingParameters(typeof(LocalTime), SqliteLocalTimeValueConverter.Instance), "TEXT");
+            => new(new CoreTypeMappingParameters(typeof(LocalTime), SqliteValueConverter.Create(LocalTimePattern.ExtendedIso)), "TEXT");
     }
 }
