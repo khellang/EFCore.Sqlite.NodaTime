@@ -32,6 +32,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
             => _constructor.ConstantNew(value.Hour, value.Minute, value.Second, value.Millisecond);
 
         private static RelationalTypeMappingParameters CreateParameters()
-            => new(new CoreTypeMappingParameters(typeof(LocalTime), SqliteValueConverter.Create(LocalTimePattern.ExtendedIso)), "TEXT");
+            => new(new CoreTypeMappingParameters(typeof(LocalTime), LocalTimePattern.ExtendedIso.AsValueConverter()), "TEXT");
     }
 }

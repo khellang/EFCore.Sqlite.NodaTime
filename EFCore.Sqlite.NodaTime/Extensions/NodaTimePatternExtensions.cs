@@ -1,14 +1,12 @@
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime.Text;
 
-namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
+namespace Microsoft.EntityFrameworkCore.Sqlite.Extensions
 {
-    public static class SqliteValueConverter
+    internal static class NodaTimePatternExtensions
     {
-        public static ValueConverter<T, string> Create<T>(IPattern<T> pattern)
-        {
-            return new Converter<T>(pattern);
-        }
+        public static ValueConverter<T, string> AsValueConverter<T>(this IPattern<T> pattern)
+            => new Converter<T>(pattern);
 
         private class Converter<T> : ValueConverter<T, string>
         {

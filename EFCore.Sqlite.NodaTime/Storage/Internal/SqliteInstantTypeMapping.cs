@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore.Sqlite.Extensions;
 using Microsoft.EntityFrameworkCore.Storage;
 using NodaTime;
 using NodaTime.Text;
@@ -33,6 +34,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
             => Expression.Call(_fromUnixTimeTicks, Expression.Constant(value.ToUnixTimeTicks()));
 
         private static RelationalTypeMappingParameters CreateParameters()
-            => new(new CoreTypeMappingParameters(typeof(Instant), SqliteValueConverter.Create(_pattern)), "TEXT");
+            => new(new CoreTypeMappingParameters(typeof(Instant), _pattern.AsValueConverter()), "TEXT");
     }
 }
