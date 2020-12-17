@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using Microsoft.Data.Sqlite;
 using NodaTime;
 using Xunit;
 
@@ -365,54 +364,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
                 Assert.Equal(new LocalTime(23, 42, 16, 323), value);
                 Assert.Contains(@"SELECT CAST(strftime('%H:%M:%f', ""n"".""LocalTime"", '+0.002 seconds') AS TEXT)", Db.Sql);
             }
-        }
-
-        protected class NodaTimeContext : DbContext
-        {
-            private readonly TestLoggerFactory _loggerFactory = new();
-
-            public string Sql => _loggerFactory.Logger.Sql;
-
-            public string Parameters => _loggerFactory.Logger.Parameters;
-
-            public DbSet<NodaTimeTypes> NodaTimeTypes { get; set; } = null!;
-
-            protected override void OnConfiguring(DbContextOptionsBuilder options)
-            {
-                var builder = new SqliteConnectionStringBuilder
-                {
-                    DataSource = "NodaTime." + Guid.NewGuid() + ".db",
-                    Cache = SqliteCacheMode.Private,
-                };
-
-                options
-                    .UseSqlite(builder.ConnectionString, x => x.UseNodaTime())
-                    .UseLoggerFactory(_loggerFactory)
-                    .EnableSensitiveDataLogging();
-            }
-
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
-                modelBuilder.Entity<NodaTimeTypes>()
-                    .HasData(new NodaTimeTypes
-                    {
-                        LocalDateTime = LocalDateTimeQueryTests.Value,
-                        LocalDate = LocalDateQueryTests.Value,
-                        LocalTime = LocalTimeQueryTests.Value,
-                        Instant = InstantQueryTests.Value,
-                        Id = 1,
-                    });
-            }
-        }
-
-        protected class NodaTimeTypes
-        {
-            public int Id { get; set; }
-            public Instant Instant { get; set; }
-            public LocalTime LocalTime { get; set; }
-            public LocalDate LocalDate { get; set; }
-            public LocalDateTime LocalDateTime { get; set; }
-
         }
     }
 }
