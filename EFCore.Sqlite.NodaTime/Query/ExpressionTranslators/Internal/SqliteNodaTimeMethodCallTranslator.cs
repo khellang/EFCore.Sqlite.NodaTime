@@ -45,52 +45,52 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
             }
 
             var declaringType = method.DeclaringType;
-            if (declaringType == typeof(LocalDateTime) ||
-                declaringType == typeof(LocalDate) ||
-                declaringType == typeof(LocalTime))
+            if (declaringType == typeof(LocalDateTime))
             {
-                return TranslateDateTime(instance, method, arguments);
+                var modifiers = GetModifiers(method.Name, arguments[0]);
+                return SqlExpressionFactory.DateTime(method.ReturnType, instance, modifiers);
+            }
+
+            if (declaringType == typeof(LocalTime))
+            {
+                var modifiers = GetModifiers(method.Name, arguments[0]);
+                return SqlExpressionFactory.Time(method.ReturnType, instance, modifiers);
+            }
+
+            if (declaringType == typeof(LocalDate))
+            {
+                var modifiers = GetModifiers(method.Name, arguments[0]);
+                return SqlExpressionFactory.Date(method.ReturnType, instance, modifiers);
             }
 
             return null;
         }
 
-        private SqlExpression? TranslateDateTime(SqlExpression instance, MethodInfo method, IReadOnlyList<SqlExpression> arguments)
+        private IEnumerable<SqlExpression>? GetModifiers(string methodName, SqlExpression argument)
         {
-            SqlExpression GetDateTime(IEnumerable<SqlExpression> modifiers)
-                => SqlExpressionFactory.DateTime(method.ReturnType, instance, modifiers);
-
-            SqlExpression PlusInt64(Func<long, Period> getPeriod)
-                => GetDateTime(GetModifiers(arguments[0], getPeriod));
-
-            SqlExpression PlusInt32(Func<int, Period> getPeriod)
-                => GetDateTime(GetModifiers(arguments[0], x => getPeriod((int) x)));
-
-            return method.Name switch
+            return methodName switch
             {
-                nameof(LocalDate.PlusYears) => PlusInt32(Period.FromYears),
-                nameof(LocalDate.PlusMonths) => PlusInt32(Period.FromMonths),
-                nameof(LocalDate.PlusWeeks) => PlusInt32(Period.FromWeeks),
-                nameof(LocalDate.PlusDays) => PlusInt32(Period.FromDays),
+                nameof(LocalDate.PlusYears) => Plus<int>(argument, Period.FromYears),
+                nameof(LocalDate.PlusMonths) => Plus<int>(argument, Period.FromMonths),
+                nameof(LocalDate.PlusWeeks) => Plus<int>(argument, Period.FromWeeks),
+                nameof(LocalDate.PlusDays) => Plus<int>(argument, Period.FromDays),
 
-                nameof(LocalTime.PlusHours) => PlusInt64(Period.FromHours),
-                nameof(LocalTime.PlusMinutes) => PlusInt64(Period.FromMinutes),
-                nameof(LocalTime.PlusSeconds) => PlusInt64(Period.FromSeconds),
+                nameof(LocalTime.PlusHours) => Plus<long>(argument, Period.FromHours),
+                nameof(LocalTime.PlusMinutes) => Plus<long>(argument, Period.FromMinutes),
+                nameof(LocalTime.PlusSeconds) => Plus<long>(argument, Period.FromSeconds),
 
                 _ => null,
             };
         }
 
-        private IEnumerable<SqlExpression> GetModifiers(SqlExpression argument, Func<long, Period> getPeriod)
+        private IEnumerable<SqlExpression> Plus<T>(SqlExpression argument, Func<T, Period> getPeriod)
         {
             if (argument is not SqlConstantExpression constant)
             {
                 yield break;
             }
 
-            var value = Convert.ToInt64(constant.Value);
-
-            var period = getPeriod(value).Normalize();
+            var period = getPeriod((T)constant.Value).Normalize();
 
             if (period.Years != 0)
             {
