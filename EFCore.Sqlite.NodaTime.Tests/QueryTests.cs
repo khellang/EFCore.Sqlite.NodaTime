@@ -16,7 +16,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
 
         protected NodaTimeContext Db { get; }
 
-        protected static string Condense(string str) =>
+        private static string Condense(string str) =>
             string.Join(" ", str.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
 
         public void Dispose()

@@ -14,12 +14,12 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
         private static readonly MethodInfo _getCurrentInstant =
             typeof(SystemClock).GetRuntimeMethod(nameof(SystemClock.GetCurrentInstant), Type.EmptyTypes)!;
 
-        private readonly SqlExpression[] _sqlExpressions;
+        private readonly SqlExpression[] _getCurrentInstantArgs;
 
         public SqliteNodaTimeMethodCallTranslator(ISqlExpressionFactory sqlExpressionFactory)
         {
             SqlExpressionFactory = sqlExpressionFactory;
-            _sqlExpressions = new SqlExpression[]
+            _getCurrentInstantArgs = new SqlExpression[]
             {
                 SqlExpressionFactory.Constant("%s"),
                 SqlExpressionFactory.Constant("now"),
@@ -36,18 +36,18 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
         {
             if (method == _getCurrentInstant)
             {
-                var args = _sqlExpressions;
-
                 return SqlExpressionFactory.Function(
                     "strftime",
-                    args,
+                    _getCurrentInstantArgs,
                     nullable: false,
                     Array.Empty<bool>(),
                     method.ReturnType);
             }
 
             var declaringType = method.DeclaringType;
-            if (declaringType == typeof(LocalDateTime) || declaringType == typeof(LocalDate) || declaringType == typeof(LocalTime))
+            if (declaringType == typeof(LocalDateTime) ||
+                declaringType == typeof(LocalDate) ||
+                declaringType == typeof(LocalTime))
             {
                 return TranslateDateTime(instance, method, arguments);
             }
