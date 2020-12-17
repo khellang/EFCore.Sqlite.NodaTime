@@ -78,6 +78,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
                 nameof(LocalTime.PlusHours) => Plus<long>(argument, Period.FromHours),
                 nameof(LocalTime.PlusMinutes) => Plus<long>(argument, Period.FromMinutes),
                 nameof(LocalTime.PlusSeconds) => Plus<long>(argument, Period.FromSeconds),
+                nameof(LocalTime.PlusMilliseconds) => Plus<long>(argument, Period.FromMilliseconds),
 
                 _ => null,
             };
@@ -117,6 +118,13 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
                 yield return GetModifier(period.Minutes, "minutes");
             }
 
+            if (period.Milliseconds != 0)
+            {
+                var fractionalSeconds = period.Seconds + ((double)period.Milliseconds / 1000);
+                yield return GetModifier(fractionalSeconds, "seconds");
+                yield break;
+            }
+
             if (period.Seconds != 0)
             {
                 yield return GetModifier(period.Seconds, "seconds");
@@ -124,6 +132,9 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
         }
 
         private SqlExpression GetModifier(long value, string unit)
-            => SqlExpressionFactory.Constant($"{value:+#;-#;+0} {unit}");
+            => SqlExpressionFactory.Constant($"{value:+##;-##;+0} {unit}");
+
+        private SqlExpression GetModifier(double value, string unit)
+            => SqlExpressionFactory.Constant($"{value:+#0.###;-##.###;+0} {unit}");
     }
 }

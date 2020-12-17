@@ -315,6 +315,14 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
                 Assert.Equal(new LocalTime(23, 42, 18, 321), value);
                 Assert.Contains(@"SELECT CAST(strftime('%H:%M:%f', ""n"".""LocalTime"", '+2 seconds') AS TEXT)", Db.Sql);
             }
+
+            [Fact]
+            public void PlusMilliseconds()
+            {
+                var value = Db.NodaTimeTypes.Select(x => x.LocalTime.PlusMilliseconds(2)).Single();
+                Assert.Equal(new LocalTime(23, 42, 16, 323), value);
+                Assert.Contains(@"SELECT CAST(strftime('%H:%M:%f', ""n"".""LocalTime"", '+0.002 seconds') AS TEXT)", Db.Sql);
+            }
         }
 
         protected class NodaTimeContext : DbContext
