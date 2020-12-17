@@ -68,13 +68,14 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
 
             return method.Name switch
             {
-                nameof(LocalDateTime.PlusYears) => PlusInt32(Period.FromYears),
-                nameof(LocalDateTime.PlusMonths) => PlusInt32(Period.FromMonths),
-                nameof(LocalDateTime.PlusWeeks) => PlusInt32(Period.FromWeeks),
-                nameof(LocalDateTime.PlusDays) => PlusInt32(Period.FromDays),
-                nameof(LocalDateTime.PlusHours) => PlusInt64(Period.FromHours),
-                nameof(LocalDateTime.PlusMinutes) => PlusInt64(Period.FromMinutes),
-                nameof(LocalDateTime.PlusSeconds) => PlusInt64(Period.FromSeconds),
+                nameof(LocalDate.PlusYears) => PlusInt32(Period.FromYears),
+                nameof(LocalDate.PlusMonths) => PlusInt32(Period.FromMonths),
+                nameof(LocalDate.PlusWeeks) => PlusInt32(Period.FromWeeks),
+                nameof(LocalDate.PlusDays) => PlusInt32(Period.FromDays),
+
+                nameof(LocalTime.PlusHours) => PlusInt64(Period.FromHours),
+                nameof(LocalTime.PlusMinutes) => PlusInt64(Period.FromMinutes),
+                nameof(LocalTime.PlusSeconds) => PlusInt64(Period.FromSeconds),
 
                 _ => null,
             };
