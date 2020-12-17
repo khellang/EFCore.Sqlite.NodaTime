@@ -1,18 +1,16 @@
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
 using NodaTime.Text;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal.Converters
 {
-    public class SqliteInstantValueConverter : ValueConverter<Instant, string>
+    public class SqliteInstantValueConverter : SqliteValueConverter<Instant>
     {
-        private static readonly InstantPattern _pattern =
-            InstantPattern.CreateWithInvariantCulture("uuuu'-'MM'-'dd' 'HH':'mm':'ss'.'FFFFFFFFF");
+        private static readonly InstantPattern _pattern = InstantPattern
+            .CreateWithInvariantCulture("uuuu'-'MM'-'dd' 'HH':'mm':'ss'.'FFFFFFFFF");
 
-        public static readonly SqliteInstantValueConverter Instance = new(_pattern);
+        public static readonly SqliteInstantValueConverter Instance = new();
 
-        private SqliteInstantValueConverter(IPattern<Instant> pattern)
-            : base(i => pattern.Format(i), t => pattern.Parse(t).GetValueOrThrow())
+        private SqliteInstantValueConverter() : base(_pattern)
         {
         }
     }
