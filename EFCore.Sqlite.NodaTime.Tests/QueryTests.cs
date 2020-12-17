@@ -30,10 +30,16 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             public static readonly Instant Value = LocalDateTimeQueryTests.Value.InUtc().ToInstant();
 
             [Fact]
+            public void Roundtrip()
+            {
+                Assert.Equal(Value, Db.NodaTimeTypes.Single().Instant);
+            }
+
+            [Fact]
             public void GetCurrentInstant_From_Instance()
             {
                 _ = Db.NodaTimeTypes.Single(x => x.Instant < SystemClock.Instance.GetCurrentInstant());
-                Assert.Contains(@"WHERE ""n"".""Instant"" < strftime('%s', 'now')", Db.Sql);
+                Assert.Contains(@"WHERE ""n"".""Instant"" < strftime('%Y-%m-%d %H:%M:%f', 'now')", Db.Sql);
             }
         }
 

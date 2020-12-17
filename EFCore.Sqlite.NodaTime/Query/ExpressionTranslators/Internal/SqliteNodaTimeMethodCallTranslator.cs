@@ -21,7 +21,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
             SqlExpressionFactory = sqlExpressionFactory;
             _getCurrentInstantArgs = new SqlExpression[]
             {
-                SqlExpressionFactory.Constant("%s"),
+                SqlExpressionFactory.Constant("%Y-%m-%d %H:%M:%f"),
                 SqlExpressionFactory.Constant("now"),
             };
         }
