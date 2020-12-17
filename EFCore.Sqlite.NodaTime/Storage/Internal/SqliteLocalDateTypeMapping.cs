@@ -39,6 +39,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
             => _constructor.ConstantNew(value.Year, value.Month, value.Day);
 
         private static RelationalTypeMappingParameters CreateParameters()
-            => new(new CoreTypeMappingParameters(typeof(LocalDate), LocalDateValueConverter.Instance), "TEXT");
+            => new(new CoreTypeMappingParameters(typeof(LocalDate), SqliteLocalDateValueConverter.Instance), "TEXT");
     }
 }

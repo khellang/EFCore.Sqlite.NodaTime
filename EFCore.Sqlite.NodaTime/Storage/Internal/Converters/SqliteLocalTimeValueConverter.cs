@@ -4,11 +4,11 @@ using NodaTime.Text;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal.Converters
 {
-    public class LocalDateValueConverter : ValueConverter<LocalDate, string>
+    public class SqliteLocalTimeValueConverter : ValueConverter<LocalTime, string>
     {
-        public static readonly LocalDateValueConverter Instance = new(LocalDatePattern.Iso);
+        public static readonly SqliteLocalTimeValueConverter Instance = new(LocalTimePattern.ExtendedIso);
 
-        private LocalDateValueConverter(IPattern<LocalDate> pattern)
+        private SqliteLocalTimeValueConverter(IPattern<LocalTime> pattern)
             : base(d => pattern.Format(d), t => pattern.Parse(t).GetValueOrThrow())
         {
         }

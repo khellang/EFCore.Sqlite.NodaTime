@@ -49,6 +49,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
         }
 
         private static RelationalTypeMappingParameters CreateParameters()
-            => new(new CoreTypeMappingParameters(typeof(LocalDateTime), LocalDateTimeValueConverter.Instance), "TEXT");
+            => new(new CoreTypeMappingParameters(typeof(LocalDateTime), SqliteLocalDateTimeValueConverter.Instance), "TEXT");
     }
 }
