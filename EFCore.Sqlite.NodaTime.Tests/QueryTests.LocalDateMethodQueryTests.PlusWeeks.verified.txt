@@ -1,0 +1,12 @@
+{
+  target: 2020-10-24,
+  sql: [
+    {
+      Type: ReaderExecuted,
+      Text: 
+SELECT date("n"."LocalDate", '+14 days')
+FROM "NodaTimeTypes" AS "n"
+LIMIT 2
+    }
+  ]
+}

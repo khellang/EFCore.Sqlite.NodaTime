@@ -7,12 +7,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
 {
     public class NodaTimeContext : DbContext
     {
-        private readonly TestLoggerFactory _loggerFactory = new();
-
-        public string Sql => _loggerFactory.Logger.Sql;
-
-        public string Parameters => _loggerFactory.Logger.Parameters;
-
         public DbSet<NodaTimeTypes> NodaTimeTypes { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -25,7 +19,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
 
             options
                 .UseSqlite(builder.ConnectionString, x => x.UseNodaTime())
-                .UseLoggerFactory(_loggerFactory)
                 .EnableSensitiveDataLogging()
                 .EnableRecording();
         }
