@@ -1,0 +1,10 @@
+[
+  {
+    Type: ReaderExecuted,
+    Text: 
+SELECT "n"."Id", "n"."Instant", "n"."LocalDate", "n"."LocalDateTime", "n"."LocalTime"
+FROM "NodaTimeTypes" AS "n"
+WHERE "n"."LocalDate" < '2020-12-13'
+LIMIT 2
+  }
+]

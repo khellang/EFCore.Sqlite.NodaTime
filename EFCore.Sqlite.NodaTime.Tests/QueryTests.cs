@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using NodaTime;
 using VerifyTests.EntityFramework;
@@ -19,13 +20,15 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
 
         protected NodaTimeContext Db { get; }
 
-        private static string Condense(string str) =>
-            string.Join(" ", str.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
-
-        protected void RunUpdate(Action<NodaTimeTypes> mutator)
+        protected Task RunUpdate(Action<NodaTimeTypes> mutator,
+            [CallerFilePath] string sourceFile = "")
         {
+            SqlRecording.StartRecording();
             mutator(Db.NodaTimeTypes.Single());
             Db.SaveChanges();
+            return Verifier.Verify(
+                SqlRecording.FinishRecording(),
+                sourceFile: sourceFile);
         }
 
         public void Dispose()
@@ -45,10 +48,11 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             }
 
             [Fact]
-            public void GetCurrentInstant_From_Instance()
+            public Task GetCurrentInstant_From_Instance()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.Instant < SystemClock.Instance.GetCurrentInstant());
-                Assert.Contains(@"WHERE ""n"".""Instant"" < strftime('%Y-%m-%d %H:%M:%f', 'now')", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
         }
 
@@ -63,103 +67,113 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             }
 
             [Fact]
-            public void Select_Equal()
+            public Task Select_Equal()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime == new LocalDateTime(2020, 10, 10, 23, 42, 16, 321));
-                Assert.Contains(@"WHERE ""n"".""LocalDateTime"" = '2020-10-10 23:42:16.321'", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_GreaterThan()
+            public Task Select_GreaterThan()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime > new LocalDateTime(2020, 10, 10, 23, 42, 16, 200));
-                Assert.Contains(@"WHERE ""n"".""LocalDateTime"" > '2020-10-10 23:42:16.2'", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_LessThan()
+            public Task Select_LessThan()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime < new LocalDateTime(2020, 10, 10, 23, 42, 16, 500));
-                Assert.Contains(@"WHERE ""n"".""LocalDateTime"" < '2020-10-10 23:42:16.5'", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Update()
+            public Task Update()
             {
-                RunUpdate(x => x.LocalDateTime = x.LocalDateTime.PlusDays(2));
-                Assert.Contains(@"SET ""LocalDateTime"" = @p0", Db.Sql);
-                Assert.Contains(@"p0='2020-10-12 23:42:16.321'", Db.Parameters);
+                return RunUpdate(x => x.LocalDateTime = x.LocalDateTime.PlusDays(2));
             }
 
             [Fact]
-            public void Select_Year()
+            public Task Select_Year()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.Year == 2020);
-                Assert.Contains(@"WHERE CAST(strftime('%Y', ""n"".""LocalDateTime"") AS INTEGER) = 2020", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_Month()
+            public Task Select_Month()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.Month == 10);
-                Assert.Contains(@"WHERE CAST(strftime('%m', ""n"".""LocalDateTime"") AS INTEGER) = 10", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_Day()
+            public Task Select_Day()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.Day == 10);
-                Assert.Contains(@"WHERE CAST(strftime('%d', ""n"".""LocalDateTime"") AS INTEGER) = 10", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_Hour()
+            public Task Select_Hour()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.Hour == 23);
-                Assert.Contains(@"WHERE CAST(strftime('%H', ""n"".""LocalDateTime"") AS INTEGER) = 23", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_Minute()
+            public Task Select_Minute()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.Minute == 42);
-                Assert.Contains(@"WHERE CAST(strftime('%M', ""n"".""LocalDateTime"") AS INTEGER) = 42", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_Second()
+            public Task Select_Second()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.Second == 16);
-                Assert.Contains(@"WHERE CAST(strftime('%S', ""n"".""LocalDateTime"") AS INTEGER) = 16", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_DayOfYear()
+            public Task Select_DayOfYear()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.DayOfYear == 284);
-                Assert.Contains(@"WHERE CAST(strftime('%j', ""n"".""LocalDateTime"") AS INTEGER) = 284", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_Date()
+            public Task Select_Date()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.Date == new LocalDate(2020, 10, 10));
-                Assert.Contains(@"WHERE date(""n"".""LocalDateTime"") = '2020-10-10'", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_TimeOfDay()
+            public Task Select_TimeOfDay()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.TimeOfDay == new LocalTime(23, 42, 16, 321));
-                Assert.Contains(@"WHERE CAST(strftime('%H:%M:%f', ""n"".""LocalDateTime"") AS TEXT) = '23:42:16.321'", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_DayOfWeek()
+            public Task Select_DayOfWeek()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.DayOfWeek == IsoDayOfWeek.Saturday);
-                Assert.Contains("WHERE CASE WHEN CAST(strftime('%w', \"n\".\"LocalDateTime\") AS INTEGER) = 0 THEN 7 " +
-                                "ELSE CAST(strftime('%w', \"n\".\"LocalDateTime\") AS INTEGER) END = 6", Condense(Db.Sql));
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
         }
 
@@ -174,68 +188,73 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             }
 
             [Fact]
-            public void Select_Equal()
+            public Task Select_Equal()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDate == new LocalDate(2020, 10, 10));
-                Assert.Contains(@"WHERE ""n"".""LocalDate"" = '2020-10-10'", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_GreaterThan()
+            public Task Select_GreaterThan()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDate > new LocalDate(2020, 09, 10));
-                Assert.Contains(@"WHERE ""n"".""LocalDate"" > '2020-09-10'", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_LessThan()
+            public Task Select_LessThan()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDate < new LocalDate(2020, 12, 13));
-                Assert.Contains(@"WHERE ""n"".""LocalDate"" < '2020-12-13'", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
             public Task Update()
             {
+                return RunUpdate(x => x.LocalDate = x.LocalDate.PlusDays(2));
+            }
+
+            [Fact]
+            public Task Select_Year()
+            {
                 SqlRecording.StartRecording();
-                RunUpdate(x => x.LocalDate = x.LocalDate.PlusDays(2));
+                _ = Db.NodaTimeTypes.Single(x => x.LocalDate.Year == 2020);
                 return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_Year()
+            public Task Select_Month()
             {
-                _ = Db.NodaTimeTypes.Single(x => x.LocalDate.Year == 2020);
-                Assert.Contains(@"WHERE CAST(strftime('%Y', ""n"".""LocalDate"") AS INTEGER) = 2020", Db.Sql);
-            }
-
-            [Fact]
-            public void Select_Month()
-            {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDate.Month == 10);
-                Assert.Contains(@"WHERE CAST(strftime('%m', ""n"".""LocalDate"") AS INTEGER) = 10", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_Day()
+            public Task Select_Day()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDate.Day == 10);
-                Assert.Contains(@"WHERE CAST(strftime('%d', ""n"".""LocalDate"") AS INTEGER) = 10", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_DayOfYear()
+            public Task Select_DayOfYear()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDate.DayOfYear == 284);
-                Assert.Contains(@"WHERE CAST(strftime('%j', ""n"".""LocalDate"") AS INTEGER) = 284", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_DayOfWeek()
+            public Task Select_DayOfWeek()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalDate.DayOfWeek == IsoDayOfWeek.Saturday);
-                Assert.Contains("WHERE CASE WHEN CAST(strftime('%w', \"n\".\"LocalDate\") AS INTEGER) = 0 THEN 7 " +
-                                "ELSE CAST(strftime('%w', \"n\".\"LocalDate\") AS INTEGER) END = 6", Condense(Db.Sql));
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
         }
 
@@ -250,123 +269,127 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             }
 
             [Fact]
-            public void Select_Equal()
+            public Task Select_Equal()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalTime == new LocalTime(23, 42, 16, 321));
-                Assert.Contains(@"WHERE ""n"".""LocalTime"" = '23:42:16.321'", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_GreaterThan()
+            public Task Select_GreaterThan()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalTime > new LocalTime(23, 42, 00));
-                Assert.Contains(@"WHERE ""n"".""LocalTime"" > '23:42:00'", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_LessThan()
+            public Task Select_LessThan()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalTime < new LocalTime(23, 50, 00));
-                Assert.Contains(@"WHERE ""n"".""LocalTime"" < '23:50:00'", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Update()
+            public Task Update()
             {
-                RunUpdate(x => x.LocalTime = x.LocalTime.PlusSeconds(10));
-                Assert.Contains(@"SET ""LocalTime"" = @p0", Db.Sql);
-                Assert.Contains(@"p0='23:42:26.321'", Db.Parameters);
+                return RunUpdate(x => x.LocalTime = x.LocalTime.PlusSeconds(10));
             }
 
             [Fact]
-            public void Select_Hour()
+            public Task Select_Hour()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalTime.Hour == 23);
-                Assert.Contains(@"WHERE CAST(strftime('%H', ""n"".""LocalTime"") AS INTEGER) = 23", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_Minute()
+            public Task Select_Minute()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalTime.Minute == 42);
-                Assert.Contains(@"WHERE CAST(strftime('%M', ""n"".""LocalTime"") AS INTEGER) = 42", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
-            public void Select_Second()
+            public Task Select_Second()
             {
+                SqlRecording.StartRecording();
                 _ = Db.NodaTimeTypes.Single(x => x.LocalTime.Second == 16);
-                Assert.Contains(@"WHERE CAST(strftime('%S', ""n"".""LocalTime"") AS INTEGER) = 16", Db.Sql);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
         }
 
         public class LocalDateMethodQueryTests : QueryTests
         {
             [Fact]
-            public void PlusYears()
+            public Task PlusYears()
             {
+                SqlRecording.StartRecording();
                 var value = Db.NodaTimeTypes.Select(x => x.LocalDate.PlusYears(2)).Single();
-                Assert.Equal(new LocalDate(2022, 10, 10), value);
-                Assert.Contains(@"SELECT date(""n"".""LocalDate"", '+2 years')", Db.Sql);
+                return Verifier.Verify(value);
             }
 
             [Fact]
-            public void PlusMonths()
+            public Task PlusMonths()
             {
+                SqlRecording.StartRecording();
                 var value = Db.NodaTimeTypes.Select(x => x.LocalDate.PlusMonths(2)).Single();
-                Assert.Equal(new LocalDate(2020, 12, 10), value);
-                Assert.Contains(@"SELECT date(""n"".""LocalDate"", '+2 months')", Db.Sql);
+                return Verifier.Verify(value);
             }
 
             [Fact]
-            public void PlusWeeks()
+            public Task PlusWeeks()
             {
+                SqlRecording.StartRecording();
                 var value = Db.NodaTimeTypes.Select(x => x.LocalDate.PlusWeeks(2)).Single();
-                Assert.Equal(new LocalDate(2020, 10, 24), value);
-                Assert.Contains(@"SELECT date(""n"".""LocalDate"", '+14 days')", Db.Sql);
+                return Verifier.Verify(value);
             }
 
             [Fact]
-            public void PlusDays()
+            public Task PlusDays()
             {
+                SqlRecording.StartRecording();
                 var value = Db.NodaTimeTypes.Select(x => x.LocalDate.PlusDays(2)).Single();
-                Assert.Equal(new LocalDate(2020, 10, 12), value);
-                Assert.Contains(@"SELECT date(""n"".""LocalDate"", '+2 days')", Db.Sql);
+                return Verifier.Verify(value);
             }
         }
 
         public class LocalTimeMethodQueryTests : QueryTests
         {
             [Fact]
-            public void PlusHours()
+            public Task PlusHours()
             {
+                SqlRecording.StartRecording();
                 var value = Db.NodaTimeTypes.Select(x => x.LocalTime.PlusHours(2)).Single();
-                Assert.Equal(new LocalTime(01, 42, 16, 321), value);
-                Assert.Contains(@"SELECT CAST(strftime('%H:%M:%f', ""n"".""LocalTime"", '+2 hours') AS TEXT)", Db.Sql);
+                return Verifier.Verify(value);
             }
 
             [Fact]
-            public void PlusMinutes()
+            public Task PlusMinutes()
             {
+                SqlRecording.StartRecording();
                 var value = Db.NodaTimeTypes.Select(x => x.LocalTime.PlusMinutes(2)).Single();
-                Assert.Equal(new LocalTime(23, 44, 16, 321), value);
-                Assert.Contains(@"SELECT CAST(strftime('%H:%M:%f', ""n"".""LocalTime"", '+2 minutes') AS TEXT)", Db.Sql);
+                return Verifier.Verify(value);
             }
 
             [Fact]
-            public void PlusSeconds()
+            public Task PlusSeconds()
             {
+                SqlRecording.StartRecording();
                 var value = Db.NodaTimeTypes.Select(x => x.LocalTime.PlusSeconds(2)).Single();
-                Assert.Equal(new LocalTime(23, 42, 18, 321), value);
-                Assert.Contains(@"SELECT CAST(strftime('%H:%M:%f', ""n"".""LocalTime"", '+2 seconds') AS TEXT)", Db.Sql);
+                return Verifier.Verify(value);
             }
 
             [Fact]
-            public void PlusMilliseconds()
+            public Task PlusMilliseconds()
             {
+                SqlRecording.StartRecording();
                 var value = Db.NodaTimeTypes.Select(x => x.LocalTime.PlusMilliseconds(2)).Single();
-                Assert.Equal(new LocalTime(23, 42, 16, 323), value);
-                Assert.Contains(@"SELECT CAST(strftime('%H:%M:%f', ""n"".""LocalTime"", '+0.002 seconds') AS TEXT)", Db.Sql);
+                return Verifier.Verify(value);
             }
         }
     }
