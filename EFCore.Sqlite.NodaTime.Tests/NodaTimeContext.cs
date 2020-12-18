@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using VerifyTests.EntityFramework;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite
 {
@@ -11,6 +12,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public string Sql => _loggerFactory.Logger.Sql;
 
         public string Parameters => _loggerFactory.Logger.Parameters;
+        public TestLogger Logger => _loggerFactory.Logger;
 
         public DbSet<NodaTimeTypes> NodaTimeTypes { get; set; } = null!;
 
@@ -25,7 +27,8 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             options
                 .UseSqlite(builder.ConnectionString, x => x.UseNodaTime())
                 .UseLoggerFactory(_loggerFactory)
-                .EnableSensitiveDataLogging();
+                .EnableSensitiveDataLogging()
+                .EnableRecording();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

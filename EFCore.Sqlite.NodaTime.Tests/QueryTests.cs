@@ -1,10 +1,14 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using NodaTime;
+using VerifyTests.EntityFramework;
+using VerifyXunit;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite
 {
+    [UsesVerify]
     public abstract class QueryTests : IDisposable
     {
         protected QueryTests()
@@ -191,11 +195,11 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             }
 
             [Fact]
-            public void Update()
+            public Task Update()
             {
+                SqlRecording.StartRecording();
                 RunUpdate(x => x.LocalDate = x.LocalDate.PlusDays(2));
-                Assert.Contains(@"SET ""LocalDate"" = @p0", Db.Sql);
-                Assert.Contains(@"p0='2020-10-12'", Db.Parameters);
+                return Verifier.Verify(Db.Logger);
             }
 
             [Fact]
