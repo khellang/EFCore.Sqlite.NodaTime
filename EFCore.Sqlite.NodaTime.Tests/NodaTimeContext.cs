@@ -12,7 +12,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public string Sql => _loggerFactory.Logger.Sql;
 
         public string Parameters => _loggerFactory.Logger.Parameters;
-        public TestLogger Logger => _loggerFactory.Logger;
 
         public DbSet<NodaTimeTypes> NodaTimeTypes { get; set; } = null!;
 
