@@ -199,7 +199,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             {
                 SqlRecording.StartRecording();
                 RunUpdate(x => x.LocalDate = x.LocalDate.PlusDays(2));
-                return Verifier.Verify(Db.Logger);
+                return Verifier.Verify(SqlRecording.FinishRecording());
             }
 
             [Fact]
