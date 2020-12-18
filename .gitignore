@@ -19,3 +19,6 @@ artifacts/
 *.ide/
 .vs/
 TestResult.xml
+
+
+*.received.*
