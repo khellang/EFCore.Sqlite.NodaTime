@@ -4,7 +4,7 @@
     {
       Type: ReaderExecuted,
       Text: 
-SELECT CAST(strftime('%Y-%m-%d %H:%M:%f', "n"."LocalDateTime", '+2 hours') AS TEXT)
+SELECT strftime('%Y-%m-%d %H:%M:%f', "n"."LocalDateTime", '+2 hours')
 FROM "NodaTimeTypes" AS "n"
 LIMIT 2
     }

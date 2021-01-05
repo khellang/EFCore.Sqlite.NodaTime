@@ -25,7 +25,14 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Extensions
             => factory.DateFunction("datetime", GetArguments(timestring, modifiers), returnType);
 
         internal static SqlExpression Strftime(this ISqlExpressionFactory factory, Type returnType, string format, SqlExpression timestring, IEnumerable<SqlExpression>? modifiers = null)
-            => factory.Convert(factory.DateFunction("strftime", GetArguments(timestring, modifiers).Insert(0, factory.Constant(format)), typeof(string)), returnType);
+        {
+            var result = factory.DateFunction("strftime", GetArguments(timestring, modifiers).Insert(0, factory.Constant(format)), timestring.Type);
+            if (timestring.Type != returnType)
+            {
+                result = factory.Convert(result, returnType);
+            }
+            return result;
+        }
 
         private static SqlExpression DateFunction(this ISqlExpressionFactory factory, string name, IImmutableList<SqlExpression> arguments, Type returnType)
             => factory.Function(name, arguments, nullable: true, arguments.Select(_ => true), returnType);
