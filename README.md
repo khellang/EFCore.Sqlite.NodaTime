@@ -6,9 +6,9 @@ Adds support for [NodaTime](https://github.com/nodatime/nodatime) types when usi
 
 ## Installation
 
-![Nuget](https://img.shields.io/nuget/v/EntityFrameworkCore.Sqlite.NodaTime)
+[![NuGet](https://img.shields.io/nuget/v/EntityFrameworkCore.Sqlite.NodaTime)](https://www.nuget.org/package/EntityFrameworkCore.Sqlite.NodaTime)
 
-Install the latest package from [NuGet](https://www.nuget.org/package/EFCore.Sqlite.NodaTime).
+Install the latest package from [NuGet](https://www.nuget.org/package/EntityFrameworkCore.Sqlite.NodaTime).
 
 ## Getting Started
 
