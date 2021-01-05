@@ -1,0 +1,12 @@
+{
+  target: 2022-10-10T23:42:16.321,
+  sql: [
+    {
+      Type: ReaderExecuted,
+      Text: 
+SELECT CAST(strftime('%Y-%m-%d %H:%M:%f', "n"."LocalDateTime", '+2 years') AS TEXT)
+FROM "NodaTimeTypes" AS "n"
+LIMIT 2
+    }
+  ]
+}

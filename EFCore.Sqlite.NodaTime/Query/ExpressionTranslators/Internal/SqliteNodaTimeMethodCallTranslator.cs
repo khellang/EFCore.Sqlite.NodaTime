@@ -48,13 +48,15 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
             if (declaringType == typeof(LocalDateTime))
             {
                 var modifiers = GetModifiers(method.Name, arguments[0]);
-                return SqlExpressionFactory.DateTime(method.ReturnType, instance, modifiers);
+                // Unfortunately we can't use the datetime convenience function if we want to support fractional seconds :(
+                return SqlExpressionFactory.Strftime(method.ReturnType, "%Y-%m-%d %H:%M:%f", instance, modifiers);
             }
 
             if (declaringType == typeof(LocalTime))
             {
                 var modifiers = GetModifiers(method.Name, arguments[0]);
-                return SqlExpressionFactory.Time(method.ReturnType, instance, modifiers);
+                // Unfortunately we can't use the time convenience function if we want to support fractional seconds :(
+                return SqlExpressionFactory.Strftime(method.ReturnType, "%H:%M:%f", instance, modifiers);
             }
 
             if (declaringType == typeof(LocalDate))

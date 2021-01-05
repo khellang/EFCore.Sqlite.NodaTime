@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using NodaTime;
 using VerifyTests.EntityFramework;
@@ -386,6 +385,76 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             {
                 SqlRecording.StartRecording();
                 var value = Db.NodaTimeTypes.Select(x => x.LocalTime.PlusMilliseconds(2)).Single();
+                return Verifier.Verify(value);
+            }
+        }
+
+        public class LocalDateTimeMethodQueryTests : QueryTests
+        {
+            [Fact]
+            public Task PlusYears()
+            {
+                SqlRecording.StartRecording();
+                var value = Db.NodaTimeTypes.Select(x => x.LocalDateTime.PlusYears(2)).Single();
+                Assert.Equal(LocalDateTimeQueryTests.Value.PlusYears(2), value);
+                return Verifier.Verify(value);
+            }
+
+            [Fact]
+            public Task PlusMonths()
+            {
+                SqlRecording.StartRecording();
+                var value = Db.NodaTimeTypes.Select(x => x.LocalDateTime.PlusMonths(2)).Single();
+                Assert.Equal(LocalDateTimeQueryTests.Value.PlusMonths(2), value);
+                return Verifier.Verify(value);
+            }
+
+            [Fact]
+            public Task PlusWeeks()
+            {
+                SqlRecording.StartRecording();
+                var value = Db.NodaTimeTypes.Select(x => x.LocalDateTime.PlusWeeks(2)).Single();
+                Assert.Equal(LocalDateTimeQueryTests.Value.PlusWeeks(2), value);
+                return Verifier.Verify(value);
+            }
+
+            [Fact]
+            public Task PlusDays()
+            {
+                SqlRecording.StartRecording();
+                var value = Db.NodaTimeTypes.Select(x => x.LocalDateTime.PlusDays(2)).Single();
+                return Verifier.Verify(value);
+            }
+
+            [Fact]
+            public Task PlusHours()
+            {
+                SqlRecording.StartRecording();
+                var value = Db.NodaTimeTypes.Select(x => x.LocalDateTime.PlusHours(2)).Single();
+                return Verifier.Verify(value);
+            }
+
+            [Fact]
+            public Task PlusMinutes()
+            {
+                SqlRecording.StartRecording();
+                var value = Db.NodaTimeTypes.Select(x => x.LocalDateTime.PlusMinutes(2)).Single();
+                return Verifier.Verify(value);
+            }
+
+            [Fact]
+            public Task PlusSeconds()
+            {
+                SqlRecording.StartRecording();
+                var value = Db.NodaTimeTypes.Select(x => x.LocalDateTime.PlusSeconds(2)).Single();
+                return Verifier.Verify(value);
+            }
+
+            [Fact]
+            public Task PlusMilliseconds()
+            {
+                SqlRecording.StartRecording();
+                var value = Db.NodaTimeTypes.Select(x => x.LocalDateTime.PlusMilliseconds(2)).Single();
                 return Verifier.Verify(value);
             }
         }

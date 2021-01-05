@@ -1,0 +1,12 @@
+{
+  target: 2020-10-24T23:42:16.321,
+  sql: [
+    {
+      Type: ReaderExecuted,
+      Text: 
+SELECT CAST(strftime('%Y-%m-%d %H:%M:%f', "n"."LocalDateTime", '+14 days') AS TEXT)
+FROM "NodaTimeTypes" AS "n"
+LIMIT 2
+    }
+  ]
+}
