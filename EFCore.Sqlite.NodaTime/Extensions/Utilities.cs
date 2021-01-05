@@ -41,10 +41,10 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Extensions
         {
             modifiers ??= Enumerable.Empty<SqlExpression>();
 
-            if (ShouldUnwrap(timestring, out var function))
+            if (ShouldUnwrap(timestring, out var function, out var timestringIndex))
             {
-                timestring = function.Arguments[0];
-                modifiers = function.Arguments.Skip(1).Concat(modifiers);
+                timestring = function.Arguments[timestringIndex];
+                modifiers = function.Arguments.Skip(timestringIndex + 1).Concat(modifiers);
             }
 
             var builder = ImmutableList.CreateBuilder<SqlExpression>();
@@ -56,20 +56,37 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Extensions
             return builder.ToImmutable();
         }
 
-        private static bool ShouldUnwrap(SqlExpression timestring, [NotNullWhen(true)] out SqlFunctionExpression? function)
+        private static bool ShouldUnwrap(SqlExpression timestring, [NotNullWhen(true)] out SqlFunctionExpression? function, out int timestringIndex)
         {
+            if (timestring is SqlUnaryExpression unary)
+            {
+                timestring = unary.Operand;
+            }
+
             if (timestring is SqlFunctionExpression fn)
             {
+                if (fn.Name == "strftime")
+                {
+                    if (fn.Arguments.Count > 2)
+                    {
+                        timestringIndex = 1;
+                        function = fn;
+                        return true;
+                    }
+                }
+
                 if (fn.Name == "date" || fn.Name == "time" || fn.Name == "datetime")
                 {
                     if (fn.Arguments.Count > 1)
                     {
+                        timestringIndex = 0;
                         function = fn;
                         return true;
                     }
                 }
             }
 
+            timestringIndex = -1;
             function = default;
             return false;
         }

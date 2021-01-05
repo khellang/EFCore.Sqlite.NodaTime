@@ -352,6 +352,14 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
                 var value = Db.NodaTimeTypes.Select(x => x.LocalDate.PlusDays(2)).Single();
                 return Verifier.Verify(value);
             }
+
+            [Fact]
+            public Task Combination()
+            {
+                SqlRecording.StartRecording();
+                var value = Db.NodaTimeTypes.Select(x => x.LocalDate.PlusMonths(2).PlusDays(2)).Single();
+                return Verifier.Verify(value);
+            }
         }
 
         public class LocalTimeMethodQueryTests : QueryTests
@@ -385,6 +393,14 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             {
                 SqlRecording.StartRecording();
                 var value = Db.NodaTimeTypes.Select(x => x.LocalTime.PlusMilliseconds(2)).Single();
+                return Verifier.Verify(value);
+            }
+
+            [Fact]
+            public Task Combination()
+            {
+                SqlRecording.StartRecording();
+                var value = Db.NodaTimeTypes.Select(x => x.LocalTime.PlusHours(2).PlusSeconds(2)).Single();
                 return Verifier.Verify(value);
             }
         }
@@ -455,6 +471,14 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             {
                 SqlRecording.StartRecording();
                 var value = Db.NodaTimeTypes.Select(x => x.LocalDateTime.PlusMilliseconds(2)).Single();
+                return Verifier.Verify(value);
+            }
+
+            [Fact]
+            public Task Combination()
+            {
+                SqlRecording.StartRecording();
+                var value = Db.NodaTimeTypes.Select(x => x.LocalDateTime.PlusMonths(2).PlusDays(2).PlusHours(2).PlusSeconds(2)).Single();
                 return Verifier.Verify(value);
             }
         }
