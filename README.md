@@ -2,7 +2,7 @@
 
 ![Build](https://github.com/khellang/EFCore.Sqlite.NodaTime/workflows/Build/badge.svg)
 
-Adds [NodaTime](https://github.com/nodatime/nodatime) support for [SQLite](https://sqlite.org/) with [Entity Framework Core](https://github.com/dotnet/efcore).
+Adds support for [NodaTime](https://github.com/nodatime/nodatime) types when using [SQLite](https://sqlite.org/) with [Entity Framework Core](https://github.com/dotnet/efcore).
 
 ## Installation
 
