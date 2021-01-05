@@ -5,6 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-20.04
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
 
     env:
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -22,6 +23,10 @@ jobs:
 
       - name: Test
         run: dotnet test --collect:"XPlat Code Coverage"
+        
+      - name: Update codecov
+        if: startsWith(github.repository, 'khellang/')
+        uses: codecov/codecov-action@v1
 
       - name: Pack NuGet packages (CI versions)
         if: startsWith(github.ref, 'refs/heads/') && github.event_name == 'push' && startsWith(github.repository, 'khellang/')
