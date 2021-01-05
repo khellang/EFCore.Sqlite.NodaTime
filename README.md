@@ -6,9 +6,38 @@ Adds support for [NodaTime](https://github.com/nodatime/nodatime) types when usi
 
 ## Installation
 
-![Nuget](https://img.shields.io/nuget/v/EFCore.Sqlite.NodaTime)
+![Nuget](https://img.shields.io/nuget/v/EntityFrameworkCore.Sqlite.NodaTime)
 
 Install the latest package from [NuGet](https://www.nuget.org/package/EFCore.Sqlite.NodaTime).
+
+## Getting Started
+
+If you're using Entity Framework Core without Dependency Injection, you can call `UseNodaTime` inside the `OnConfiguring` method in your `DbContext` class:
+
+```csharp
+public class MyDbContext : DbContext
+{
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite("<connection-string>", x => x.UseNodaTime());
+    }
+}
+```
+
+Otherwise, you should call `UseNodaTime` when adding the `DbContext` to your service collection:
+
+```csharp
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddDbContext<MyDbContext>(options =>
+            options.UseSqlite("<connection-string>", x => x.UseNodaTime()));
+    }
+}
+```
+
+And that's it. You can now use NodaTime types in your entities and perform server-side queries on them! :sparkles:
 
 ## Supported Types
 
