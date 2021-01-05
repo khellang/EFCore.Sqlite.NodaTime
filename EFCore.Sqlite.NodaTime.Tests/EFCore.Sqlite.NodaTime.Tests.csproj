@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\**\*.received.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Verify.EntityFramework" />
     <PackageReference Include="Verify.Xunit" />
     <PackageReference Include="xunit" />

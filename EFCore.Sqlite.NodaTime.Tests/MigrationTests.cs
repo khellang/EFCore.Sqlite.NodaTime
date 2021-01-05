@@ -38,7 +38,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Migrations
 
         private static Task Verify(ITestOutputHelper output, string migrationName, Func<ScaffoldedMigration, string> selector)
         {
-            return Verifier.Verify(selector(ScaffoldMigration(output, migrationName))).UseExtension("cs");
+            return Verifier.Verify(selector(ScaffoldMigration(output, migrationName)));
         }
 
         private static ScaffoldedMigration ScaffoldMigration(ITestOutputHelper output, string migrationName)
@@ -52,7 +52,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Migrations
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
-            using var context = new NodaTimeContext();
+            using var context = NodaTimeContext.Create();
 
             return new DesignTimeServicesBuilder(assembly, assembly, reporter, Array.Empty<string>())
                 .Build(context)

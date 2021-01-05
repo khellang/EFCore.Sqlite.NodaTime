@@ -1,34 +1,39 @@
-using System;
+using System.Data.Common;
 using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using VerifyTests.EntityFramework;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite
 {
-    public class NodaTimeContext : DbContext
+    public sealed class NodaTimeContext : DbContext
     {
+        public NodaTimeContext(DbContextOptions<NodaTimeContext> options) : base(options)
+        {
+            Connection = RelationalOptionsExtension.Extract(options).Connection;
+        }
+
+        private DbConnection Connection { get; }
+
         public DbSet<NodaTimeTypes> NodaTimeTypes { get; set; } = null!;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        public static NodaTimeContext Create()
         {
-            var builder = new SqliteConnectionStringBuilder
-            {
-                DataSource = "NodaTime." + Guid.NewGuid() + ".db",
-                Cache = SqliteCacheMode.Private,
-            };
+            var connection = new SqliteConnection("Filename=:memory:");
 
-            options
-                .UseSqlite(builder.ConnectionString, x => x.UseNodaTime())
-                .EnableSensitiveDataLogging()
-                .EnableRecording();
+            connection.Open();
+
+            var builder = new DbContextOptionsBuilder<NodaTimeContext>()
+                .UseSqlite(connection, x => x.UseNodaTime())
+                .EnableSensitiveDataLogging();
+
+            builder.EnableRecording();
+
+            return new NodaTimeContext(builder.Options);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var model = modelBuilder.Model;
-
-            model.RemoveAnnotation(CoreAnnotationNames.ProductVersion);
-
             modelBuilder.Entity<NodaTimeTypes>()
                 .HasData(new NodaTimeTypes
                 {
@@ -38,6 +43,16 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
                     Instant = QueryTests.InstantQueryTests.Value,
                     Id = 1,
                 });
+
+            var model = modelBuilder.Model;
+
+            model.RemoveAnnotation(CoreAnnotationNames.ProductVersion);
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            Connection.Dispose();
         }
     }
 }

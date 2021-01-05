@@ -14,21 +14,18 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
     {
         protected QueryTests()
         {
-            Db = new NodaTimeContext();
+            Db = NodaTimeContext.Create();
             Db.Database.EnsureCreated();
         }
 
-        protected NodaTimeContext Db { get; }
+        private NodaTimeContext Db { get; }
 
-        protected Task RunUpdate(Action<NodaTimeTypes> mutator,
-            [CallerFilePath] string sourceFile = "")
+        private Task RunUpdate(Action<NodaTimeTypes> mutator)
         {
             SqlRecording.StartRecording();
             mutator(Db.NodaTimeTypes.Single());
             Db.SaveChanges();
-            return Verifier.Verify(
-                SqlRecording.FinishRecording(),
-                sourceFile: sourceFile);
+            return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
         public void Dispose()
