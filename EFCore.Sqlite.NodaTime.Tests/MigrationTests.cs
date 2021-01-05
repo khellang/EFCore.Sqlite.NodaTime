@@ -12,7 +12,7 @@ using Xunit.Abstractions;
     "Microsoft.EntityFrameworkCore.Sqlite.Design.Internal.SqliteNodaTimeDesignTimeServices, EntityFrameworkCore.Sqlite.NodaTime",
     "Microsoft.EntityFrameworkCore.Sqlite")]
 
-namespace Microsoft.EntityFrameworkCore.Sqlite.Migrations
+namespace Microsoft.EntityFrameworkCore.Sqlite
 {
     [UsesVerify]
     public class MigrationTests
