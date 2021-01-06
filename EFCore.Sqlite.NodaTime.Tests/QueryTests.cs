@@ -20,7 +20,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
 
         private Expression<Func<NodaTimeTypes, T>> Selector { get; }
 
-        protected NodaTimeContext Db { get; }
+        private NodaTimeContext Db { get; }
 
         protected IQueryable<T> Query => Db.NodaTimeTypes.Select(Selector);
 
@@ -29,6 +29,13 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             SqlRecording.StartRecording();
             mutator(Db.NodaTimeTypes.Single());
             Db.SaveChanges();
+            return Verifier.Verify(SqlRecording.FinishRecording(), sourceFile: sourceFile);
+        }
+
+        protected Task Verify(Expression<Func<T, bool>> predicate, [CallerFilePath] string sourceFile = "")
+        {
+            SqlRecording.StartRecording();
+            _ = Query.Single(predicate);
             return Verifier.Verify(SqlRecording.FinishRecording(), sourceFile: sourceFile);
         }
 

@@ -1,8 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using NodaTime;
-using VerifyTests.EntityFramework;
-using VerifyXunit;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite
@@ -24,9 +22,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         [Fact]
         public Task GetCurrentInstant_From_Instance()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x < SystemClock.Instance.GetCurrentInstant());
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x < SystemClock.Instance.GetCurrentInstant());
         }
     }
 }

@@ -1,8 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using NodaTime;
-using VerifyTests.EntityFramework;
-using VerifyXunit;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite
@@ -24,25 +22,19 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         [Fact]
         public Task Select_Equal()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x == new LocalDateTime(2020, 10, 10, 23, 42, 16, 321));
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x == new LocalDateTime(2020, 10, 10, 23, 42, 16, 321));
         }
 
         [Fact]
         public Task Select_GreaterThan()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x > new LocalDateTime(2020, 10, 10, 23, 42, 16, 200));
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x > new LocalDateTime(2020, 10, 10, 23, 42, 16, 200));
         }
 
         [Fact]
         public Task Select_LessThan()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x < new LocalDateTime(2020, 10, 10, 23, 42, 16, 500));
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x < new LocalDateTime(2020, 10, 10, 23, 42, 16, 500));
         }
 
         [Fact]
@@ -54,81 +46,61 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         [Fact]
         public Task Select_Year()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x.Year == 2020);
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x.Year == 2020);
         }
 
         [Fact]
         public Task Select_Month()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x.Month == 10);
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x.Month == 10);
         }
 
         [Fact]
         public Task Select_Day()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x.Day == 10);
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x.Day == 10);
         }
 
         [Fact]
         public Task Select_Hour()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x.Hour == 23);
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x.Hour == 23);
         }
 
         [Fact]
         public Task Select_Minute()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x.Minute == 42);
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x.Minute == 42);
         }
 
         [Fact]
         public Task Select_Second()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x.Second == 16);
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x.Second == 16);
         }
 
         [Fact]
         public Task Select_DayOfYear()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x.DayOfYear == 284);
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x.DayOfYear == 284);
         }
 
         [Fact]
         public Task Select_Date()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x.Date == new LocalDate(2020, 10, 10));
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x.Date == new LocalDate(2020, 10, 10));
         }
 
         [Fact]
         public Task Select_TimeOfDay()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x.TimeOfDay == new LocalTime(23, 42, 16, 321));
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x.TimeOfDay == new LocalTime(23, 42, 16, 321));
         }
 
         [Fact]
         public Task Select_DayOfWeek()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x.DayOfWeek == IsoDayOfWeek.Saturday);
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x.DayOfWeek == IsoDayOfWeek.Saturday);
         }
     }
 }

@@ -1,8 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using NodaTime;
-using VerifyTests.EntityFramework;
-using VerifyXunit;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite
@@ -24,25 +22,19 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         [Fact]
         public Task Select_Equal()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x == new LocalTime(23, 42, 16, 321));
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x == new LocalTime(23, 42, 16, 321));
         }
 
         [Fact]
         public Task Select_GreaterThan()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x > new LocalTime(23, 42, 00));
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x > new LocalTime(23, 42, 00));
         }
 
         [Fact]
         public Task Select_LessThan()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x < new LocalTime(23, 50, 00));
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x < new LocalTime(23, 50, 00));
         }
 
         [Fact]
@@ -54,25 +46,19 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         [Fact]
         public Task Select_Hour()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x.Hour == 23);
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x.Hour == 23);
         }
 
         [Fact]
         public Task Select_Minute()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x.Minute == 42);
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x.Minute == 42);
         }
 
         [Fact]
         public Task Select_Second()
         {
-            SqlRecording.StartRecording();
-            _ = Query.Single(x => x.Second == 16);
-            return Verifier.Verify(SqlRecording.FinishRecording());
+            return Verify(x => x.Second == 16);
         }
     }
 }
