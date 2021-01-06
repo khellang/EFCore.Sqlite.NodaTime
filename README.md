@@ -86,3 +86,15 @@ The following NodaTime types are currently supported:
 | `LocalDateTime.PlusMinutes` | `strftime('%Y-%m-%d %H:%M:%f', <column>, '+n minutes')` |
 | `LocalDateTime.PlusSeconds` | `strftime('%Y-%m-%d %H:%M:%f', <column>, '+n seconds')` |
 | `LocalDateTime.PlusMilliseconds` | `strftime('%Y-%m-%d %H:%M:%f', <column>, '+0.n seconds')` |
+
+When these methods are chained, all modifiers will be added to the same function call, like this:
+
+```csharp
+context.NodaTime.Select(x => x.LocalDateTime.PlusMonths(2).PlusDays(2).PlusHours(2).PlusSeconds(2))
+```
+
+Results in the following SQL:
+
+```sql
+SELECT strftime('%Y-%m-%d %H:%M:%f', "n"."LocalDateTime", '+2 months', '+2 days', '+2 hours', '+2 seconds')
+```
