@@ -2,6 +2,7 @@ using System.Data.Common;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using NodaTime;
 using VerifyTests.EntityFramework;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite
@@ -37,10 +38,10 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             modelBuilder.Entity<NodaTimeTypes>()
                 .HasData(new NodaTimeTypes
                 {
-                    LocalDateTime = QueryTests.LocalDateTimeQueryTests.Value,
-                    LocalDate = QueryTests.LocalDateQueryTests.Value,
-                    LocalTime = QueryTests.LocalTimeQueryTests.Value,
-                    Instant = QueryTests.InstantQueryTests.Value,
+                    LocalDateTime = LocalDateTimeQueryTests.Value,
+                    LocalDate = LocalDateQueryTests.Value,
+                    LocalTime = LocalTimeQueryTests.Value,
+                    Instant = InstantQueryTests.Value,
                     Id = 1,
                 });
 
