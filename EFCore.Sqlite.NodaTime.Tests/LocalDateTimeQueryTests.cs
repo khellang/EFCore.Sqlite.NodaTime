@@ -18,14 +18,14 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         [Fact]
         public void Roundtrip()
         {
-            Assert.Equal(Value, Db.NodaTimeTypes.Single().LocalDateTime);
+            Assert.Equal(Value, Query.Single());
         }
 
         [Fact]
         public Task Select_Equal()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime == new LocalDateTime(2020, 10, 10, 23, 42, 16, 321));
+            _ = Query.Single(x => x == new LocalDateTime(2020, 10, 10, 23, 42, 16, 321));
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -33,7 +33,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_GreaterThan()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime > new LocalDateTime(2020, 10, 10, 23, 42, 16, 200));
+            _ = Query.Single(x => x > new LocalDateTime(2020, 10, 10, 23, 42, 16, 200));
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -41,7 +41,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_LessThan()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime < new LocalDateTime(2020, 10, 10, 23, 42, 16, 500));
+            _ = Query.Single(x => x < new LocalDateTime(2020, 10, 10, 23, 42, 16, 500));
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -55,7 +55,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_Year()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.Year == 2020);
+            _ = Query.Single(x => x.Year == 2020);
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -63,7 +63,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_Month()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.Month == 10);
+            _ = Query.Single(x => x.Month == 10);
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -71,7 +71,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_Day()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.Day == 10);
+            _ = Query.Single(x => x.Day == 10);
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -79,7 +79,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_Hour()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.Hour == 23);
+            _ = Query.Single(x => x.Hour == 23);
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -87,7 +87,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_Minute()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.Minute == 42);
+            _ = Query.Single(x => x.Minute == 42);
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -95,7 +95,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_Second()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.Second == 16);
+            _ = Query.Single(x => x.Second == 16);
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -103,7 +103,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_DayOfYear()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.DayOfYear == 284);
+            _ = Query.Single(x => x.DayOfYear == 284);
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -111,7 +111,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_Date()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.Date == new LocalDate(2020, 10, 10));
+            _ = Query.Single(x => x.Date == new LocalDate(2020, 10, 10));
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -119,7 +119,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_TimeOfDay()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.TimeOfDay == new LocalTime(23, 42, 16, 321));
+            _ = Query.Single(x => x.TimeOfDay == new LocalTime(23, 42, 16, 321));
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -127,7 +127,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_DayOfWeek()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalDateTime.DayOfWeek == IsoDayOfWeek.Saturday);
+            _ = Query.Single(x => x.DayOfWeek == IsoDayOfWeek.Saturday);
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
     }

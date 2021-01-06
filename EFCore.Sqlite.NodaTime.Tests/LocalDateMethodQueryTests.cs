@@ -17,7 +17,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task PlusYears()
         {
             SqlRecording.StartRecording();
-            var value = Db.NodaTimeTypes.Select(x => x.LocalDate.PlusYears(2)).Single();
+            var value = Query.Select(x => x.PlusYears(2)).Single();
             return Verifier.Verify(value);
         }
 
@@ -25,7 +25,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task PlusMonths()
         {
             SqlRecording.StartRecording();
-            var value = Db.NodaTimeTypes.Select(x => x.LocalDate.PlusMonths(2)).Single();
+            var value = Query.Select(x => x.PlusMonths(2)).Single();
             return Verifier.Verify(value);
         }
 
@@ -33,7 +33,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task PlusWeeks()
         {
             SqlRecording.StartRecording();
-            var value = Db.NodaTimeTypes.Select(x => x.LocalDate.PlusWeeks(2)).Single();
+            var value = Query.Select(x => x.PlusWeeks(2)).Single();
             return Verifier.Verify(value);
         }
 
@@ -41,7 +41,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task PlusDays()
         {
             SqlRecording.StartRecording();
-            var value = Db.NodaTimeTypes.Select(x => x.LocalDate.PlusDays(2)).Single();
+            var value = Query.Select(x => x.PlusDays(2)).Single();
             return Verifier.Verify(value);
         }
 
@@ -49,7 +49,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Combination()
         {
             SqlRecording.StartRecording();
-            var value = Db.NodaTimeTypes.Select(x => x.LocalDate.PlusMonths(2).PlusDays(2)).Single();
+            var value = Query.Select(x => x.PlusMonths(2).PlusDays(2)).Single();
             return Verifier.Verify(value);
         }
     }

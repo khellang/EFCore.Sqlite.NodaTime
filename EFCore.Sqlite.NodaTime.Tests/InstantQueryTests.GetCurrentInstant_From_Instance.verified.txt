@@ -2,7 +2,7 @@
   {
     Type: ReaderExecuted,
     Text: 
-SELECT "n"."Id", "n"."Instant", "n"."LocalDate", "n"."LocalDateTime", "n"."LocalTime"
+SELECT "n"."Instant"
 FROM "NodaTimeTypes" AS "n"
 WHERE "n"."Instant" < strftime('%Y-%m-%d %H:%M:%f', 'now')
 LIMIT 2

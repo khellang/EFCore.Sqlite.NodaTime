@@ -2,7 +2,7 @@
   {
     Type: ReaderExecuted,
     Text: 
-SELECT "n"."Id", "n"."Instant", "n"."LocalDate", "n"."LocalDateTime", "n"."LocalTime"
+SELECT "n"."LocalDate"
 FROM "NodaTimeTypes" AS "n"
 WHERE CASE
     WHEN CAST(strftime('%w', "n"."LocalDate") AS INTEGER) = 0 THEN 7

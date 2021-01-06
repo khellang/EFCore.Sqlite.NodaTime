@@ -2,7 +2,7 @@
   {
     Type: ReaderExecuted,
     Text: 
-SELECT "n"."Id", "n"."Instant", "n"."LocalDate", "n"."LocalDateTime", "n"."LocalTime"
+SELECT "n"."LocalDate"
 FROM "NodaTimeTypes" AS "n"
 WHERE "n"."LocalDate" > '2020-09-10'
 LIMIT 2

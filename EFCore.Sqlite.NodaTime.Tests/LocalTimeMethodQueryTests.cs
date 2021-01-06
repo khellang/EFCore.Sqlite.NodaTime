@@ -17,7 +17,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task PlusHours()
         {
             SqlRecording.StartRecording();
-            var value = Db.NodaTimeTypes.Select(x => x.LocalTime.PlusHours(2)).Single();
+            var value = Query.Select(x => x.PlusHours(2)).Single();
             return Verifier.Verify(value);
         }
 
@@ -25,7 +25,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task PlusMinutes()
         {
             SqlRecording.StartRecording();
-            var value = Db.NodaTimeTypes.Select(x => x.LocalTime.PlusMinutes(2)).Single();
+            var value = Query.Select(x => x.PlusMinutes(2)).Single();
             return Verifier.Verify(value);
         }
 
@@ -33,7 +33,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task PlusSeconds()
         {
             SqlRecording.StartRecording();
-            var value = Db.NodaTimeTypes.Select(x => x.LocalTime.PlusSeconds(2)).Single();
+            var value = Query.Select(x => x.PlusSeconds(2)).Single();
             return Verifier.Verify(value);
         }
 
@@ -41,7 +41,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task PlusMilliseconds()
         {
             SqlRecording.StartRecording();
-            var value = Db.NodaTimeTypes.Select(x => x.LocalTime.PlusMilliseconds(2)).Single();
+            var value = Query.Select(x => x.PlusMilliseconds(2)).Single();
             return Verifier.Verify(value);
         }
 
@@ -49,7 +49,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Combination()
         {
             SqlRecording.StartRecording();
-            var value = Db.NodaTimeTypes.Select(x => x.LocalTime.PlusHours(2).PlusSeconds(2)).Single();
+            var value = Query.Select(x => x.PlusHours(2).PlusSeconds(2)).Single();
             return Verifier.Verify(value);
         }
     }

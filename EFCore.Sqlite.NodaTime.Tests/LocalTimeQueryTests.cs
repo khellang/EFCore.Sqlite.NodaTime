@@ -18,14 +18,14 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         [Fact]
         public void Roundtrip()
         {
-            Assert.Equal(Value, Db.NodaTimeTypes.Single().LocalTime);
+            Assert.Equal(Value, Query.Single());
         }
 
         [Fact]
         public Task Select_Equal()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalTime == new LocalTime(23, 42, 16, 321));
+            _ = Query.Single(x => x == new LocalTime(23, 42, 16, 321));
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -33,7 +33,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_GreaterThan()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalTime > new LocalTime(23, 42, 00));
+            _ = Query.Single(x => x > new LocalTime(23, 42, 00));
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -41,7 +41,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_LessThan()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalTime < new LocalTime(23, 50, 00));
+            _ = Query.Single(x => x < new LocalTime(23, 50, 00));
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -55,7 +55,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_Hour()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalTime.Hour == 23);
+            _ = Query.Single(x => x.Hour == 23);
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -63,7 +63,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_Minute()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalTime.Minute == 42);
+            _ = Query.Single(x => x.Minute == 42);
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
 
@@ -71,7 +71,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public Task Select_Second()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.LocalTime.Second == 16);
+            _ = Query.Single(x => x.Second == 16);
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
     }

@@ -2,7 +2,7 @@
   {
     Type: ReaderExecuted,
     Text: 
-SELECT "n"."Id", "n"."Instant", "n"."LocalDate", "n"."LocalDateTime", "n"."LocalTime"
+SELECT "n"."LocalTime"
 FROM "NodaTimeTypes" AS "n"
 WHERE CAST(strftime('%H', "n"."LocalTime") AS INTEGER) = 23
 LIMIT 2

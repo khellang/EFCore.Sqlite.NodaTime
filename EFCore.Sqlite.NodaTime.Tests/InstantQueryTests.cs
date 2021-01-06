@@ -18,14 +18,14 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         [Fact]
         public void Roundtrip()
         {
-            Assert.Equal(Value, Db.NodaTimeTypes.Single().Instant);
+            Assert.Equal(Value, Query.Single());
         }
 
         [Fact]
         public Task GetCurrentInstant_From_Instance()
         {
             SqlRecording.StartRecording();
-            _ = Db.NodaTimeTypes.Single(x => x.Instant < SystemClock.Instance.GetCurrentInstant());
+            _ = Query.Single(x => x < SystemClock.Instance.GetCurrentInstant());
             return Verifier.Verify(SqlRecording.FinishRecording());
         }
     }
