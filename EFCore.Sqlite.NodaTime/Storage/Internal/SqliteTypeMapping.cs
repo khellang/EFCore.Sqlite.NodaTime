@@ -4,9 +4,9 @@ using NodaTime.Text;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 {
-    public abstract class SqliteTypeMapping<T> : RelationalTypeMapping
+    public class SqliteTypeMapping<T> : RelationalTypeMapping
     {
-        protected SqliteTypeMapping(IPattern<T> pattern) : this(CreateParameters(pattern))
+        public SqliteTypeMapping(IPattern<T> pattern) : this(CreateParameters(pattern))
         {
         }
 
@@ -15,6 +15,9 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
         }
 
         protected override string SqlLiteralFormatString => "'{0}'";
+
+        protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
+            => new SqliteTypeMapping<T>(parameters);
 
         private static RelationalTypeMappingParameters CreateParameters(IPattern<T> pattern)
             => new(new CoreTypeMappingParameters(typeof(T), pattern.AsValueConverter()), "TEXT");

@@ -9,10 +9,10 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
     {
         private readonly Dictionary<Type, RelationalTypeMapping> _clrTypeMappings = new Dictionary<Type, RelationalTypeMapping>
         {
-            { typeof(LocalDateTime), new SqliteLocalDateTimeTypeMapping() },
-            { typeof(LocalDate), new SqliteLocalDateTypeMapping() },
-            { typeof(LocalTime), new SqliteLocalTimeTypeMapping() },
-            { typeof(Instant), new SqliteInstantTypeMapping() },
+            { typeof(LocalDateTime), new SqliteTypeMapping<LocalDateTime>(SqlitePatterns.LocalDateTime) },
+            { typeof(LocalDate), new SqliteTypeMapping<LocalDate>(SqlitePatterns.LocalDate) },
+            { typeof(LocalTime), new SqliteTypeMapping<LocalTime>(SqlitePatterns.LocalTime) },
+            { typeof(Instant), new SqliteTypeMapping<Instant>(SqlitePatterns.Instant) },
         };
 
         public RelationalTypeMapping? FindMapping(in RelationalTypeMappingInfo mappingInfo)
