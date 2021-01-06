@@ -7,7 +7,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 {
     public class SqliteNodaTimeTypeMappingSourcePlugin : IRelationalTypeMappingSourcePlugin
     {
-        private readonly Dictionary<Type, RelationalTypeMapping> _clrTypeMappings = new Dictionary<Type, RelationalTypeMapping>
+        private readonly Dictionary<Type, RelationalTypeMapping> _clrTypeMappings = new()
         {
             { typeof(LocalDateTime), new SqliteTypeMapping<LocalDateTime>(SqlitePatterns.LocalDateTime) },
             { typeof(LocalDate), new SqliteTypeMapping<LocalDate>(SqlitePatterns.LocalDate) },
