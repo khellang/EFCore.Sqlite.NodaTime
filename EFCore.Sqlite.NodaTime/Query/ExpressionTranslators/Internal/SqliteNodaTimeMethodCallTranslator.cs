@@ -21,7 +21,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
             SqlExpressionFactory = sqlExpressionFactory;
             _getCurrentInstantArgs = new SqlExpression[]
             {
-                SqlExpressionFactory.Constant("%Y-%m-%d %H:%M:%f"),
+                SqlExpressionFactory.Constant(Constants.DateTimeFormat),
                 SqlExpressionFactory.Constant("now"),
             };
         }
@@ -49,14 +49,14 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
             {
                 var modifiers = GetModifiers(method.Name, arguments[0]);
                 // Unfortunately we can't use the datetime convenience function if we want to support fractional seconds :(
-                return SqlExpressionFactory.Strftime(method.ReturnType, "%Y-%m-%d %H:%M:%f", instance, modifiers);
+                return SqlExpressionFactory.Strftime(method.ReturnType, Constants.DateTimeFormat, instance, modifiers);
             }
 
             if (declaringType == typeof(LocalTime))
             {
                 var modifiers = GetModifiers(method.Name, arguments[0]);
                 // Unfortunately we can't use the time convenience function if we want to support fractional seconds :(
-                return SqlExpressionFactory.Strftime(method.ReturnType, "%H:%M:%f", instance, modifiers);
+                return SqlExpressionFactory.Strftime(method.ReturnType, Constants.TimeFormat, instance, modifiers);
             }
 
             if (declaringType == typeof(LocalDate))
