@@ -70,3 +70,19 @@ The following NodaTime types are currently supported:
 | NodaTime Method | Generated SQL |
 |-----------------|---------------|
 | `SystemClock.Instance.GetCurrentInstant()` | `strftime('%Y-%m-%d %H:%M:%f', 'now')` |
+| `LocalDate.PlusYears` | `date(<column>, '+n years')` |
+| `LocalDate.PlusMonths` | `date(<column>, '+n months')` |
+| `LocalDate.PlusWeeks` | `date(<column>, '+n*7 days')` |
+| `LocalDate.PlusDays` | `date(<column>, '+n days')` |
+| `LocalTime.PlusHours` | `strftime('%H:%M:%f', <column>, '+n hours')` |
+| `LocalTime.PlusMinutes` | `strftime('%H:%M:%f', <column>, '+n minutes')` |
+| `LocalTime.PlusSeconds` | `strftime('%H:%M:%f', <column>, '+n seconds')` |
+| `LocalTime.PlusMilliseconds` | `strftime('%H:%M:%f', <column>, '+0.n seconds')` |
+| `LocalDateTime.PlusYears` | `strftime('%Y-%m-%d %H:%M:%f',<column>, '+n years')` |
+| `LocalDateTime.PlusMonths` | `strftime('%Y-%m-%d %H:%M:%f',<column>, '+n months')` |
+| `LocalDateTime.PlusWeeks` | `strftime('%Y-%m-%d %H:%M:%f',<column>, '+n*7 days')` |
+| `LocalDateTime.PlusDays` | `strftime('%Y-%m-%d %H:%M:%f',<column>, '+n days')` |
+| `LocalDateTime.PlusHours` | `strftime('%Y-%m-%d %H:%M:%f', <column>, '+n hours')` |
+| `LocalDateTime.PlusMinutes` | `strftime('%Y-%m-%d %H:%M:%f', <column>, '+n minutes')` |
+| `LocalDateTime.PlusSeconds` | `strftime('%Y-%m-%d %H:%M:%f', <column>, '+n seconds')` |
+| `LocalDateTime.PlusMilliseconds` | `strftime('%Y-%m-%d %H:%M:%f', <column>, '+0.n seconds')` |
