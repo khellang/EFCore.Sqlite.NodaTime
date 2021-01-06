@@ -14,15 +14,9 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         }
 
         [Fact]
-        public void Roundtrip()
-        {
-            Assert.Equal(Value, Query.Single());
-        }
+        public void Roundtrip() => Assert.Equal(Value, Query.Single());
 
         [Fact]
-        public Task GetCurrentInstant_From_Instance()
-        {
-            return Verify(x => x < SystemClock.Instance.GetCurrentInstant());
-        }
+        public Task GetCurrentInstant_From_Instance() => Verify(x => x < SystemClock.Instance.GetCurrentInstant());
     }
 }

@@ -14,51 +14,27 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         }
 
         [Fact]
-        public void Roundtrip()
-        {
-            Assert.Equal(Value, Query.Single());
-        }
+        public void Roundtrip() => Assert.Equal(Value, Query.Single());
 
         [Fact]
-        public Task Select_Equal()
-        {
-            return Verify(x => x == new LocalTime(23, 42, 16, 321));
-        }
+        public Task Select_Equal() => Verify(x => x == new LocalTime(23, 42, 16, 321));
 
         [Fact]
-        public Task Select_GreaterThan()
-        {
-            return Verify(x => x > new LocalTime(23, 42, 00));
-        }
+        public Task Select_GreaterThan() => Verify(x => x > new LocalTime(23, 42, 00));
 
         [Fact]
-        public Task Select_LessThan()
-        {
-            return Verify(x => x < new LocalTime(23, 50, 00));
-        }
+        public Task Select_LessThan() => Verify(x => x < new LocalTime(23, 50, 00));
 
         [Fact]
-        public Task Update()
-        {
-            return RunUpdate(x => x.LocalTime = x.LocalTime.PlusSeconds(10));
-        }
+        public Task Update() => RunUpdate(x => x.LocalTime = x.LocalTime.PlusSeconds(10));
 
         [Fact]
-        public Task Select_Hour()
-        {
-            return Verify(x => x.Hour == 23);
-        }
+        public Task Select_Hour() => Verify(x => x.Hour == 23);
 
         [Fact]
-        public Task Select_Minute()
-        {
-            return Verify(x => x.Minute == 42);
-        }
+        public Task Select_Minute() => Verify(x => x.Minute == 42);
 
         [Fact]
-        public Task Select_Second()
-        {
-            return Verify(x => x.Second == 16);
-        }
+        public Task Select_Second() => Verify(x => x.Second == 16);
     }
 }
