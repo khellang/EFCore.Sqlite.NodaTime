@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using VerifyTests.EntityFramework;
 using VerifyXunit;
@@ -13,7 +14,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         {
         }
 
-        protected Task Verify(Expression<Func<T, T>> selector, string sourceFile = "")
+        protected Task Verify(Expression<Func<T, T>> selector, [CallerFilePath] string sourceFile = "")
         {
             SqlRecording.StartRecording();
             var value = Query.Select(selector).Single();
