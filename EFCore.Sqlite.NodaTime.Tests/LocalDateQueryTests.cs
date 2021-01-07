@@ -17,16 +17,16 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public void Roundtrip() => Assert.Equal(Value, Query.Single());
 
         [Fact]
-        public Task Equal() => Verify(x => x == new LocalDate(2020, 10, 10));
+        public Task Equal() => VerifyQuery(x => x == new LocalDate(2020, 10, 10));
 
         [Fact]
-        public Task GreaterThan() => Verify(x => x > new LocalDate(2020, 09, 10));
+        public Task GreaterThan() => VerifyQuery(x => x > new LocalDate(2020, 09, 10));
 
         [Fact]
-        public Task LessThan() => Verify(x => x < new LocalDate(2020, 12, 13));
+        public Task LessThan() => VerifyQuery(x => x < new LocalDate(2020, 12, 13));
 
         [Fact]
-        public Task Update() => RunUpdate(x => x.LocalDate = x.LocalDate.PlusDays(2));
+        public Task Update() => VerifyUpdate(x => x.LocalDate = x.LocalDate.PlusDays(2));
 
         public class Properties : QueryTests<LocalDate>
         {
@@ -35,19 +35,19 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             }
 
             [Fact]
-            public Task Year() => Verify(x => x.Year == 2020);
+            public Task Year() => VerifyQuery(x => x.Year == 2020);
 
             [Fact]
-            public Task Month() => Verify(x => x.Month == 10);
+            public Task Month() => VerifyQuery(x => x.Month == 10);
 
             [Fact]
-            public Task Day() => Verify(x => x.Day == 10);
+            public Task Day() => VerifyQuery(x => x.Day == 10);
 
             [Fact]
-            public Task DayOfYear() => Verify(x => x.DayOfYear == 284);
+            public Task DayOfYear() => VerifyQuery(x => x.DayOfYear == 284);
 
             [Fact]
-            public Task DayOfWeek() => Verify(x => x.DayOfWeek == IsoDayOfWeek.Saturday);
+            public Task DayOfWeek() => VerifyQuery(x => x.DayOfWeek == IsoDayOfWeek.Saturday);
         }
 
         public class Methods : MethodQueryTests<LocalDate>

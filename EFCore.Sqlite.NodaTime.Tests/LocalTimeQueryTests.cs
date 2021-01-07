@@ -17,16 +17,16 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public void Roundtrip() => Assert.Equal(Value, Query.Single());
 
         [Fact]
-        public Task Equal() => Verify(x => x == new LocalTime(23, 42, 16, 321));
+        public Task Equal() => VerifyQuery(x => x == new LocalTime(23, 42, 16, 321));
 
         [Fact]
-        public Task GreaterThan() => Verify(x => x > new LocalTime(23, 42, 00));
+        public Task GreaterThan() => VerifyQuery(x => x > new LocalTime(23, 42, 00));
 
         [Fact]
-        public Task LessThan() => Verify(x => x < new LocalTime(23, 50, 00));
+        public Task LessThan() => VerifyQuery(x => x < new LocalTime(23, 50, 00));
 
         [Fact]
-        public Task Update() => RunUpdate(x => x.LocalTime = x.LocalTime.PlusSeconds(10));
+        public Task Update() => VerifyUpdate(x => x.LocalTime = x.LocalTime.PlusSeconds(10));
 
         public class Properties : QueryTests<LocalTime>
         {
@@ -35,13 +35,13 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             }
 
             [Fact]
-            public Task Hour() => Verify(x => x.Hour == 23);
+            public Task Hour() => VerifyQuery(x => x.Hour == 23);
 
             [Fact]
-            public Task Minute() => Verify(x => x.Minute == 42);
+            public Task Minute() => VerifyQuery(x => x.Minute == 42);
 
             [Fact]
-            public Task Second() => Verify(x => x.Second == 16);
+            public Task Second() => VerifyQuery(x => x.Second == 16);
         }
 
         public class Methods : MethodQueryTests<LocalTime>

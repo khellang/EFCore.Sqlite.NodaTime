@@ -17,16 +17,16 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public void Roundtrip() => Assert.Equal(Value, Query.Single());
 
         [Fact]
-        public Task Equal() => Verify(x => x == new LocalDateTime(2020, 10, 10, 23, 42, 16, 321));
+        public Task Equal() => VerifyQuery(x => x == new LocalDateTime(2020, 10, 10, 23, 42, 16, 321));
 
         [Fact]
-        public Task GreaterThan() => Verify(x => x > new LocalDateTime(2020, 10, 10, 23, 42, 16, 200));
+        public Task GreaterThan() => VerifyQuery(x => x > new LocalDateTime(2020, 10, 10, 23, 42, 16, 200));
 
         [Fact]
-        public Task LessThan() => Verify(x => x < new LocalDateTime(2020, 10, 10, 23, 42, 16, 500));
+        public Task LessThan() => VerifyQuery(x => x < new LocalDateTime(2020, 10, 10, 23, 42, 16, 500));
 
         [Fact]
-        public Task Update() => RunUpdate(x => x.LocalDateTime = x.LocalDateTime.PlusDays(2));
+        public Task Update() => VerifyUpdate(x => x.LocalDateTime = x.LocalDateTime.PlusDays(2));
 
         public class Properties : QueryTests<LocalDateTime>
         {
@@ -35,34 +35,34 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             }
 
             [Fact]
-            public Task Year() => Verify(x => x.Year == 2020);
+            public Task Year() => VerifyQuery(x => x.Year == 2020);
 
             [Fact]
-            public Task Month() => Verify(x => x.Month == 10);
+            public Task Month() => VerifyQuery(x => x.Month == 10);
 
             [Fact]
-            public Task Day() => Verify(x => x.Day == 10);
+            public Task Day() => VerifyQuery(x => x.Day == 10);
 
             [Fact]
-            public Task Hour() => Verify(x => x.Hour == 23);
+            public Task Hour() => VerifyQuery(x => x.Hour == 23);
 
             [Fact]
-            public Task Minute() => Verify(x => x.Minute == 42);
+            public Task Minute() => VerifyQuery(x => x.Minute == 42);
 
             [Fact]
-            public Task Second() => Verify(x => x.Second == 16);
+            public Task Second() => VerifyQuery(x => x.Second == 16);
 
             [Fact]
-            public Task DayOfYear() => Verify(x => x.DayOfYear == 284);
+            public Task DayOfYear() => VerifyQuery(x => x.DayOfYear == 284);
 
             [Fact]
-            public Task Date() => Verify(x => x.Date == new LocalDate(2020, 10, 10));
+            public Task Date() => VerifyQuery(x => x.Date == new LocalDate(2020, 10, 10));
 
             [Fact]
-            public Task TimeOfDay() => Verify(x => x.TimeOfDay == new LocalTime(23, 42, 16, 321));
+            public Task TimeOfDay() => VerifyQuery(x => x.TimeOfDay == new LocalTime(23, 42, 16, 321));
 
             [Fact]
-            public Task DayOfWeek() => Verify(x => x.DayOfWeek == IsoDayOfWeek.Saturday);
+            public Task DayOfWeek() => VerifyQuery(x => x.DayOfWeek == IsoDayOfWeek.Saturday);
         }
 
         public class Methods : MethodQueryTests<LocalDateTime>

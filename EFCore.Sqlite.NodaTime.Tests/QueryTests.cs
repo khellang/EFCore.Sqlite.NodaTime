@@ -24,7 +24,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
 
         protected IQueryable<T> Query => Db.NodaTimeTypes.Select(Selector);
 
-        protected Task RunUpdate(Action<NodaTimeTypes> mutator, [CallerFilePath] string sourceFile = "")
+        protected Task VerifyUpdate(Action<NodaTimeTypes> mutator, [CallerFilePath] string sourceFile = "")
         {
             SqlRecording.StartRecording();
             mutator(Db.NodaTimeTypes.Single());
@@ -32,17 +32,13 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             return Verifier.Verify(SqlRecording.FinishRecording(), sourceFile: sourceFile);
         }
 
-        protected Task Verify(Expression<Func<T, bool>> predicate, [CallerFilePath] string sourceFile = "")
+        protected Task VerifyQuery(Expression<Func<T, bool>> predicate, [CallerFilePath] string sourceFile = "")
         {
             SqlRecording.StartRecording();
             _ = Query.Single(predicate);
             return Verifier.Verify(SqlRecording.FinishRecording(), sourceFile: sourceFile);
         }
 
-        public void Dispose()
-        {
-            Db.Database.EnsureDeleted();
-            Db.Dispose();
-        }
+        public void Dispose() => Db.Dispose();
     }
 }
