@@ -6,6 +6,7 @@
     <RootNamespace>Microsoft.EntityFrameworkCore.Sqlite</RootNamespace>
     <AssemblyName>EntityFrameworkCore.Sqlite.NodaTime</AssemblyName>
     <Copyright>Copyright 2020 © Kristian Hellang, et al.</Copyright>
+    <PackageId>EntityFrameworkCore.Sqlite.NodaTime</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <TargetFramework>netstandard2.1</TargetFramework>
