@@ -2,17 +2,11 @@
   <PropertyGroup>
     <PackageTags>Entity Framework Core;entity-framework-core;ef;efcore;orm;sql;sqlite;NodaTime</PackageTags>
     <Description>Adds support for NodaTime types when using SQLite with Entity Framework Core.</Description>
-    <RepositoryUrl>git://github.com/khellang/EFCore.Sqlite.NodaTime</RepositoryUrl>
     <RootNamespace>Microsoft.EntityFrameworkCore.Sqlite</RootNamespace>
     <AssemblyName>EntityFrameworkCore.Sqlite.NodaTime</AssemblyName>
-    <Copyright>Copyright 2020 © Kristian Hellang, et al.</Copyright>
     <PackageId>EntityFrameworkCore.Sqlite.NodaTime</PackageId>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Authors>Kristian Hellang, et al.</Authors>
     <VersionPrefix>5.0.1</VersionPrefix>
-    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
