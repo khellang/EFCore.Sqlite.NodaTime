@@ -17,24 +17,53 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public void Roundtrip() => Assert.Equal(Value, Query.Single());
 
         [Fact]
-        public Task Select_Equal() => Verify(x => x == new LocalTime(23, 42, 16, 321));
+        public Task Equal() => Verify(x => x == new LocalTime(23, 42, 16, 321));
 
         [Fact]
-        public Task Select_GreaterThan() => Verify(x => x > new LocalTime(23, 42, 00));
+        public Task GreaterThan() => Verify(x => x > new LocalTime(23, 42, 00));
 
         [Fact]
-        public Task Select_LessThan() => Verify(x => x < new LocalTime(23, 50, 00));
+        public Task LessThan() => Verify(x => x < new LocalTime(23, 50, 00));
 
         [Fact]
         public Task Update() => RunUpdate(x => x.LocalTime = x.LocalTime.PlusSeconds(10));
 
-        [Fact]
-        public Task Select_Hour() => Verify(x => x.Hour == 23);
+        public class Properties : QueryTests<LocalTime>
+        {
+            public Properties() : base(x => x.LocalTime)
+            {
+            }
 
-        [Fact]
-        public Task Select_Minute() => Verify(x => x.Minute == 42);
+            [Fact]
+            public Task Hour() => Verify(x => x.Hour == 23);
 
-        [Fact]
-        public Task Select_Second() => Verify(x => x.Second == 16);
+            [Fact]
+            public Task Minute() => Verify(x => x.Minute == 42);
+
+            [Fact]
+            public Task Second() => Verify(x => x.Second == 16);
+        }
+
+        public class Methods : MethodQueryTests<LocalTime>
+        {
+            public Methods() : base(x => x.LocalTime)
+            {
+            }
+
+            [Fact]
+            public Task PlusHours() => Verify(x => x.PlusHours(2));
+
+            [Fact]
+            public Task PlusMinutes() => Verify(x => x.PlusMinutes(2));
+
+            [Fact]
+            public Task PlusSeconds() => Verify(x => x.PlusSeconds(2));
+
+            [Fact]
+            public Task PlusMilliseconds() => Verify(x => x.PlusMilliseconds(2));
+
+            [Fact]
+            public Task Combination() => Verify(x => x.PlusHours(2).PlusSeconds(2));
+        }
     }
 }

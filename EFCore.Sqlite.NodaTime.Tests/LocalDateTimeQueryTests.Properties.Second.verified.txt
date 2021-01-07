@@ -1,0 +1,10 @@
+[
+  {
+    Type: ReaderExecuted,
+    Text: 
+SELECT "n"."LocalDateTime"
+FROM "NodaTimeTypes" AS "n"
+WHERE CAST(strftime('%S', "n"."LocalDateTime") AS INTEGER) = 16
+LIMIT 2
+  }
+]

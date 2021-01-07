@@ -17,30 +17,59 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public void Roundtrip() => Assert.Equal(Value, Query.Single());
 
         [Fact]
-        public Task Select_Equal() => Verify(x => x == new LocalDate(2020, 10, 10));
+        public Task Equal() => Verify(x => x == new LocalDate(2020, 10, 10));
 
         [Fact]
-        public Task Select_GreaterThan() => Verify(x => x > new LocalDate(2020, 09, 10));
+        public Task GreaterThan() => Verify(x => x > new LocalDate(2020, 09, 10));
 
         [Fact]
-        public Task Select_LessThan() => Verify(x => x < new LocalDate(2020, 12, 13));
+        public Task LessThan() => Verify(x => x < new LocalDate(2020, 12, 13));
 
         [Fact]
         public Task Update() => RunUpdate(x => x.LocalDate = x.LocalDate.PlusDays(2));
 
-        [Fact]
-        public Task Select_Year() => Verify(x => x.Year == 2020);
+        public class Properties : QueryTests<LocalDate>
+        {
+            public Properties() : base(x => x.LocalDate)
+            {
+            }
 
-        [Fact]
-        public Task Select_Month() => Verify(x => x.Month == 10);
+            [Fact]
+            public Task Year() => Verify(x => x.Year == 2020);
 
-        [Fact]
-        public Task Select_Day() => Verify(x => x.Day == 10);
+            [Fact]
+            public Task Month() => Verify(x => x.Month == 10);
 
-        [Fact]
-        public Task Select_DayOfYear() => Verify(x => x.DayOfYear == 284);
+            [Fact]
+            public Task Day() => Verify(x => x.Day == 10);
 
-        [Fact]
-        public Task Select_DayOfWeek() => Verify(x => x.DayOfWeek == IsoDayOfWeek.Saturday);
+            [Fact]
+            public Task DayOfYear() => Verify(x => x.DayOfYear == 284);
+
+            [Fact]
+            public Task DayOfWeek() => Verify(x => x.DayOfWeek == IsoDayOfWeek.Saturday);
+        }
+
+        public class Methods : MethodQueryTests<LocalDate>
+        {
+            public Methods() : base(x => x.LocalDate)
+            {
+            }
+
+            [Fact]
+            public Task PlusYears() => Verify(x => x.PlusYears(2));
+
+            [Fact]
+            public Task PlusMonths() => Verify(x => x.PlusMonths(2));
+
+            [Fact]
+            public Task PlusWeeks() => Verify(x => x.PlusWeeks(2));
+
+            [Fact]
+            public Task PlusDays() => Verify(x => x.PlusDays(2));
+
+            [Fact]
+            public Task Combination() => Verify(x => x.PlusMonths(2).PlusDays(2));
+        }
     }
 }

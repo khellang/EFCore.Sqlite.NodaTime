@@ -1,0 +1,10 @@
+[
+  {
+    Type: ReaderExecuted,
+    Text: 
+SELECT "n"."LocalTime"
+FROM "NodaTimeTypes" AS "n"
+WHERE "n"."LocalTime" = '23:42:16.321'
+LIMIT 2
+  }
+]
