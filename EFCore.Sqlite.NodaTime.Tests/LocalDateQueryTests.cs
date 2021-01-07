@@ -57,19 +57,19 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             }
 
             [Fact]
-            public Task PlusYears() => Verify(x => x.PlusYears(2));
+            public Task PlusYears() => VerifyMethod(x => x.PlusYears(2));
 
             [Fact]
-            public Task PlusMonths() => Verify(x => x.PlusMonths(2));
+            public Task PlusMonths() => VerifyMethod(x => x.PlusMonths(2));
 
             [Fact]
-            public Task PlusWeeks() => Verify(x => x.PlusWeeks(2));
+            public Task PlusWeeks() => VerifyMethod(x => x.PlusWeeks(2));
 
             [Fact]
-            public Task PlusDays() => Verify(x => x.PlusDays(2));
+            public Task PlusDays() => VerifyMethod(x => x.PlusDays(2));
 
             [Fact]
-            public Task Combination() => Verify(x => x.PlusMonths(2).PlusDays(2));
+            public Task Combination() => VerifyMethod(x => x.PlusMonths(2).PlusDays(2));
         }
     }
 }

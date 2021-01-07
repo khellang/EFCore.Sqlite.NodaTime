@@ -51,19 +51,19 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             }
 
             [Fact]
-            public Task PlusHours() => Verify(x => x.PlusHours(2));
+            public Task PlusHours() => VerifyMethod(x => x.PlusHours(2));
 
             [Fact]
-            public Task PlusMinutes() => Verify(x => x.PlusMinutes(2));
+            public Task PlusMinutes() => VerifyMethod(x => x.PlusMinutes(2));
 
             [Fact]
-            public Task PlusSeconds() => Verify(x => x.PlusSeconds(2));
+            public Task PlusSeconds() => VerifyMethod(x => x.PlusSeconds(2));
 
             [Fact]
-            public Task PlusMilliseconds() => Verify(x => x.PlusMilliseconds(2));
+            public Task PlusMilliseconds() => VerifyMethod(x => x.PlusMilliseconds(2));
 
             [Fact]
-            public Task Combination() => Verify(x => x.PlusHours(2).PlusSeconds(2));
+            public Task Combination() => VerifyMethod(x => x.PlusHours(2).PlusSeconds(2));
         }
     }
 }
