@@ -1,56 +1,28 @@
-using System.Linq;
 using System.Threading.Tasks;
 using NodaTime;
-using VerifyTests.EntityFramework;
-using VerifyXunit;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite
 {
-    public class LocalTimeMethodQueryTests : QueryTests<LocalTime>
+    public class LocalTimeMethodQueryTests : MethodQueryTests<LocalTime>
     {
         public LocalTimeMethodQueryTests() : base(x => x.LocalTime)
         {
         }
 
         [Fact]
-        public Task PlusHours()
-        {
-            SqlRecording.StartRecording();
-            var value = Query.Select(x => x.PlusHours(2)).Single();
-            return Verifier.Verify(value);
-        }
+        public Task PlusHours() => Verify(x => x.PlusHours(2));
 
         [Fact]
-        public Task PlusMinutes()
-        {
-            SqlRecording.StartRecording();
-            var value = Query.Select(x => x.PlusMinutes(2)).Single();
-            return Verifier.Verify(value);
-        }
+        public Task PlusMinutes() => Verify(x => x.PlusMinutes(2));
 
         [Fact]
-        public Task PlusSeconds()
-        {
-            SqlRecording.StartRecording();
-            var value = Query.Select(x => x.PlusSeconds(2)).Single();
-            return Verifier.Verify(value);
-        }
+        public Task PlusSeconds() => Verify(x => x.PlusSeconds(2));
 
         [Fact]
-        public Task PlusMilliseconds()
-        {
-            SqlRecording.StartRecording();
-            var value = Query.Select(x => x.PlusMilliseconds(2)).Single();
-            return Verifier.Verify(value);
-        }
+        public Task PlusMilliseconds() => Verify(x => x.PlusMilliseconds(2));
 
         [Fact]
-        public Task Combination()
-        {
-            SqlRecording.StartRecording();
-            var value = Query.Select(x => x.PlusHours(2).PlusSeconds(2)).Single();
-            return Verifier.Verify(value);
-        }
+        public Task Combination() => Verify(x => x.PlusHours(2).PlusSeconds(2));
     }
 }
