@@ -5,7 +5,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 {
     internal static class SqlitePatterns
     {
-        private const string DateTimePattern = "uuuu'-'MM'-'dd' 'HH':'mm':'ss'.'FFFFFFFFF";
+        private const string DateTimePattern = "uuuu-MM-dd HH:mm:ss.FFFFFFFFF";
 
         internal static readonly IPattern<LocalDateTime> LocalDateTime = LocalDateTimePattern.CreateWithInvariantCulture(DateTimePattern);
 
