@@ -34,6 +34,9 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Extensions
             return result;
         }
 
+        internal static SqlExpression JulianDay(this ISqlExpressionFactory factory, SqlExpression argument, Type returnType)
+            => factory.DateFunction("JULIANDAY", ImmutableList<SqlExpression>.Empty.Add(argument), returnType);
+
         private static SqlExpression DateFunction(this ISqlExpressionFactory factory, string name, IImmutableList<SqlExpression> arguments, Type returnType)
             => factory.Function(name, arguments, nullable: true, arguments.Select(_ => true), returnType);
 
