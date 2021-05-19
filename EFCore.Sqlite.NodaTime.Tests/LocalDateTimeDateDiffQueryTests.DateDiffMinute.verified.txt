@@ -1,0 +1,12 @@
+{
+  target: 42,
+  sql: [
+    {
+      Type: ReaderExecuted,
+      Text: 
+SELECT CAST(((JULIANDAY('2020-10-11 00:24:16.321') - JULIANDAY("n"."LocalDateTime")) * 1440) AS INTEGER)
+FROM "NodaTimeTypes" AS "n"
+LIMIT 2
+    }
+  ]
+}
