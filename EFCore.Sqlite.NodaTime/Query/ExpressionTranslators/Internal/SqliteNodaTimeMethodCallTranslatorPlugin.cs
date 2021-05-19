@@ -9,6 +9,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
         {
             Translators = new IMethodCallTranslator[]
             {
+                new SqliteNodaTimeDateDiffFunctionsTranslator(sqlExpressionFactory),
                 new SqliteNodaTimeMethodCallTranslator(sqlExpressionFactory),
             };
         }
