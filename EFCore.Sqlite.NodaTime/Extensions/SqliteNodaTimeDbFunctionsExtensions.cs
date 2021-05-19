@@ -1,10 +1,12 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using NodaTime;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.EntityFrameworkCore
 {
+    [ExcludeFromCodeCoverage]
     public static class SqliteNodaTimeDbFunctionsExtensions
     {
         public static int DateDiffYear(this DbFunctions _, LocalDate startDate, LocalDate endDate)
