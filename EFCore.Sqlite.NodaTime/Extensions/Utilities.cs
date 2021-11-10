@@ -46,7 +46,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Extensions
 
             if (ShouldUnwrap(timestring, out var function, out var timestringIndex))
             {
-                timestring = function.Arguments[timestringIndex];
+                timestring = function.Arguments![timestringIndex];
                 modifiers = function.Arguments.Skip(timestringIndex + 1).Concat(modifiers);
             }
 
@@ -66,7 +66,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Extensions
                 timestring = unary.Operand;
             }
 
-            if (timestring is SqlFunctionExpression fn)
+            if (timestring is SqlFunctionExpression fn && fn.Arguments is not null)
             {
                 if (fn.Name == "strftime")
                 {

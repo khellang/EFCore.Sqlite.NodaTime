@@ -45,10 +45,12 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Infrastructure.Internal
 
             public override bool IsDatabaseProvider => false;
 
-            public override long GetServiceProviderHashCode() => 0;
+            public override int GetServiceProviderHashCode() => 0;
 
             public override void PopulateDebugInfo(IDictionary<string, string> debugInfo)
                 => debugInfo["Sqlite:" + nameof(SqliteNodaTimeDbContextOptionsBuilderExtensions.UseNodaTime)] = "1";
+
+            public override bool ShouldUseSameServiceProvider(DbContextOptionsExtensionInfo other) => true;
 
             public override string LogFragment => "using NodaTime ";
         }

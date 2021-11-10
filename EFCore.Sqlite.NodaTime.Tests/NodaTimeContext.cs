@@ -14,7 +14,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             Connection = RelationalOptionsExtension.Extract(options).Connection;
         }
 
-        private DbConnection Connection { get; }
+        private DbConnection? Connection { get; }
 
         public DbSet<NodaTimeTypes> NodaTimeTypes { get; set; } = null!;
 
@@ -53,7 +53,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         public override void Dispose()
         {
             base.Dispose();
-            Connection.Dispose();
+            Connection?.Dispose();
         }
     }
 }

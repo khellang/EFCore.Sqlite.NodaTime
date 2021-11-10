@@ -29,7 +29,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
         private ISqlExpressionFactory SqlExpressionFactory { get; }
 
         public SqlExpression? Translate(
-            SqlExpression instance,
+            SqlExpression? instance,
             MethodInfo method,
             IReadOnlyList<SqlExpression> arguments,
             IDiagnosticsLogger<DbLoggerCategory.Query> logger)
@@ -42,6 +42,11 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
                     nullable: false,
                     Array.Empty<bool>(),
                     method.ReturnType);
+            }
+
+            if (instance is null)
+            {
+                return null;
             }
 
             var declaringType = method.DeclaringType;
@@ -88,55 +93,53 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
 
         private IEnumerable<SqlExpression> Plus<T>(SqlExpression argument, Func<T, Period> getPeriod)
         {
-            if (argument is not SqlConstantExpression constant)
+            if (argument is SqlConstantExpression constant && constant.Value is T value)
             {
-                yield break;
-            }
+                var period = getPeriod(value).Normalize();
 
-            var period = getPeriod((T)constant.Value).Normalize();
+                if (period.Years != 0)
+                {
+                    yield return GetModifier(period.Years, "years");
+                }
 
-            if (period.Years != 0)
-            {
-                yield return GetModifier(period.Years, "years");
-            }
+                if (period.Months != 0)
+                {
+                    yield return GetModifier(period.Months, "months");
+                }
 
-            if (period.Months != 0)
-            {
-                yield return GetModifier(period.Months, "months");
-            }
+                if (period.Days != 0)
+                {
+                    yield return GetModifier(period.Days, "days");
+                }
 
-            if (period.Days != 0)
-            {
-                yield return GetModifier(period.Days, "days");
-            }
+                if (period.Hours != 0)
+                {
+                    yield return GetModifier(period.Hours, "hours");
+                }
 
-            if (period.Hours != 0)
-            {
-                yield return GetModifier(period.Hours, "hours");
-            }
+                if (period.Minutes != 0)
+                {
+                    yield return GetModifier(period.Minutes, "minutes");
+                }
 
-            if (period.Minutes != 0)
-            {
-                yield return GetModifier(period.Minutes, "minutes");
-            }
+                if (period.Milliseconds != 0)
+                {
+                    var fractionalSeconds = period.Seconds + ((double)period.Milliseconds / 1000);
+                    yield return GetModifier(fractionalSeconds, "seconds");
+                    yield break;
+                }
 
-            if (period.Milliseconds != 0)
-            {
-                var fractionalSeconds = period.Seconds + ((double)period.Milliseconds / 1000);
-                yield return GetModifier(fractionalSeconds, "seconds");
-                yield break;
-            }
-
-            if (period.Seconds != 0)
-            {
-                yield return GetModifier(period.Seconds, "seconds");
+                if (period.Seconds != 0)
+                {
+                    yield return GetModifier(period.Seconds, "seconds");
+                }
             }
         }
 
         private SqlExpression GetModifier(long value, string unit)
-            => SqlExpressionFactory.Constant($"{value:+##;-##;+0} {unit}");
+            => SqlExpressionFactory.Constant(FormattableString.Invariant($"{value:+##;-##;+0} {unit}"));
 
         private SqlExpression GetModifier(double value, string unit)
-            => SqlExpressionFactory.Constant($"{value:+#0.###;-##.###;+0} {unit}");
+            => SqlExpressionFactory.Constant(FormattableString.Invariant($"{value:+#0.###;-##.###;+0} {unit}"));
     }
 }

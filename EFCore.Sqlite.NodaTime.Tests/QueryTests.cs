@@ -26,17 +26,17 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
 
         protected Task VerifyUpdate(Action<NodaTimeTypes> mutator, [CallerFilePath] string sourceFile = "")
         {
-            SqlRecording.StartRecording();
+            EfRecording.StartRecording();
             mutator(Db.NodaTimeTypes.Single());
             Db.SaveChanges();
-            return Verifier.Verify(SqlRecording.FinishRecording(), sourceFile: sourceFile);
+            return Verifier.Verify(EfRecording.FinishRecording(), sourceFile: sourceFile);
         }
 
         protected Task VerifyQuery(Expression<Func<T, bool>> predicate, [CallerFilePath] string sourceFile = "")
         {
-            SqlRecording.StartRecording();
+            EfRecording.StartRecording();
             _ = Query.Single(predicate);
-            return Verifier.Verify(SqlRecording.FinishRecording(), sourceFile: sourceFile);
+            return Verifier.Verify(EfRecording.FinishRecording(), sourceFile: sourceFile);
         }
 
         public void Dispose() => Db.Dispose();

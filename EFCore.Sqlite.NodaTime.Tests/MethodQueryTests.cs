@@ -16,7 +16,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
 
         protected Task VerifyMethod<TResult>(Expression<Func<T, TResult>> selector, [CallerFilePath] string sourceFile = "")
         {
-            SqlRecording.StartRecording();
+            EfRecording.StartRecording();
             var value = Query.Select(selector).Single();
             return Verifier.Verify(value, sourceFile: sourceFile);
         }

@@ -5,8 +5,8 @@
     <RootNamespace>Microsoft.EntityFrameworkCore.Sqlite</RootNamespace>
     <AssemblyName>EntityFrameworkCore.Sqlite.NodaTime</AssemblyName>
     <PackageId>EntityFrameworkCore.Sqlite.NodaTime</PackageId>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <VersionPrefix>5.1.0</VersionPrefix>
+    <TargetFramework>net6.0</TargetFramework>
+    <VersionPrefix>6.0.0</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>
