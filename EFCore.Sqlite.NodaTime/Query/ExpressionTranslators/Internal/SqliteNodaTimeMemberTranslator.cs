@@ -19,7 +19,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
         private ISqlExpressionFactory SqlExpressionFactory { get; }
 
         public SqlExpression? Translate(
-            SqlExpression instance,
+            SqlExpression? instance,
             MemberInfo member,
             Type returnType,
             IDiagnosticsLogger<DbLoggerCategory.Query> logger)
@@ -27,6 +27,11 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
             if (member == _systemClockInstance)
             {
                 return SqlExpressionFactory.Constant(SystemClock.Instance);
+            }
+
+            if (instance is null)
+            {
+                return null;
             }
 
             var declaringType = member.DeclaringType;

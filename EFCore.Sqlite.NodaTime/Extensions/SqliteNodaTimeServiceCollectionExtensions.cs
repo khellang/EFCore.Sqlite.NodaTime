@@ -19,11 +19,10 @@ namespace Microsoft.Extensions.DependencyInjection
             }
 
             new EntityFrameworkRelationalServicesBuilder(services)
-                .TryAddProviderSpecificServices(x => x
-                    .TryAddSingletonEnumerable<IRelationalTypeMappingSourcePlugin, SqliteNodaTimeTypeMappingSourcePlugin>()
-                    .TryAddSingletonEnumerable<IMethodCallTranslatorPlugin, SqliteNodaTimeMethodCallTranslatorPlugin>()
-                    .TryAddSingletonEnumerable<IMemberTranslatorPlugin, SqliteNodaTimeMemberTranslatorPlugin>()
-                    .TryAddSingletonEnumerable<IEvaluatableExpressionFilterPlugin, SqliteNodaTimeEvaluatableExpressionFilterPlugin>());
+                .TryAdd<IRelationalTypeMappingSourcePlugin, SqliteNodaTimeTypeMappingSourcePlugin>()
+                .TryAdd<IMethodCallTranslatorPlugin, SqliteNodaTimeMethodCallTranslatorPlugin>()
+                .TryAdd<IMemberTranslatorPlugin, SqliteNodaTimeMemberTranslatorPlugin>()
+                .TryAdd<IEvaluatableExpressionFilterPlugin, SqliteNodaTimeEvaluatableExpressionFilterPlugin>();
 
             return services;
         }
