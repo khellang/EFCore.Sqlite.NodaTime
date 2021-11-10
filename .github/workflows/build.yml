@@ -19,11 +19,11 @@ jobs:
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: "5.0.x"
+          dotnet-version: "6.0.x"
 
       - name: Test
         run: dotnet test --collect:"XPlat Code Coverage"
-        
+
       - name: Update codecov
         if: startsWith(github.repository, 'khellang/')
         uses: codecov/codecov-action@v1
