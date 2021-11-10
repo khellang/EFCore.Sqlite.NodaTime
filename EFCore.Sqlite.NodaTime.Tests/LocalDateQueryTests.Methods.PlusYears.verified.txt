@@ -1,9 +1,9 @@
-{
+﻿{
   target: 2022-10-10,
   sql: [
     {
       Type: ReaderExecuted,
-      Text: 
+      Text:
 SELECT date("n"."LocalDate", '+2 years')
 FROM "NodaTimeTypes" AS "n"
 LIMIT 2

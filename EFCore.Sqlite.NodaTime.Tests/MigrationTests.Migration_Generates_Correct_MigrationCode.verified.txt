@@ -1,4 +1,6 @@
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Migrations
 {

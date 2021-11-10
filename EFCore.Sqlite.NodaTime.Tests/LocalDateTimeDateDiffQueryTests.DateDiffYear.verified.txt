@@ -1,9 +1,9 @@
-{
+﻿{
   target: 42,
   sql: [
     {
       Type: ReaderExecuted,
-      Text: 
+      Text:
 SELECT CAST(((JULIANDAY('2062-10-10 23:42:16.321') - JULIANDAY("n"."LocalDateTime")) / 365) AS INTEGER)
 FROM "NodaTimeTypes" AS "n"
 LIMIT 2

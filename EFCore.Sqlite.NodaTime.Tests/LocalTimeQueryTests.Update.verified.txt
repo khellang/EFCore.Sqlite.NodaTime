@@ -1,7 +1,7 @@
-[
+﻿[
   {
     Type: ReaderExecuted,
-    Text: 
+    Text:
 SELECT "n"."Id", "n"."Instant", "n"."LocalDate", "n"."LocalDateTime", "n"."LocalTime"
 FROM "NodaTimeTypes" AS "n"
 LIMIT 2
@@ -10,10 +10,10 @@ LIMIT 2
     Type: ReaderExecuted,
     HasTransaction: true,
     Parameters: {
-      @p1 (String): 1,
-      @p0 (String): 23:42:26.321
+      @p0 (String): 23:42:26.321,
+      @p1 (Int32): 1
     },
-    Text: 
+    Text:
 UPDATE "NodaTimeTypes" SET "LocalTime" = @p0
 WHERE "Id" = @p1;
 SELECT changes();

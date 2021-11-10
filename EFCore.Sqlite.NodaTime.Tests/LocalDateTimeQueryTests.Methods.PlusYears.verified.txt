@@ -1,9 +1,9 @@
-{
+﻿{
   target: 2022-10-10T23:42:16.321,
   sql: [
     {
       Type: ReaderExecuted,
-      Text: 
+      Text:
 SELECT strftime('%Y-%m-%d %H:%M:%f', "n"."LocalDateTime", '+2 years')
 FROM "NodaTimeTypes" AS "n"
 LIMIT 2

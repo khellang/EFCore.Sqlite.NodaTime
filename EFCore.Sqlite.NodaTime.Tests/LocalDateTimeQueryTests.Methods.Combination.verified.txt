@@ -1,9 +1,9 @@
-{
+﻿{
   target: 2020-12-13T01:42:18.321,
   sql: [
     {
       Type: ReaderExecuted,
-      Text: 
+      Text:
 SELECT strftime('%Y-%m-%d %H:%M:%f', "n"."LocalDateTime", '+2 months', '+2 days', '+2 hours', '+2 seconds')
 FROM "NodaTimeTypes" AS "n"
 LIMIT 2

@@ -1,7 +1,7 @@
-[
+﻿[
   {
     Type: ReaderExecuted,
-    Text: 
+    Text:
 SELECT "n"."LocalDateTime"
 FROM "NodaTimeTypes" AS "n"
 WHERE CAST(strftime('%H:%M:%f', "n"."LocalDateTime") AS TEXT) = '23:42:16.321'
