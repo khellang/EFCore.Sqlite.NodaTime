@@ -1,9 +1,9 @@
-{
+﻿{
   target: 2020-12-10,
   sql: [
     {
       Type: ReaderExecuted,
-      Text: 
+      Text:
 SELECT date("n"."LocalDate", '+2 months')
 FROM "NodaTimeTypes" AS "n"
 LIMIT 2

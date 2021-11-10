@@ -1,7 +1,7 @@
-[
+﻿[
   {
     Type: ReaderExecuted,
-    Text: 
+    Text:
 SELECT "n"."LocalDateTime"
 FROM "NodaTimeTypes" AS "n"
 WHERE "n"."LocalDateTime" = '2020-10-10 23:42:16.321'
