@@ -18,7 +18,8 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
             Assert.IsType<SqliteNodaTimeTypeMappingSourcePlugin>(serviceProvider.GetService<IRelationalTypeMappingSourcePlugin>());
-            Assert.IsType<SqliteNodaTimeCodeGeneratorPlugin>(serviceProvider.GetService<IProviderCodeGeneratorPlugin>());
+            var plugin = Assert.IsType<SqliteNodaTimeCodeGeneratorPlugin>(serviceProvider.GetService<IProviderCodeGeneratorPlugin>());
+            Assert.NotNull(plugin.GenerateProviderOptions().MethodInfo);
         }
     }
 }
