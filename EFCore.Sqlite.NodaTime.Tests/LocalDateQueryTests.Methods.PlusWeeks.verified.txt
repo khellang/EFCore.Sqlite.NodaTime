@@ -3,6 +3,7 @@
   sql: [
     {
       Type: ReaderExecuted,
+      HasTransaction: false,
       Text:
 SELECT date("n"."LocalDate", '+14 days')
 FROM "NodaTimeTypes" AS "n"

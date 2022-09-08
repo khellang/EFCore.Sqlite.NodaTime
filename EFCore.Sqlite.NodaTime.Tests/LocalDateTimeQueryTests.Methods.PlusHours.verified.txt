@@ -1,8 +1,9 @@
 ﻿{
-  target: 2020-10-11T01:42:16.321,
+  target: DateTimeOffset_1,
   sql: [
     {
       Type: ReaderExecuted,
+      HasTransaction: false,
       Text:
 SELECT strftime('%Y-%m-%d %H:%M:%f', "n"."LocalDateTime", '+2 hours')
 FROM "NodaTimeTypes" AS "n"

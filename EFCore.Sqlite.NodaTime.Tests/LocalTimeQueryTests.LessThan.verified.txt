@@ -1,6 +1,7 @@
 ﻿[
   {
     Type: ReaderExecuted,
+    HasTransaction: false,
     Text:
 SELECT "n"."LocalTime"
 FROM "NodaTimeTypes" AS "n"

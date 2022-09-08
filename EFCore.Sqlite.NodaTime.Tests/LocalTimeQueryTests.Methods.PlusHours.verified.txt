@@ -3,6 +3,7 @@
   sql: [
     {
       Type: ReaderExecuted,
+      HasTransaction: false,
       Text:
 SELECT strftime('%H:%M:%f', "n"."LocalTime", '+2 hours')
 FROM "NodaTimeTypes" AS "n"
