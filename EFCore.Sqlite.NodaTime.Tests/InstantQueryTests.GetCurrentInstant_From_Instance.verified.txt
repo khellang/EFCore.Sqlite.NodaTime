@@ -1,6 +1,7 @@
 ﻿[
   {
     Type: ReaderExecuted,
+    HasTransaction: false,
     Text:
 SELECT "n"."Instant"
 FROM "NodaTimeTypes" AS "n"

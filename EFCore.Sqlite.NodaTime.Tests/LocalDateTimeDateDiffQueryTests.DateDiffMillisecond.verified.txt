@@ -3,6 +3,7 @@
   sql: [
     {
       Type: ReaderExecuted,
+      HasTransaction: false,
       Text:
 SELECT CAST(((JULIANDAY('2020-10-10 23:42:16.363') - JULIANDAY("n"."LocalDateTime")) * 86400000) AS INTEGER)
 FROM "NodaTimeTypes" AS "n"
