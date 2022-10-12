@@ -6,7 +6,6 @@
     <AssemblyName>EntityFrameworkCore.Sqlite.NodaTime</AssemblyName>
     <PackageId>EntityFrameworkCore.Sqlite.NodaTime</PackageId>
     <TargetFramework>net6.0</TargetFramework>
-    <VersionPrefix>7.0.0</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+    <PackageReference Include="MinVer" PrivateAssets="All" />
     <PackageReference Include="NodaTime" />
   </ItemGroup>
 </Project>

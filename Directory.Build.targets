@@ -13,5 +13,8 @@
     <PackageReference Update="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.0-rc.2.22472.11" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.Specification.Tests" Version="7.0.0-rc.2.22472.11" />
     <PackageReference Update="coverlet.collector" Version="3.1.2" />
+
+    <!-- Dev Dependencies-->
+    <PackageReference Update="MinVer" Version="4.2.0" />
   </ItemGroup>
 </Project>
