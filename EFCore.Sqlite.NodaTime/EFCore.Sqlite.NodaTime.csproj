@@ -6,6 +6,8 @@
     <AssemblyName>EntityFrameworkCore.Sqlite.NodaTime</AssemblyName>
     <PackageId>EntityFrameworkCore.Sqlite.NodaTime</PackageId>
     <TargetFramework>net6.0</TargetFramework>
+
+    <MinVerTagPrefix>v</MinVerTagPrefix>
   </PropertyGroup>
 
   <ItemGroup>
