@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageTags>Entity Framework Core;entity-framework-core;ef;efcore;orm;sql;sqlite;NodaTime</PackageTags>
     <Description>Adds support for NodaTime types when using SQLite with Entity Framework Core.</Description>
@@ -6,7 +6,7 @@
     <AssemblyName>EntityFrameworkCore.Sqlite.NodaTime</AssemblyName>
     <PackageId>EntityFrameworkCore.Sqlite.NodaTime</PackageId>
     <TargetFramework>net6.0</TargetFramework>
-    <VersionPrefix>6.0.0</VersionPrefix>
+    <VersionPrefix>7.0.0</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
     <PackageReference Include="NodaTime" />
   </ItemGroup>

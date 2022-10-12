@@ -9,14 +9,14 @@ LIMIT 2
   },
   {
     Type: ReaderExecuted,
-    HasTransaction: true,
+    HasTransaction: false,
     Parameters: {
       @p0 (String): 23:42:26.321,
       @p1 (Int32): 1
     },
     Text:
 UPDATE "NodaTimeTypes" SET "LocalTime" = @p0
-WHERE "Id" = @p1;
-SELECT changes();
+WHERE "Id" = @p1
+RETURNING 1;
   }
 ]
