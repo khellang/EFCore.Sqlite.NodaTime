@@ -4,8 +4,10 @@
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Migrations
 {
+    /// <inheritdoc />
     public partial class MigrationCode : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -30,6 +32,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Migrations
                 values: new object[] { 1, "2020-10-10 23:42:16.321", "2020-10-10", "2020-10-10 23:42:16.321", "23:42:16.321" });
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
