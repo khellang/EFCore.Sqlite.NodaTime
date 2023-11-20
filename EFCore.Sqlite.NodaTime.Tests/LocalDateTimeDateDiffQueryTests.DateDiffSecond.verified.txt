@@ -5,7 +5,7 @@
       Type: ReaderExecuted,
       HasTransaction: false,
       Text:
-SELECT CAST(((JULIANDAY('2020-10-10 23:42:58.321') - JULIANDAY("n"."LocalDateTime")) * 86400) AS INTEGER)
+SELECT CAST((JULIANDAY('2020-10-10 23:42:58.321') - JULIANDAY("n"."LocalDateTime")) * 86400 AS INTEGER)
 FROM "NodaTimeTypes" AS "n"
 LIMIT 2
     }
