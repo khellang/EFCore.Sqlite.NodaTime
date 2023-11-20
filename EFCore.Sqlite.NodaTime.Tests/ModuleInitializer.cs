@@ -8,7 +8,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
         [ModuleInitializer]
         public static void Initialize()
         {
-            VerifyEntityFramework.Enable();
+            VerifyEntityFramework.Initialize();
             VerifierSettings.DontScrubDateTimes();
         }
     }
