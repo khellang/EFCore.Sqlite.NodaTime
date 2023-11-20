@@ -9,7 +9,7 @@
     <Authors>Kristian Hellang, et al.</Authors>
     <IncludeSymbols>true</IncludeSymbols>
     <RepositoryType>git</RepositoryType>
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>11.0</LangVersion>
     <Nullable>Enable</Nullable>
     <Features>strict</Features>
   </PropertyGroup>
