@@ -5,7 +5,7 @@
     <RootNamespace>Microsoft.EntityFrameworkCore.Sqlite</RootNamespace>
     <AssemblyName>EntityFrameworkCore.Sqlite.NodaTime</AssemblyName>
     <PackageId>EntityFrameworkCore.Sqlite.NodaTime</PackageId>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
 
     <MinVerTagPrefix>v</MinVerTagPrefix>
   </PropertyGroup>
@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
-    <PackageReference Include="MinVer" PrivateAssets="All" />
+    <PackageReference Include="MinVer" />
     <PackageReference Include="NodaTime" />
   </ItemGroup>
 </Project>

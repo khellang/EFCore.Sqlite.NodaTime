@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyName>EntityFrameworkCore.Sqlite.NodaTime.Tests</AssemblyName>
     <RootNamespace>Microsoft.EntityFrameworkCore.Sqlite</RootNamespace>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <NoWarn>$(NoWarn);EF1001;CS9057</NoWarn>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
