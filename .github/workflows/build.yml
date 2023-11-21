@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-20.04
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
 
     env:
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: "8.0.x"
 
@@ -25,20 +25,20 @@ jobs:
         run: dotnet test --collect:"XPlat Code Coverage"
 
       - name: Update codecov
-        if: startsWith(github.repository, 'khellang/')
-        uses: codecov/codecov-action@v1
+        if: ${{ startsWith(github.repository, 'khellang/') }}
+        uses: codecov/codecov-action@v3
 
       - name: Pack NuGet packages (CI versions)
-        if: startsWith(github.ref, 'refs/heads/') && github.event_name == 'push' && startsWith(github.repository, 'khellang/')
+        if: ${{ startsWith(github.ref, 'refs/heads/') && github.event_name == 'push' && startsWith(github.repository, 'khellang/') }}
         run: dotnet pack --configuration Release --output nupkgs --version-suffix "ci.$(date -u +%Y%m%dT%H%M%S)+sha.${GITHUB_SHA:0:9}" -p:ContinuousIntegrationBuild=true
 
       - name: Pack NuGet packages (Release versions)
-        if: startsWith(github.ref, 'refs/tags/v') && github.event_name == 'push' && startsWith(github.repository, 'khellang/')
+        if: ${{ startsWith(github.ref, 'refs/tags/v') && github.event_name == 'push' && startsWith(github.repository, 'khellang/') }}
         run: dotnet pack --configuration Release --output nupkgs -p:ContinuousIntegrationBuild=true
 
       - name: Upload artifacts
-        if: github.event_name == 'push' && startsWith(github.repository, 'khellang/')
-        uses: actions/upload-artifact@v1
+        if: ${{ github.event_name == 'push' && startsWith(github.repository, 'khellang/') }}
+        uses: actions/upload-artifact@v3
         with:
           name: EFCore.Sqlite.NodaTime
           path: nupkgs
