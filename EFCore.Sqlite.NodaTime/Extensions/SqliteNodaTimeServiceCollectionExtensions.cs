@@ -13,10 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddEntityFrameworkSqliteNodaTime(this IServiceCollection services)
         {
-            if (services is null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
+            ArgumentNullException.ThrowIfNull(services);
 
             new EntityFrameworkRelationalServicesBuilder(services)
                 .TryAdd<IRelationalTypeMappingSourcePlugin, SqliteNodaTimeTypeMappingSourcePlugin>()

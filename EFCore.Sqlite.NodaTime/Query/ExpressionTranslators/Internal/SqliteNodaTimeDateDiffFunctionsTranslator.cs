@@ -87,6 +87,10 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
                         factory = expression => SqlExpressionFactory
                             .Multiply(expression, SqlExpressionFactory.Constant(86400000));
                         return true;
+
+                    default:
+                        factory = default;
+                        return false;
                 }
             }
 

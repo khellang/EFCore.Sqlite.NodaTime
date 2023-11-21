@@ -9,10 +9,7 @@ namespace Microsoft.EntityFrameworkCore
     {
         public static SqliteDbContextOptionsBuilder UseNodaTime(this SqliteDbContextOptionsBuilder builder)
         {
-            if (builder is null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
+            ArgumentNullException.ThrowIfNull(builder);
 
             var coreBuilder = ((IRelationalDbContextOptionsBuilderInfrastructure)builder).OptionsBuilder;
 
