@@ -1,0 +1,13 @@
+﻿{
+  target: 11:42 PM,
+  sql: [
+    {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
+SELECT CAST(strftime('%H:%M:%f', "n"."LocalTime") AS TEXT)
+FROM "NodaTimeTypes" AS "n"
+LIMIT 2
+    }
+  ]
+}

@@ -64,6 +64,9 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
 
             [Fact]
             public Task Combination() => VerifyMethod(x => x.PlusHours(2).PlusSeconds(2));
+
+            [Fact]
+            public Task ToTimeOnly() => VerifyMethod(x => x.ToTimeOnly());
         }
     }
 }

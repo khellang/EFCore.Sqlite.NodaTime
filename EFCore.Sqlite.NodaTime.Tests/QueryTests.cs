@@ -39,6 +39,13 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
             return Verifier.Verify(EfRecording.FinishRecording(), sourceFile: sourceFile);
         }
 
+        protected Task VerifyProjection<TResult>(Expression<Func<T, TResult>> projection, [CallerFilePath] string sourceFile = "")
+        {
+            EfRecording.StartRecording();
+            _ = Query.Select(projection).ToList();
+            return Verifier.Verify(EfRecording.FinishRecording(), sourceFile: sourceFile);
+        }
+
         public void Dispose() => Db.Dispose();
     }
 }

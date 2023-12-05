@@ -1,0 +1,13 @@
+﻿{
+  target: 2020-10-10,
+  sql: [
+    {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
+SELECT date("n"."LocalDate")
+FROM "NodaTimeTypes" AS "n"
+LIMIT 2
+    }
+  ]
+}

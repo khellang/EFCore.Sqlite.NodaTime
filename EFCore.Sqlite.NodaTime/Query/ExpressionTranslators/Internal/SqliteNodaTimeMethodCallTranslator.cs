@@ -49,18 +49,42 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
                 return null;
             }
 
-            if (arguments.Count != 1)
+            if (arguments.Count == 0)
             {
-                return null;
+                if (method.Name == nameof(LocalDate.ToDateTimeUnspecified))
+                {
+                    return Translate(instance, method);
+                }
+
+                if (method.Name == nameof(LocalDate.ToDateOnly))
+                {
+                    return Translate(instance, method);
+                }
+
+                if (method.Name == nameof(LocalTime.ToTimeOnly))
+                {
+                    return Translate(instance, method);
+                }
             }
 
-            var modifiers = GetModifiers(method.Name, arguments[0]);
-            if (modifiers is null)
+            if (arguments.Count == 1)
             {
-                return null;
+                var modifiers = GetModifiers(method.Name, arguments[0]);
+                if (modifiers is null)
+                {
+                    return null;
+                }
+
+                return Translate(instance, method, modifiers);
             }
 
+            return null;
+        }
+
+        private SqlExpression? Translate(SqlExpression instance, MethodInfo method, IEnumerable<SqlExpression>? modifiers = null)
+        {
             var declaringType = method.DeclaringType;
+
             if (declaringType == typeof(LocalDateTime))
             {
                 // Unfortunately we can't use the datetime convenience function if we want to support fractional seconds :(

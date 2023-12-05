@@ -97,6 +97,9 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
 
             [Fact]
             public Task Combination() => VerifyMethod(x => x.PlusMonths(2).PlusDays(2).PlusHours(2).PlusSeconds(2));
+
+            [Fact]
+            public Task ToDateTimeUnspecified() => VerifyMethod(x => x.ToDateTimeUnspecified());
         }
     }
 }

@@ -74,10 +74,13 @@ The following NodaTime types are currently supported:
 | `LocalDate.PlusMonths` | `date(<column>, '+n months')` |
 | `LocalDate.PlusWeeks` | `date(<column>, '+n*7 days')` |
 | `LocalDate.PlusDays` | `date(<column>, '+n days')` |
+| `LocalDate.ToDateOnly` | `date(<column>)` |
+| `LocalDate.ToDateTimeUnspecified` | `date(<column>)` |
 | `LocalTime.PlusHours` | `strftime('%H:%M:%f', <column>, '+n hours')` |
 | `LocalTime.PlusMinutes` | `strftime('%H:%M:%f', <column>, '+n minutes')` |
 | `LocalTime.PlusSeconds` | `strftime('%H:%M:%f', <column>, '+n seconds')` |
 | `LocalTime.PlusMilliseconds` | `strftime('%H:%M:%f', <column>, '+0.n seconds')` |
+| `LocalTime.ToTimeOnly` | `strftime('%H:%M:%f', <column>)` |
 | `LocalDateTime.PlusYears` | `strftime('%Y-%m-%d %H:%M:%f',<column>, '+n years')` |
 | `LocalDateTime.PlusMonths` | `strftime('%Y-%m-%d %H:%M:%f',<column>, '+n months')` |
 | `LocalDateTime.PlusWeeks` | `strftime('%Y-%m-%d %H:%M:%f',<column>, '+n*7 days')` |
@@ -86,6 +89,7 @@ The following NodaTime types are currently supported:
 | `LocalDateTime.PlusMinutes` | `strftime('%Y-%m-%d %H:%M:%f', <column>, '+n minutes')` |
 | `LocalDateTime.PlusSeconds` | `strftime('%Y-%m-%d %H:%M:%f', <column>, '+n seconds')` |
 | `LocalDateTime.PlusMilliseconds` | `strftime('%Y-%m-%d %H:%M:%f', <column>, '+0.n seconds')` |
+| `LocalDateTime.ToDateTimeUnspecified` | `strftime('%Y-%m-%d %H:%M:%f', <column>)` |
 
 When these methods are chained, all modifiers will be added to the same function call, like this:
 

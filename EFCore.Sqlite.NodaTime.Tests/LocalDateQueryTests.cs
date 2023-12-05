@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using NodaTime;
@@ -28,9 +27,6 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
 
         [Fact]
         public Task Update() => VerifyUpdate(x => x.LocalDate = x.LocalDate.PlusDays(2));
-
-        [Fact]
-        public Task ToDateTimeUnspecified() => VerifyQuery(x => x.ToDateTimeUnspecified() > DateTime.Now);
 
         public class Properties : QueryTests<LocalDate>
         {
@@ -74,6 +70,12 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
 
             [Fact]
             public Task Combination() => VerifyMethod(x => x.PlusMonths(2).PlusDays(2));
+
+            [Fact]
+            public Task ToDateTimeUnspecified() => VerifyMethod(x => x.ToDateTimeUnspecified());
+
+            [Fact]
+            public Task ToDateOnly() => VerifyMethod(x => x.ToDateOnly());
         }
     }
 }
