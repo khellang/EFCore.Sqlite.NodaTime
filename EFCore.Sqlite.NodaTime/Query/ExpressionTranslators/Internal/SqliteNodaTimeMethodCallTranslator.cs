@@ -49,24 +49,32 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
                 return null;
             }
 
+            if (arguments.Count != 1)
+            {
+                return null;
+            }
+
+            var modifiers = GetModifiers(method.Name, arguments[0]);
+            if (modifiers is null)
+            {
+                return null;
+            }
+
             var declaringType = method.DeclaringType;
             if (declaringType == typeof(LocalDateTime))
             {
-                var modifiers = GetModifiers(method.Name, arguments[0]);
                 // Unfortunately we can't use the datetime convenience function if we want to support fractional seconds :(
                 return SqlExpressionFactory.Strftime(method.ReturnType, Constants.DateTimeFormat, instance, modifiers);
             }
 
             if (declaringType == typeof(LocalTime))
             {
-                var modifiers = GetModifiers(method.Name, arguments[0]);
                 // Unfortunately we can't use the time convenience function if we want to support fractional seconds :(
                 return SqlExpressionFactory.Strftime(method.ReturnType, Constants.TimeFormat, instance, modifiers);
             }
 
             if (declaringType == typeof(LocalDate))
             {
-                var modifiers = GetModifiers(method.Name, arguments[0]);
                 return SqlExpressionFactory.Date(method.ReturnType, instance, modifiers);
             }
 
