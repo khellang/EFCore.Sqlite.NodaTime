@@ -3,17 +3,12 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Internal
 {
-    public class SqliteNodaTimeMethodCallTranslatorPlugin : IMethodCallTranslatorPlugin
+    public class SqliteNodaTimeMethodCallTranslatorPlugin(ISqlExpressionFactory sqlExpressionFactory) : IMethodCallTranslatorPlugin
     {
-        public SqliteNodaTimeMethodCallTranslatorPlugin(ISqlExpressionFactory sqlExpressionFactory)
-        {
-            Translators = new IMethodCallTranslator[]
-            {
-                new SqliteNodaTimeDateDiffFunctionsTranslator(sqlExpressionFactory),
-                new SqliteNodaTimeMethodCallTranslator(sqlExpressionFactory),
-            };
-        }
-
-        public virtual IEnumerable<IMethodCallTranslator> Translators { get; }
+        public virtual IEnumerable<IMethodCallTranslator> Translators { get; } =
+        [
+            new SqliteNodaTimeDateDiffFunctionsTranslator(sqlExpressionFactory),
+            new SqliteNodaTimeMethodCallTranslator(sqlExpressionFactory)
+        ];
     }
 }

@@ -9,15 +9,8 @@ using Microsoft.EntityFrameworkCore.Sqlite.Extensions;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Internal
 {
-    public class SqliteNodaTimeDateDiffFunctionsTranslator : IMethodCallTranslator
+    public class SqliteNodaTimeDateDiffFunctionsTranslator(ISqlExpressionFactory sqlExpressionFactory) : IMethodCallTranslator
     {
-        public SqliteNodaTimeDateDiffFunctionsTranslator(ISqlExpressionFactory sqlExpressionFactory)
-        {
-            SqlExpressionFactory = sqlExpressionFactory;
-        }
-
-        private ISqlExpressionFactory SqlExpressionFactory { get; }
-
         public SqlExpression? Translate(
             SqlExpression? instance,
             MethodInfo method,
@@ -34,13 +27,13 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
 
             var typeMapping = ExpressionExtensions.InferTypeMapping(startDate, endDate);
 
-            startDate = SqlExpressionFactory.ApplyTypeMapping(startDate, typeMapping);
-            endDate = SqlExpressionFactory.ApplyTypeMapping(endDate, typeMapping);
+            startDate = sqlExpressionFactory.ApplyTypeMapping(startDate, typeMapping);
+            endDate = sqlExpressionFactory.ApplyTypeMapping(endDate, typeMapping);
 
-            var fromDate = SqlExpressionFactory.JulianDay(startDate, method.ReturnType);
-            var toDate = SqlExpressionFactory.JulianDay(endDate, method.ReturnType);
+            var fromDate = sqlExpressionFactory.JulianDay(startDate, method.ReturnType);
+            var toDate = sqlExpressionFactory.JulianDay(endDate, method.ReturnType);
 
-            return SqlExpressionFactory.Convert(factory(SqlExpressionFactory.Subtract(toDate, fromDate)), typeof(int));
+            return sqlExpressionFactory.Convert(factory(sqlExpressionFactory.Subtract(toDate, fromDate)), typeof(int));
         }
 
         private bool TryGetMultiplier(MemberInfo method, [NotNullWhen(true)] out Func<SqlExpression, SqlExpression>? factory)
@@ -50,18 +43,18 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
                 switch (method.Name)
                 {
                     case nameof(SqliteNodaTimeDbFunctionsExtensions.DateDiffYear):
-                        factory = expression => SqlExpressionFactory
-                            .Divide(expression, SqlExpressionFactory.Constant(365));
+                        factory = expression => sqlExpressionFactory
+                            .Divide(expression, sqlExpressionFactory.Constant(365));
                         return true;
 
                     case nameof(SqliteNodaTimeDbFunctionsExtensions.DateDiffMonth):
-                        factory = expression => SqlExpressionFactory
-                            .Divide(expression, SqlExpressionFactory.Constant(30));
+                        factory = expression => sqlExpressionFactory
+                            .Divide(expression, sqlExpressionFactory.Constant(30));
                         return true;
 
                     case nameof(SqliteNodaTimeDbFunctionsExtensions.DateDiffWeek):
-                        factory = expression => SqlExpressionFactory
-                            .Divide(expression, SqlExpressionFactory.Constant(7));
+                        factory = expression => sqlExpressionFactory
+                            .Divide(expression, sqlExpressionFactory.Constant(7));
                         return true;
 
                     case nameof(SqliteNodaTimeDbFunctionsExtensions.DateDiffDay):
@@ -69,23 +62,23 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
                         return true;
 
                     case nameof(SqliteNodaTimeDbFunctionsExtensions.DateDiffHour):
-                        factory = expression => SqlExpressionFactory
-                            .Multiply(expression, SqlExpressionFactory.Constant(24));
+                        factory = expression => sqlExpressionFactory
+                            .Multiply(expression, sqlExpressionFactory.Constant(24));
                         return true;
 
                     case nameof(SqliteNodaTimeDbFunctionsExtensions.DateDiffMinute):
-                        factory = expression => SqlExpressionFactory
-                            .Multiply(expression, SqlExpressionFactory.Constant(1440));
+                        factory = expression => sqlExpressionFactory
+                            .Multiply(expression, sqlExpressionFactory.Constant(1440));
                         return true;
 
                     case nameof(SqliteNodaTimeDbFunctionsExtensions.DateDiffSecond):
-                        factory = expression => SqlExpressionFactory
-                            .Multiply(expression, SqlExpressionFactory.Constant(86400));
+                        factory = expression => sqlExpressionFactory
+                            .Multiply(expression, sqlExpressionFactory.Constant(86400));
                         return true;
 
                     case nameof(SqliteNodaTimeDbFunctionsExtensions.DateDiffMillisecond):
-                        factory = expression => SqlExpressionFactory
-                            .Multiply(expression, SqlExpressionFactory.Constant(86400000));
+                        factory = expression => sqlExpressionFactory
+                            .Multiply(expression, sqlExpressionFactory.Constant(86400000));
                         return true;
 
                     default:

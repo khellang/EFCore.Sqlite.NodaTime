@@ -8,12 +8,8 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Extensions
         public static ValueConverter<T, string> AsValueConverter<T>(this IPattern<T> pattern)
             => new Converter<T>(pattern);
 
-        private class Converter<T> : ValueConverter<T, string>
-        {
-            public Converter(IPattern<T> pattern)
-                : base(x => pattern.Format(x), x => pattern.Parse(x).GetValueOrThrow())
-            {
-            }
-        }
+        private class Converter<T>(IPattern<T> pattern) : ValueConverter<T, string>(
+            x => pattern.Format(x),
+            x => pattern.Parse(x).GetValueOrThrow());
     }
 }

@@ -8,15 +8,10 @@ using NodaTime;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Internal
 {
-    public class SqliteNodaTimeMemberTranslator : IMemberTranslator
+    public class SqliteNodaTimeMemberTranslator(ISqlExpressionFactory sqlExpressionFactory) : IMemberTranslator
     {
         private static readonly MemberInfo _systemClockInstance =
             typeof(SystemClock).GetRuntimeProperty(nameof(SystemClock.Instance))!;
-
-        public SqliteNodaTimeMemberTranslator(ISqlExpressionFactory sqlExpressionFactory)
-            => SqlExpressionFactory = sqlExpressionFactory;
-
-        private ISqlExpressionFactory SqlExpressionFactory { get; }
 
         public SqlExpression? Translate(
             SqlExpression? instance,
@@ -26,7 +21,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
         {
             if (member == _systemClockInstance)
             {
-                return SqlExpressionFactory.Constant(SystemClock.Instance);
+                return sqlExpressionFactory.Constant(SystemClock.Instance);
             }
 
             if (instance is null)
@@ -49,21 +44,21 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
         {
             return member.Name switch
             {
-                nameof(LocalDate.Year) => SqlExpressionFactory.Strftime(returnType, "%Y", instance),
-                nameof(LocalDate.Month) => SqlExpressionFactory.Strftime(returnType, "%m", instance),
-                nameof(LocalDate.Day) => SqlExpressionFactory.Strftime(returnType, "%d", instance),
+                nameof(LocalDate.Year) => sqlExpressionFactory.Strftime(returnType, "%Y", instance),
+                nameof(LocalDate.Month) => sqlExpressionFactory.Strftime(returnType, "%m", instance),
+                nameof(LocalDate.Day) => sqlExpressionFactory.Strftime(returnType, "%d", instance),
 
-                nameof(LocalDate.DayOfYear) => SqlExpressionFactory.Strftime(returnType, "%j", instance),
+                nameof(LocalDate.DayOfYear) => sqlExpressionFactory.Strftime(returnType, "%j", instance),
                 nameof(LocalDate.DayOfWeek) => TranslateDayOfWeek(returnType, instance),
 
-                nameof(LocalTime.Hour) => SqlExpressionFactory.Strftime(returnType, "%H", instance),
-                nameof(LocalTime.Minute) => SqlExpressionFactory.Strftime(returnType, "%M", instance),
-                nameof(LocalTime.Second) => SqlExpressionFactory.Strftime(returnType, "%S", instance),
+                nameof(LocalTime.Hour) => sqlExpressionFactory.Strftime(returnType, "%H", instance),
+                nameof(LocalTime.Minute) => sqlExpressionFactory.Strftime(returnType, "%M", instance),
+                nameof(LocalTime.Second) => sqlExpressionFactory.Strftime(returnType, "%S", instance),
                 nameof(LocalTime.Millisecond) => null, // Ugh :(
 
-                nameof(LocalDateTime.Date) => SqlExpressionFactory.Date(returnType, instance),
+                nameof(LocalDateTime.Date) => sqlExpressionFactory.Date(returnType, instance),
                 // Unfortunately we can't use the time convenience function if we want to support fractional seconds :(
-                nameof(LocalDateTime.TimeOfDay) => SqlExpressionFactory.Strftime(returnType, Constants.TimeFormat, instance),
+                nameof(LocalDateTime.TimeOfDay) => sqlExpressionFactory.Strftime(returnType, Constants.TimeFormat, instance),
 
                 _ => null
             };
@@ -74,12 +69,12 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
         /// values returned by strftime('%w', ...): in NodaTime Sunday is 7 and not 0, which is None.
         /// So we generate a CASE WHEN expression to translate sqlite's 0 to 7.
         /// </summary>
-        private SqlExpression? TranslateDayOfWeek(Type returnType, SqlExpression instance)
+        private SqlExpression TranslateDayOfWeek(Type returnType, SqlExpression instance)
         {
-            var value = SqlExpressionFactory.Strftime(returnType, "%w", instance);
-            var test = SqlExpressionFactory.Equal(value, SqlExpressionFactory.Constant(0));
-            var cases = new[] { new CaseWhenClause(test, SqlExpressionFactory.Constant(7)) };
-            return SqlExpressionFactory.Case(cases, value);
+            var value = sqlExpressionFactory.Strftime(returnType, "%w", instance);
+            var test = sqlExpressionFactory.Equal(value, sqlExpressionFactory.Constant(0));
+            var cases = new[] { new CaseWhenClause(test, sqlExpressionFactory.Constant(7)) };
+            return sqlExpressionFactory.Case(cases, value);
         }
     }
 }

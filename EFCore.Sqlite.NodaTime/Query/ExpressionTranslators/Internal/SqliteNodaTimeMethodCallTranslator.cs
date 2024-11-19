@@ -19,11 +19,11 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
         public SqliteNodaTimeMethodCallTranslator(ISqlExpressionFactory sqlExpressionFactory)
         {
             SqlExpressionFactory = sqlExpressionFactory;
-            _getCurrentInstantArgs = new SqlExpression[]
-            {
+            _getCurrentInstantArgs =
+            [
                 SqlExpressionFactory.Constant(Constants.DateTimeFormat),
-                SqlExpressionFactory.Constant("now"),
-            };
+                SqlExpressionFactory.Constant("now")
+            ];
         }
 
         private ISqlExpressionFactory SqlExpressionFactory { get; }
@@ -51,20 +51,13 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
 
             if (arguments.Count == 0)
             {
-                if (method.Name == nameof(LocalDate.ToDateTimeUnspecified))
+                return method.Name switch
                 {
-                    return Translate(instance, method);
-                }
-
-                if (method.Name == nameof(LocalDate.ToDateOnly))
-                {
-                    return Translate(instance, method);
-                }
-
-                if (method.Name == nameof(LocalTime.ToTimeOnly))
-                {
-                    return Translate(instance, method);
-                }
+                    nameof(LocalDate.ToDateTimeUnspecified) => Translate(instance, method),
+                    nameof(LocalDate.ToDateOnly) => Translate(instance, method),
+                    nameof(LocalTime.ToTimeOnly) => Translate(instance, method),
+                    _ => null
+                };
             }
 
             if (arguments.Count == 1)
@@ -125,46 +118,48 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
 
         private IEnumerable<SqlExpression> Plus<T>(SqlExpression argument, Func<T, Period> getPeriod)
         {
-            if (argument is SqlConstantExpression constant && constant.Value is T value)
+            if (argument is not SqlConstantExpression { Value: T value })
             {
-                var period = getPeriod(value).Normalize();
+                yield break;
+            }
 
-                if (period.Years != 0)
-                {
-                    yield return GetModifier(period.Years, "years");
-                }
+            var period = getPeriod(value).Normalize();
 
-                if (period.Months != 0)
-                {
-                    yield return GetModifier(period.Months, "months");
-                }
+            if (period.Years != 0)
+            {
+                yield return GetModifier(period.Years, "years");
+            }
 
-                if (period.Days != 0)
-                {
-                    yield return GetModifier(period.Days, "days");
-                }
+            if (period.Months != 0)
+            {
+                yield return GetModifier(period.Months, "months");
+            }
 
-                if (period.Hours != 0)
-                {
-                    yield return GetModifier(period.Hours, "hours");
-                }
+            if (period.Days != 0)
+            {
+                yield return GetModifier(period.Days, "days");
+            }
 
-                if (period.Minutes != 0)
-                {
-                    yield return GetModifier(period.Minutes, "minutes");
-                }
+            if (period.Hours != 0)
+            {
+                yield return GetModifier(period.Hours, "hours");
+            }
 
-                if (period.Milliseconds != 0)
-                {
-                    var fractionalSeconds = period.Seconds + ((double)period.Milliseconds / 1000);
-                    yield return GetModifier(fractionalSeconds, "seconds");
-                    yield break;
-                }
+            if (period.Minutes != 0)
+            {
+                yield return GetModifier(period.Minutes, "minutes");
+            }
 
-                if (period.Seconds != 0)
-                {
-                    yield return GetModifier(period.Seconds, "seconds");
-                }
+            if (period.Milliseconds != 0)
+            {
+                var fractionalSeconds = period.Seconds + ((double)period.Milliseconds / 1000);
+                yield return GetModifier(fractionalSeconds, "seconds");
+                yield break;
+            }
+
+            if (period.Seconds != 0)
+            {
+                yield return GetModifier(period.Seconds, "seconds");
             }
         }
 
