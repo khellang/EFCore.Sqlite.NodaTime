@@ -1,8 +1,9 @@
 ﻿[
   {
-    Type: ReaderExecuted,
-    HasTransaction: false,
-    Text:
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
 SELECT "n"."LocalDate"
 FROM "NodaTimeTypes" AS "n"
 WHERE CASE
@@ -10,5 +11,6 @@ WHERE CASE
     ELSE CAST(strftime('%w', "n"."LocalDate") AS INTEGER)
 END = 6
 LIMIT 2
+    }
   }
 ]

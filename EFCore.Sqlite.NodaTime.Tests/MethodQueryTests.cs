@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using VerifyTests.EntityFramework;
+using VerifyTests;
 using VerifyXunit;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite
@@ -16,7 +16,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite
 
         protected Task VerifyMethod<TResult>(Expression<Func<T, TResult>> selector, [CallerFilePath] string sourceFile = "")
         {
-            EfRecording.StartRecording();
+            Recording.Start();
             var value = Query.Select(selector).Single();
             return Verifier.Verify(value, sourceFile: sourceFile);
         }

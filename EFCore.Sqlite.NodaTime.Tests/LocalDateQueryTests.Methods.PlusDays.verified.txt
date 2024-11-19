@@ -1,13 +1,11 @@
 ﻿{
   target: 2020-10-12,
-  sql: [
-    {
-      Type: ReaderExecuted,
-      HasTransaction: false,
-      Text:
+  ef: {
+    Type: ReaderExecuted,
+    HasTransaction: false,
+    Text:
 SELECT date("n"."LocalDate", '+2 days')
 FROM "NodaTimeTypes" AS "n"
 LIMIT 2
-    }
-  ]
+  }
 }

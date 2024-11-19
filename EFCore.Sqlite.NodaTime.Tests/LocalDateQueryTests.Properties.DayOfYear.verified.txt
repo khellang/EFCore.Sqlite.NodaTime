@@ -1,11 +1,13 @@
 ﻿[
   {
-    Type: ReaderExecuted,
-    HasTransaction: false,
-    Text:
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
 SELECT "n"."LocalDate"
 FROM "NodaTimeTypes" AS "n"
 WHERE CAST(strftime('%j', "n"."LocalDate") AS INTEGER) = 284
 LIMIT 2
+    }
   }
 ]

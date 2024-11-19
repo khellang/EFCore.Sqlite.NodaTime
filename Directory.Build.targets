@@ -1,21 +1,21 @@
 <Project>
   <ItemGroup>
-    <PackageReference Update="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0" />
-    <PackageReference Update="NodaTime" Version="3.1.9" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
+    <PackageReference Update="NodaTime" Version="3.2.0" />
 
     <!-- Test -->
-    <PackageReference Update="Verify.Xunit" Version="22.1.4" />
-    <PackageReference Update="Verify.EntityFramework" Version="10.0.2" />
-    <PackageReference Update="xunit" Version="2.5.3" />
-    <PackageReference Update="xunit.runner.visualstudio" Version="2.5.3" />
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.7.2" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.Design" Version="8.0.0" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.Specification.Tests" Version="8.0.0" />
-    <PackageReference Update="coverlet.collector" Version="6.0.0" />
+    <PackageReference Update="Verify.Xunit" Version="28.3.2" />
+    <PackageReference Update="Verify.EntityFramework" Version="12.4.0" />
+    <PackageReference Update="xunit" Version="2.9.2" />
+    <PackageReference Update="xunit.runner.visualstudio" Version="2.8.2" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Design" Version="9.0.0" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Specification.Tests" Version="9.0.0" />
+    <PackageReference Update="coverlet.collector" Version="6.0.2" />
 
     <!-- Dev Dependencies-->
-    <PackageReference Update="MinVer" Version="4.3.0">
+    <PackageReference Update="MinVer" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

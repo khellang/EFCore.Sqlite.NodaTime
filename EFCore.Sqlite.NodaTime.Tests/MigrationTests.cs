@@ -14,7 +14,6 @@ using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite
 {
-    [UsesVerify]
     public class MigrationTests
     {
         public MigrationTests(ITestOutputHelper output)

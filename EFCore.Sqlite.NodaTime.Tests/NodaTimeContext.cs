@@ -2,8 +2,7 @@ using System.Data.Common;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using NodaTime;
-using VerifyTests.EntityFramework;
+using VerifyTests;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite
 {

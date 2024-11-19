@@ -40,7 +40,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Inter
                     "strftime",
                     _getCurrentInstantArgs,
                     nullable: false,
-                    Array.Empty<bool>(),
+                    [false, false],
                     method.ReturnType);
             }
 

@@ -1,11 +1,13 @@
 ﻿[
   {
-    Type: ReaderExecuted,
-    HasTransaction: false,
-    Text:
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
 SELECT "n"."Instant"
 FROM "NodaTimeTypes" AS "n"
 WHERE "n"."Instant" < strftime('%Y-%m-%d %H:%M:%f', 'now')
 LIMIT 2
+    }
   }
 ]

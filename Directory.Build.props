@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <RepositoryUrl>git://github.com/khellang/EFCore.Sqlite.NodaTime</RepositoryUrl>
-    <Copyright>Copyright 2021 © Kristian Hellang, et al.</Copyright>
+    <Copyright>Copyright 2024 © Kristian Hellang, et al.</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -9,12 +9,12 @@
     <Authors>Kristian Hellang, et al.</Authors>
     <IncludeSymbols>true</IncludeSymbols>
     <RepositoryType>git</RepositoryType>
-    <LangVersion>11.0</LangVersion>
+    <LangVersion>latest</LangVersion>
     <Nullable>Enable</Nullable>
     <Features>strict</Features>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
   </ItemGroup>
 </Project>

@@ -1,13 +1,11 @@
 ﻿{
   target: 23:44:16.321,
-  sql: [
-    {
-      Type: ReaderExecuted,
-      HasTransaction: false,
-      Text:
+  ef: {
+    Type: ReaderExecuted,
+    HasTransaction: false,
+    Text:
 SELECT strftime('%H:%M:%f', "n"."LocalTime", '+2 minutes')
 FROM "NodaTimeTypes" AS "n"
 LIMIT 2
-    }
-  ]
+  }
 }

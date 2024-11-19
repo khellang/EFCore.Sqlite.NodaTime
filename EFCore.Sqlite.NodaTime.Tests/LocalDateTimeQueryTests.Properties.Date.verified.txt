@@ -1,11 +1,13 @@
 ﻿[
   {
-    Type: ReaderExecuted,
-    HasTransaction: false,
-    Text:
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
 SELECT "n"."LocalDateTime"
 FROM "NodaTimeTypes" AS "n"
 WHERE date("n"."LocalDateTime") = '2020-10-10'
 LIMIT 2
+    }
   }
 ]
