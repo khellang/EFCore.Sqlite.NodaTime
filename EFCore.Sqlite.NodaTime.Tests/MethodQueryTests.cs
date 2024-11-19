@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 using VerifyTests;
 using VerifyXunit;
 
-namespace Microsoft.EntityFrameworkCore.Sqlite
-{
-    public abstract class MethodQueryTests<T> : QueryTests<T>
-    {
-        protected MethodQueryTests(Expression<Func<NodaTimeTypes, T>> selector) : base(selector)
-        {
-        }
+namespace Microsoft.EntityFrameworkCore.Sqlite;
 
-        protected Task VerifyMethod<TResult>(Expression<Func<T, TResult>> selector, [CallerFilePath] string sourceFile = "")
-        {
-            Recording.Start();
-            var value = Query.Select(selector).Single();
-            return Verifier.Verify(value, sourceFile: sourceFile);
-        }
+public abstract class MethodQueryTests<T> : QueryTests<T>
+{
+    protected MethodQueryTests(Expression<Func<NodaTimeTypes, T>> selector) : base(selector)
+    {
+    }
+
+    protected Task VerifyMethod<TResult>(Expression<Func<T, TResult>> selector, [CallerFilePath] string sourceFile = "")
+    {
+        Recording.Start();
+        var value = Query.Select(selector).Single();
+        return Verifier.Verify(value, sourceFile: sourceFile);
     }
 }

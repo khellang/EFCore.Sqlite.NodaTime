@@ -3,20 +3,19 @@ using System.Threading.Tasks;
 using NodaTime;
 using Xunit;
 
-namespace Microsoft.EntityFrameworkCore.Sqlite
+namespace Microsoft.EntityFrameworkCore.Sqlite;
+
+public class InstantQueryTests : QueryTests<Instant>
 {
-    public class InstantQueryTests : QueryTests<Instant>
+    public static readonly Instant Value = LocalDateTimeQueryTests.Value.InUtc().ToInstant();
+
+    public InstantQueryTests() : base(x => x.Instant)
     {
-        public static readonly Instant Value = LocalDateTimeQueryTests.Value.InUtc().ToInstant();
-
-        public InstantQueryTests() : base(x => x.Instant)
-        {
-        }
-
-        [Fact]
-        public void Roundtrip() => Assert.Equal(Value, Query.Single());
-
-        [Fact]
-        public Task GetCurrentInstant_From_Instance() => VerifyQuery(x => x < SystemClock.Instance.GetCurrentInstant());
     }
+
+    [Fact]
+    public void Roundtrip() => Assert.Equal(Value, Query.Single());
+
+    [Fact]
+    public Task GetCurrentInstant_From_Instance() => VerifyQuery(x => x < SystemClock.Instance.GetCurrentInstant());
 }

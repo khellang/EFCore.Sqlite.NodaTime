@@ -1,11 +1,10 @@
-namespace Microsoft.EntityFrameworkCore.Sqlite
+namespace Microsoft.EntityFrameworkCore.Sqlite;
+
+internal static class Constants
 {
-    internal static class Constants
-    {
-        internal const string DateFormat = "%Y-%m-%d";
+    internal const string DateFormat = "%Y-%m-%d";
 
-        internal const string TimeFormat = "%H:%M:%f";
+    internal const string TimeFormat = "%H:%M:%f";
 
-        internal const string DateTimeFormat = DateFormat + " " + TimeFormat;
-    }
+    internal const string DateTimeFormat = DateFormat + " " + TimeFormat;
 }

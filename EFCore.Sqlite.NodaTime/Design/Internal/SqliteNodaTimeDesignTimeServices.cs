@@ -5,14 +5,13 @@ using Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.Sqlite.Design.Internal
+namespace Microsoft.EntityFrameworkCore.Sqlite.Design.Internal;
+
+// ReSharper disable once UnusedType.Global
+public class SqliteNodaTimeDesignTimeServices : IDesignTimeServices
 {
-    // ReSharper disable once UnusedType.Global
-    public class SqliteNodaTimeDesignTimeServices : IDesignTimeServices
-    {
-        public virtual void ConfigureDesignTimeServices(IServiceCollection services) =>
-            services
-                .AddSingleton<IRelationalTypeMappingSourcePlugin, SqliteNodaTimeTypeMappingSourcePlugin>()
-                .AddSingleton<IProviderCodeGeneratorPlugin, SqliteNodaTimeCodeGeneratorPlugin>();
-    }
+    public virtual void ConfigureDesignTimeServices(IServiceCollection services) =>
+        services
+            .AddSingleton<IRelationalTypeMappingSourcePlugin, SqliteNodaTimeTypeMappingSourcePlugin>()
+            .AddSingleton<IProviderCodeGeneratorPlugin, SqliteNodaTimeCodeGeneratorPlugin>();
 }
