@@ -17,16 +17,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: "9.0.x"
 
       - name: Test
         run: dotnet test --collect:"XPlat Code Coverage"
 
       - name: Update codecov
         if: ${{ startsWith(github.repository, 'khellang/') }}
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
 
       - name: Pack NuGet packages (CI versions)
         if: ${{ startsWith(github.ref, 'refs/heads/') && github.event_name == 'push' && startsWith(github.repository, 'khellang/') }}
@@ -38,7 +38,7 @@ jobs:
 
       - name: Upload artifacts
         if: ${{ github.event_name == 'push' && startsWith(github.repository, 'khellang/') }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: EFCore.Sqlite.NodaTime
           path: nupkgs
