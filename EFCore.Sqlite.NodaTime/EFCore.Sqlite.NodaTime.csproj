@@ -5,6 +5,7 @@
     <RootNamespace>Microsoft.EntityFrameworkCore.Sqlite</RootNamespace>
     <AssemblyName>EntityFrameworkCore.Sqlite.NodaTime</AssemblyName>
     <PackageId>EntityFrameworkCore.Sqlite.NodaTime</PackageId>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <TargetFramework>net8.0</TargetFramework>
 
     <MinVerTagPrefix>v</MinVerTagPrefix>
@@ -15,6 +16,10 @@
       <Pack>True</Pack>
       <PackagePath>build</PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
