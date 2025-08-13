@@ -1,7 +1,7 @@
 <Project>
   <ItemGroup>
-    <PackageReference Update="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
-    <PackageReference Update="NodaTime" Version="3.2.0" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="9.0.8" />
+    <PackageReference Update="NodaTime" Version="3.2.2" />
 
     <!-- Test -->
     <PackageReference Update="Verify.Xunit" Version="30.6.1" />
@@ -12,6 +12,7 @@
     <PackageReference Update="Microsoft.EntityFrameworkCore.Design" Version="9.0.8" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.8" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.Specification.Tests" Version="9.0.8" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.8" />
     <PackageReference Update="coverlet.collector" Version="6.0.4" />
 
     <!-- Dev Dependencies-->

@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" />
     <PackageReference Include="MinVer" />
     <PackageReference Include="NodaTime" />
   </ItemGroup>
