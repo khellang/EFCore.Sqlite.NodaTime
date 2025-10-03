@@ -1,0 +1,13 @@
+﻿[
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
+SELECT "n"."Duration"
+FROM "NodaTimeTypes" AS "n"
+WHERE "n"."Duration" <> CAST(CAST("n"."Duration" / 60.0 AS INTEGER) AS REAL) * 60.0
+LIMIT 2
+    }
+  }
+]

@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Adds support for NodaTime Duration when using SQLite with Entity Framework Core.</Description>
+    <RootNamespace>Microsoft.EntityFrameworkCore.Sqlite</RootNamespace>
+    <AssemblyName>EntityFrameworkCore.Sqlite.NodaTime.Duration</AssemblyName>
+    <PackageId>EntityFrameworkCore.Sqlite.NodaTime.Duration</PackageId>
+    <TargetFramework>net8.0</TargetFramework>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="build\**\*">
+      <Pack>True</Pack>
+      <PackagePath>build</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" />
+    <PackageReference Include="MinVer" />
+    <PackageReference Include="NodaTime" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Include="../EFCore.Sqlite.NodaTime/Storage/Internal/SqliteTypeMapping.cs"
+             LinkBase="Storage/"/>
+  </ItemGroup>
+
+</Project>

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Sqlite.Extensions;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Internal;
 
-public class SqliteNodaTimeDateDiffFunctionsTranslator(ISqlExpressionFactory sqlExpressionFactory) : IMethodCallTranslator
+internal class SqliteNodaTimeDateDiffFunctionsTranslator(ISqlExpressionFactory sqlExpressionFactory) : IMethodCallTranslator
 {
     public SqlExpression? Translate(
         SqlExpression? instance,

@@ -9,24 +9,24 @@ using NodaTime;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Internal;
 
-public class SqliteNodaTimeMethodCallTranslator : IMethodCallTranslator
+internal class SqliteNodaTimeMethodCallTranslator : IMethodCallTranslator
 {
-    private static readonly MethodInfo _getCurrentInstant =
-        typeof(SystemClock).GetRuntimeMethod(nameof(SystemClock.GetCurrentInstant), Type.EmptyTypes)!;
-
+    private readonly ISqlExpressionFactory _sqlExpressionFactory;
     private readonly SqlExpression[] _getCurrentInstantArgs;
 
     public SqliteNodaTimeMethodCallTranslator(ISqlExpressionFactory sqlExpressionFactory)
     {
-        SqlExpressionFactory = sqlExpressionFactory;
+        _sqlExpressionFactory = sqlExpressionFactory;
+
         _getCurrentInstantArgs =
         [
-            SqlExpressionFactory.Constant(Constants.DateTimeFormat),
-            SqlExpressionFactory.Constant("now")
+            _sqlExpressionFactory.Constant(Constants.DateTimeFormat),
+            _sqlExpressionFactory.Constant("now")
         ];
     }
 
-    private ISqlExpressionFactory SqlExpressionFactory { get; }
+    private static readonly MethodInfo _getCurrentInstant =
+        typeof(SystemClock).GetRuntimeMethod(nameof(SystemClock.GetCurrentInstant), Type.EmptyTypes)!;
 
     public SqlExpression? Translate(
         SqlExpression? instance,
@@ -36,7 +36,7 @@ public class SqliteNodaTimeMethodCallTranslator : IMethodCallTranslator
     {
         if (method == _getCurrentInstant)
         {
-            return SqlExpressionFactory.Function(
+            return _sqlExpressionFactory.Function(
                 "strftime",
                 _getCurrentInstantArgs,
                 nullable: false,
@@ -81,18 +81,18 @@ public class SqliteNodaTimeMethodCallTranslator : IMethodCallTranslator
         if (declaringType == typeof(LocalDateTime))
         {
             // Unfortunately we can't use the datetime convenience function if we want to support fractional seconds :(
-            return SqlExpressionFactory.Strftime(method.ReturnType, Constants.DateTimeFormat, instance, modifiers);
+            return _sqlExpressionFactory.Strftime(method.ReturnType, Constants.DateTimeFormat, instance, modifiers);
         }
 
         if (declaringType == typeof(LocalTime))
         {
             // Unfortunately we can't use the time convenience function if we want to support fractional seconds :(
-            return SqlExpressionFactory.Strftime(method.ReturnType, Constants.TimeFormat, instance, modifiers);
+            return _sqlExpressionFactory.Strftime(method.ReturnType, Constants.TimeFormat, instance, modifiers);
         }
 
         if (declaringType == typeof(LocalDate))
         {
-            return SqlExpressionFactory.Date(method.ReturnType, instance, modifiers);
+            return _sqlExpressionFactory.Date(method.ReturnType, instance, modifiers);
         }
 
         return null;
@@ -164,8 +164,8 @@ public class SqliteNodaTimeMethodCallTranslator : IMethodCallTranslator
     }
 
     private SqlExpression GetModifier(long value, string unit)
-        => SqlExpressionFactory.Constant(FormattableString.Invariant($"{value:+##;-##;+0} {unit}"));
+        => _sqlExpressionFactory.Constant(FormattableString.Invariant($"{value:+##;-##;+0} {unit}"));
 
     private SqlExpression GetModifier(double value, string unit)
-        => SqlExpressionFactory.Constant(FormattableString.Invariant($"{value:+#0.###;-##.###;+0} {unit}"));
+        => _sqlExpressionFactory.Constant(FormattableString.Invariant($"{value:+#0.###;-##.###;+0} {unit}"));
 }

@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCore.Sqlite.NodaTime.Duration", "EFCore.Sqlite.NodaTime.Duration\EFCore.Sqlite.NodaTime.Duration.csproj", "{DE923EFC-124B-46B1-B125-52795D4C1161}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCore.Sqlite.NodaTime.Duration.Tests", "EFCore.Sqlite.NodaTime.Duration.Tests\EFCore.Sqlite.NodaTime.Duration.Tests.csproj", "{53BBED94-BA2C-4F02-A6E2-265F533384F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +33,22 @@ Global
 		{587CBF38-6FF9-4196-B5A7-FA8155DDE274}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{587CBF38-6FF9-4196-B5A7-FA8155DDE274}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{587CBF38-6FF9-4196-B5A7-FA8155DDE274}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE923EFC-124B-46B1-B125-52795D4C1161}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE923EFC-124B-46B1-B125-52795D4C1161}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE923EFC-124B-46B1-B125-52795D4C1161}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE923EFC-124B-46B1-B125-52795D4C1161}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53BBED94-BA2C-4F02-A6E2-265F533384F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53BBED94-BA2C-4F02-A6E2-265F533384F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53BBED94-BA2C-4F02-A6E2-265F533384F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53BBED94-BA2C-4F02-A6E2-265F533384F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+	GlobalSection(RiderSharedRunConfigurations) = postSolution
+		File = ..\..\ui\.run\Debug.run.xml
+		File = ..\..\ui\.run\dev.run.xml
 	EndGlobalSection
 EndGlobal

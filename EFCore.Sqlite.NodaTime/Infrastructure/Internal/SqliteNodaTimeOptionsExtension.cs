@@ -8,13 +8,16 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Infrastructure.Internal;
 
-public class SqliteNodaTimeOptionsExtension : IDbContextOptionsExtension
+internal class SqliteNodaTimeOptionsExtension : IDbContextOptionsExtension
 {
     private DbContextOptionsExtensionInfo? _info;
 
     public DbContextOptionsExtensionInfo Info => _info ??= new ExtensionInfo(this);
 
-    public void ApplyServices(IServiceCollection services) => services.AddEntityFrameworkSqliteNodaTime();
+    public void ApplyServices(IServiceCollection services)
+    {
+        services.AddEntityFrameworkSqliteNodaTime();
+    }
 
     public void Validate(IDbContextOptions options)
     {

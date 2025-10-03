@@ -1,0 +1,13 @@
+﻿[
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
+SELECT "n"."Duration"
+FROM "NodaTimeTypes" AS "n"
+WHERE "n"."Duration" = ("n"."Duration" / 3600.0) * 3600.0
+LIMIT 2
+    }
+  }
+]

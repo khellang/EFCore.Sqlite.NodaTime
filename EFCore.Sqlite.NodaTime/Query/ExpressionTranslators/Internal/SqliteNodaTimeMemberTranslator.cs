@@ -8,7 +8,7 @@ using NodaTime;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Internal;
 
-public class SqliteNodaTimeMemberTranslator(ISqlExpressionFactory sqlExpressionFactory) : IMemberTranslator
+internal class SqliteNodaTimeMemberTranslator(ISqlExpressionFactory sqlExpressionFactory) : IMemberTranslator
 {
     private static readonly MemberInfo _systemClockInstance =
         typeof(SystemClock).GetRuntimeProperty(nameof(SystemClock.Instance))!;

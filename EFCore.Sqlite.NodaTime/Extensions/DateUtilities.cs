@@ -5,10 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+// ReSharper disable StringLiteralTypo
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Extensions;
 
-internal static class Utilities
+internal static class DateUtilities
 {
     internal static SqlExpression Date(this ISqlExpressionFactory factory, Type returnType, SqlExpression timestring, IEnumerable<SqlExpression>? modifiers = null)
         => factory.DateFunction("date", GetArguments(timestring, modifiers), returnType);

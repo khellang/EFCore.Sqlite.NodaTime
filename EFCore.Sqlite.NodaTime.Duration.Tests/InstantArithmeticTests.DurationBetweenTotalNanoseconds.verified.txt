@@ -1,0 +1,13 @@
+﻿[
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
+SELECT "n"."Id", "n"."Duration", "n"."Instant", "n"."LocalDateTime"
+FROM "NodaTimeTypes" AS "n"
+WHERE CAST((unixepoch('now', 'subsec') - unixepoch("n"."Instant", 'subsec')) * 1000000000.0 AS INTEGER) > 0
+LIMIT 2
+    }
+  }
+]

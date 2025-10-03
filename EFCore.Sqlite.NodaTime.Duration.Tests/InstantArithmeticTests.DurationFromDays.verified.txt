@@ -1,0 +1,13 @@
+﻿[
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
+SELECT "n"."Id", "n"."Duration", "n"."Instant", "n"."LocalDateTime"
+FROM "NodaTimeTypes" AS "n"
+WHERE CAST(CAST(strftime('%d', "n"."LocalDateTime") AS INTEGER) AS REAL) * 86400.0 = 864000.0
+LIMIT 2
+    }
+  }
+]
