@@ -32,11 +32,12 @@ public abstract class QueryTests<T> : IDisposable
         return Verifier.Verify(Recording.Stop(), sourceFile: sourceFile);
     }
 
-    protected Task VerifySelect<TOut>(Expression<Func<T, TOut>> selector, [CallerFilePath] string sourceFile = "")
+    protected async Task<TOut> VerifySelect<TOut>(Expression<Func<T, TOut>> selector, [CallerFilePath] string sourceFile = "")
     {
         Recording.Start();
-        _ = Query.Select(selector).Single();
-        return Verifier.Verify(Recording.Stop(), sourceFile: sourceFile);
+        var result = Query.Select(selector).Single();
+        await Verifier.Verify(Recording.Stop(), sourceFile: sourceFile);
+        return result;
     }
 
     public void Dispose() => Db.Dispose();

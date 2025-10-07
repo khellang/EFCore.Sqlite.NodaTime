@@ -2,7 +2,7 @@
 
 // ReSharper disable StringLiteralTypo
 
-namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators;
+namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Internal;
 
 internal class DurationConstants
 {

@@ -30,8 +30,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Compile Include="../EFCore.Sqlite.NodaTime/Storage/Internal/SqliteTypeMapping.cs"
-             LinkBase="Storage/"/>
+    <Compile Include="../EFCore.Sqlite.NodaTime/Constants.cs"/>
   </ItemGroup>
 
 </Project>

@@ -5,7 +5,6 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using Microsoft.EntityFrameworkCore.Sqlite.Extensions;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Internal;
 

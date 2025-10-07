@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore.Sqlite.Storage;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.Sqlite.Infrastructure;
+namespace Microsoft.EntityFrameworkCore.Sqlite.Infrastructure.Internal;
 
-internal class SqliteNodaTimeDurationExtension : IDbContextOptionsExtension
+public class SqliteNodaTimeDurationExtension : IDbContextOptionsExtension
 {
     private DbContextOptionsExtensionInfo? _info;
 

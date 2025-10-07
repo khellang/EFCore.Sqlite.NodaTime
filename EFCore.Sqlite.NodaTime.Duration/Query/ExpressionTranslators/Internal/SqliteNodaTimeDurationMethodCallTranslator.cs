@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.Storage;
 using NodaTime;
 
-namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators;
+namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Internal;
 
 internal class SqliteNodaTimeDurationMethodCallTranslator : IMethodCallTranslator
 {
@@ -22,7 +22,7 @@ internal class SqliteNodaTimeDurationMethodCallTranslator : IMethodCallTranslato
         _sqlExpressionFactory = sqlExpressionFactory;
 
         _doubleTypeMapping = typeMappingSource.GetRelationalTypeMapping(typeof(double));
-        _durationTypeMapping = typeMappingSource.GetRelationalTypeMapping(typeof(NodaTime.Duration));
+        _durationTypeMapping = typeMappingSource.GetRelationalTypeMapping(typeof(Duration));
     }
 
     private static readonly MethodInfo _durationBetween =
@@ -42,9 +42,19 @@ internal class SqliteNodaTimeDurationMethodCallTranslator : IMethodCallTranslato
             return TranslateDurationBetween(arguments[1], arguments[2]);
         }
 
-        if (method.DeclaringType == typeof(NodaTime.Duration) && method.IsStatic)
+        if (method.DeclaringType == typeof(Duration) && method.IsStatic)
         {
             return TranslateDuration(method, arguments);
+        }
+
+        if (instance == null)
+        {
+            return null;
+        }
+
+        if (method.DeclaringType == typeof(Instant))
+        {
+            return TranslateInstant(instance, method, arguments);
         }
 
         return null;
@@ -72,35 +82,35 @@ internal class SqliteNodaTimeDurationMethodCallTranslator : IMethodCallTranslato
 
         return method.Name switch
         {
-            nameof(NodaTime.Duration.FromSeconds) =>
+            nameof(Duration.FromSeconds) =>
                 // Value is already in seconds, we just need to change the type
                 _sqlExpressionFactory.ChangeExpressionType(argument, _durationTypeMapping),
 
-            nameof(NodaTime.Duration.FromNanoseconds) =>
+            nameof(Duration.FromNanoseconds) =>
                 _sqlExpressionFactory.Divide(
                     argument,
                     _sqlExpressionFactory.Constant(DurationConstants.NanosecondsPerSecond, _doubleTypeMapping),
                     _durationTypeMapping),
 
-            nameof(NodaTime.Duration.FromMilliseconds) =>
+            nameof(Duration.FromMilliseconds) =>
                 _sqlExpressionFactory.Divide(
                     argument,
                     _sqlExpressionFactory.Constant(DurationConstants.MillisecondsPerSecond, _doubleTypeMapping),
                     _durationTypeMapping),
 
-            nameof(NodaTime.Duration.FromMinutes) =>
+            nameof(Duration.FromMinutes) =>
                 _sqlExpressionFactory.Multiply(
                     argument,
                     _sqlExpressionFactory.Constant(DurationConstants.SecondsPerMinute, _doubleTypeMapping),
                     _durationTypeMapping),
 
-            nameof(NodaTime.Duration.FromHours) =>
+            nameof(Duration.FromHours) =>
                 _sqlExpressionFactory.Multiply(
                     argument,
                     _sqlExpressionFactory.Constant(DurationConstants.SecondsPerHour, _doubleTypeMapping),
                     _durationTypeMapping),
 
-            nameof(NodaTime.Duration.FromDays) =>
+            nameof(Duration.FromDays) =>
                 _sqlExpressionFactory.Multiply(
                     argument,
                     _sqlExpressionFactory.Constant(DurationConstants.SecondsPerDay, _doubleTypeMapping),
@@ -122,28 +132,22 @@ internal class SqliteNodaTimeDurationMethodCallTranslator : IMethodCallTranslato
         {
             Debug.Assert(instant.Type == typeof(Instant));
 
-            // Optimization: if instant is strftime(..., 'now'), we can replace with 'now'
-            // Result is then 'unixepoch('now', 'subsec')' rather than 'unixepoch(strftime(..., 'now'), 'subsec')'
-            if (IsStrftimeNow(instant))
-            {
-                instant = _sqlExpressionFactory.Constant("now");
-            }
-
-            return _sqlExpressionFactory.Function(
-                "unixepoch",
-                [instant, _sqlExpressionFactory.Constant("subsec")],
-                true,
-                [true, false],
-                typeof(double),
-                _doubleTypeMapping);
+            instant = InstantUtilities.UnwrapStrftimeNow(instant, _sqlExpressionFactory);
+            return InstantUtilities.UnixEpoch(instant, _sqlExpressionFactory, _doubleTypeMapping);
         }
     }
 
-    /// <summary>
-    /// Checks if the expression is a function call <c>strftime(..., 'now')</c>
-    /// i.e. translation of <c>SystemClock.Instance.GetCurrentInstant()</c>
-    /// </summary>
-    private static bool IsStrftimeNow(SqlExpression expression)
-        => expression is SqlFunctionExpression { Name: "strftime", Arguments.Count: 2 } fn
-           && fn.Arguments[1] is SqlConstantExpression { Value: "now" };
+    private SqlExpression? TranslateInstant(
+        SqlExpression instance,
+        MethodInfo method,
+        IReadOnlyList<SqlExpression> arguments)
+    {
+        Debug.Assert(method.DeclaringType == typeof(Instant));
+        return method.Name switch
+        {
+            nameof(Instant.Plus) => InstantUtilities.Plus(instance, arguments[0], _sqlExpressionFactory, _doubleTypeMapping),
+            nameof(Instant.Minus) => InstantUtilities.Minus(instance, arguments[0], _sqlExpressionFactory, _doubleTypeMapping),
+            _ => null
+        };
+    }
 }

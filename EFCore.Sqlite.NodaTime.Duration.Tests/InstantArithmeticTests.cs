@@ -20,6 +20,53 @@ public class InstantArithmeticTests : QueryTests<NodaTimeTypes>
         EF.Functions.DurationBetween(x.Instant, SystemClock.Instance.GetCurrentInstant()));
 
     [Fact]
+    public async Task Plus()
+    {
+        var result = await VerifySelect(x => x.Instant.Plus(x.Duration));
+        Assert.Equal(result, InstantValue + DurationQueryTests.Value);
+    }
+
+    [Fact]
+    public async Task PlusNegative()
+    {
+        var result = await VerifySelect(x => x.Instant.Plus(-x.Duration));
+        Assert.Equal(result, InstantValue - DurationQueryTests.Value);
+    }
+
+    [Fact]
+    public async Task Minus()
+    {
+        var result = await VerifySelect(x => x.Instant.Minus(x.Duration));
+        Assert.Equal(result, InstantValue - DurationQueryTests.Value);
+    }
+
+    [Fact]
+    public async Task MinusNegative()
+    {
+        var result = await VerifySelect(x => x.Instant.Minus(-x.Duration));
+        Assert.Equal(result, InstantValue + DurationQueryTests.Value);
+    }
+
+    [Fact]
+    public async Task Chain()
+    {
+        var result = await VerifySelect(x => x.Instant
+            .Plus(x.Duration)
+            .Minus(x.Duration)
+            .Plus(x.Duration)
+            .Minus(x.Duration));
+        Assert.Equal(result, InstantValue);
+    }
+
+    [Fact]
+    public Task ChainGetCurrentInstantPlus() => VerifySelect(x =>
+        SystemClock.Instance.GetCurrentInstant().Plus(x.Duration).Minus(x.Duration));
+
+    [Fact]
+    public Task ChainGetCurrentInstantMinus() => VerifySelect(x =>
+        SystemClock.Instance.GetCurrentInstant().Minus(x.Duration).Plus(x.Duration));
+
+    [Fact]
     public Task DurationBetweenTotalSeconds() => VerifySelect(x =>
         EF.Functions.DurationBetween(x.Instant, x.Instant).TotalSeconds);
 

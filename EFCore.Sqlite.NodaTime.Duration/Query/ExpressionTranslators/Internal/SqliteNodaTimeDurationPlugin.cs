@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Sqlite.Storage;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators;
+namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Internal;
 
 internal class SqliteNodaTimeDurationPlugin :
     IMemberTranslatorPlugin,

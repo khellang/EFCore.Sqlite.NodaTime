@@ -2,6 +2,7 @@ using System;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Sqlite.Infrastructure;
 using Microsoft.EntityFrameworkCore.Sqlite.Infrastructure.Internal;
+using Microsoft.EntityFrameworkCore.Sqlite.Storage;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.EntityFrameworkCore;
@@ -22,14 +23,12 @@ public static class SqliteNodaTimeDbContextOptionsBuilderExtensions
     /// </para>
     /// <para>
     /// If you need exact round-tripping of <see cref="NodaTime.Duration"/>,
-    /// consider using the provided round-trip converter instead:
+    /// consider using the provided round-trip converter <see cref="SqliteDurationValueConverter"/> instead.
     /// <code>
-    /// using Microsoft.EntityFrameworkCore.Sqlite;
-    ///
     /// protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     /// {
     ///     configurationBuilder.Properties&lt;Duration&gt;()
-    ///         .HaveConversion&lt;DurationPatternConverter&gt;();
+    ///         .HaveConversion&lt;Microsoft.EntityFrameworkCore.Sqlite.Storage.SqliteDurationValueConverter&gt;();
     /// }
     /// </code>
     /// </para>

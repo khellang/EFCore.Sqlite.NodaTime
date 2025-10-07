@@ -1,0 +1,12 @@
+﻿[
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
+SELECT strftime('%Y-%m-%d %H:%M:%f', unixepoch("n"."Instant", 'subsec') + CAST(-"n"."Duration" AS REAL), 'unixepoch')
+FROM "NodaTimeTypes" AS "n"
+LIMIT 2
+    }
+  }
+]
