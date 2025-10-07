@@ -4,8 +4,9 @@
       Type: ReaderExecuted,
       HasTransaction: false,
       Text:
-SELECT strftime('%Y-%m-%d %H:%M:%f', (unixepoch('now', 'subsec') - "n"."Duration") + "n"."Duration", 'unixepoch')
+SELECT "n"."Id", "n"."Duration", "n"."Instant", "n"."LocalDateTime"
 FROM "NodaTimeTypes" AS "n"
+WHERE strftime('%Y-%m-%d %H:%M:%f', (unixepoch('now', 'subsec') - "n"."Duration") + "n"."Duration", 'unixepoch') = strftime('%Y-%m-%d %H:%M:%f', 'now')
 LIMIT 2
     }
   }

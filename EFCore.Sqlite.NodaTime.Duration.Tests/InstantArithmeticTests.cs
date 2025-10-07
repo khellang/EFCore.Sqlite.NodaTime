@@ -59,12 +59,14 @@ public class InstantArithmeticTests : QueryTests<NodaTimeTypes>
     }
 
     [Fact]
-    public Task ChainGetCurrentInstantPlus() => VerifySelect(x =>
-        SystemClock.Instance.GetCurrentInstant().Plus(x.Duration).Minus(x.Duration));
+    public Task ChainGetCurrentInstantPlus() => VerifyQuery(x =>
+        SystemClock.Instance.GetCurrentInstant().Plus(x.Duration).Minus(x.Duration)
+        == SystemClock.Instance.GetCurrentInstant());
 
     [Fact]
-    public Task ChainGetCurrentInstantMinus() => VerifySelect(x =>
-        SystemClock.Instance.GetCurrentInstant().Minus(x.Duration).Plus(x.Duration));
+    public Task ChainGetCurrentInstantMinus() => VerifyQuery(x =>
+        SystemClock.Instance.GetCurrentInstant().Minus(x.Duration).Plus(x.Duration)
+        == SystemClock.Instance.GetCurrentInstant());
 
     [Fact]
     public Task DurationBetweenTotalSeconds() => VerifySelect(x =>
