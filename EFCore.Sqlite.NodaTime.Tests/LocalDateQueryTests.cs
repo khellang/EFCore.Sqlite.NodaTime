@@ -8,6 +8,8 @@ namespace Microsoft.EntityFrameworkCore.Sqlite;
 public class LocalDateQueryTests : QueryTests<LocalDate>
 {
     public static readonly LocalDate Value = LocalDateTimeQueryTests.Value.Date;
+    public static readonly LocalDate[] CollectionValues =
+        LocalDateTimeQueryTests.CollectionValues.Select(d => d.Date).ToArray();
 
     public LocalDateQueryTests() : base(x => x.LocalDate)
     {
@@ -83,5 +85,26 @@ public class LocalDateQueryTests : QueryTests<LocalDate>
 
         [Fact]
         public Task ToDateOnly() => VerifyMethod(x => x.ToDateOnly());
+    }
+
+    public class Collections : CollectionsTests<LocalDate>
+    {
+        [Fact]
+        public void RoundTrip() => VerifyEqual(NodaTimeContext.NewCollection(CollectionValues), Query.Single());
+
+        [Fact]
+        public void Update()
+        {
+            VerifyUpdate(u =>
+            {
+                u.IReadOnlyListNullable = u.IReadOnlyListNullable
+                    .Select(d => d?.PlusDays(1))
+                    .ToList();
+            });
+        }
+
+        [Fact]
+        public void Year() => VerifyQuery(x =>
+            x.ArrayNullable.Any(n => n!.Value.Year == 2020));
     }
 }

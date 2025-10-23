@@ -35,16 +35,12 @@ internal class SqliteNodaTimeTypeMappingSourcePlugin : IRelationalTypeMappingSou
             _clrTypeMappings.Add(typeof(List<T>), list);
             _clrTypeMappings.Add(typeof(IList<T>), list);
             _clrTypeMappings.Add(typeof(IReadOnlyList<T>), list);
-            _clrTypeMappings.Add(typeof(ICollection<T>), list);
-            _clrTypeMappings.Add(typeof(IReadOnlyCollection<T>), list);
 
             _clrTypeMappings.Add(typeof(IEnumerable<T?>), listNullable);
             _clrTypeMappings.Add(typeof(T?[]), arrayNullable);
             _clrTypeMappings.Add(typeof(List<T?>), listNullable);
             _clrTypeMappings.Add(typeof(IList<T?>), listNullable);
             _clrTypeMappings.Add(typeof(IReadOnlyList<T?>), listNullable);
-            _clrTypeMappings.Add(typeof(ICollection<T?>), listNullable);
-            _clrTypeMappings.Add(typeof(IReadOnlyCollection<T?>), listNullable);
         }
     }
 

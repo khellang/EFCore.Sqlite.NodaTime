@@ -1,0 +1,16 @@
+﻿[
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
+SELECT "l"."Id"
+FROM "LocalTimeCollections" AS "l"
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM json_each("l"."List") AS "l0"
+    WHERE CAST(strftime('%H', "l0"."value") AS INTEGER) = 5)
+LIMIT 2
+    }
+  }
+]

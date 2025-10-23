@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading.Tasks;
 using VerifyTests;
 using VerifyXunit;
@@ -11,9 +12,9 @@ using Xunit;
 namespace Microsoft.EntityFrameworkCore.Sqlite;
 
 [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
-public abstract class CollectionQueryTests<T> : IDisposable where T : struct
+public abstract class CollectionsTests<T> : IDisposable where T : struct
 {
-    protected CollectionQueryTests()
+    protected CollectionsTests()
     {
         Db = NodaTimeContext.Create();
         Db.Database.EnsureCreated();
@@ -37,6 +38,14 @@ public abstract class CollectionQueryTests<T> : IDisposable where T : struct
         Recording.Start();
         _ = Query.Where(predicate).Select(x => x.Id).Single();
         return Verifier.Verify(Recording.Stop(), sourceFile: sourceFile);
+    }
+
+    protected static void VerifyEqual(NodaTimeTypesCollectionType<T> expected, NodaTimeTypesCollectionType<T> actual)
+    {
+        // Use JSON serialization to compare collections
+        var expectedJson = JsonSerializer.Serialize(expected);
+        var actualJson = JsonSerializer.Serialize(actual);
+        Assert.Equal(expectedJson, actualJson);
     }
 
     public void Dispose() => Db.Dispose();

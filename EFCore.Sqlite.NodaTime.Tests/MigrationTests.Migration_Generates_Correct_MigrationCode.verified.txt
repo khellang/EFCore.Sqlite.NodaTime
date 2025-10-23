@@ -11,6 +11,86 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "InstantCollections",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Array = table.Column<string>(type: "TEXT", nullable: false),
+                    List = table.Column<string>(type: "TEXT", nullable: false),
+                    IList = table.Column<string>(type: "TEXT", nullable: false),
+                    IReadOnlyList = table.Column<string>(type: "TEXT", nullable: false),
+                    ArrayNullable = table.Column<string>(type: "TEXT", nullable: false),
+                    ListNullable = table.Column<string>(type: "TEXT", nullable: false),
+                    IListNullable = table.Column<string>(type: "TEXT", nullable: false),
+                    IReadOnlyListNullable = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InstantCollections", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LocalDateCollections",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Array = table.Column<string>(type: "TEXT", nullable: false),
+                    List = table.Column<string>(type: "TEXT", nullable: false),
+                    IList = table.Column<string>(type: "TEXT", nullable: false),
+                    IReadOnlyList = table.Column<string>(type: "TEXT", nullable: false),
+                    ArrayNullable = table.Column<string>(type: "TEXT", nullable: false),
+                    ListNullable = table.Column<string>(type: "TEXT", nullable: false),
+                    IListNullable = table.Column<string>(type: "TEXT", nullable: false),
+                    IReadOnlyListNullable = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LocalDateCollections", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LocalDateTimeCollections",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Array = table.Column<string>(type: "TEXT", nullable: false),
+                    List = table.Column<string>(type: "TEXT", nullable: false),
+                    IList = table.Column<string>(type: "TEXT", nullable: false),
+                    IReadOnlyList = table.Column<string>(type: "TEXT", nullable: false),
+                    ArrayNullable = table.Column<string>(type: "TEXT", nullable: false),
+                    ListNullable = table.Column<string>(type: "TEXT", nullable: false),
+                    IListNullable = table.Column<string>(type: "TEXT", nullable: false),
+                    IReadOnlyListNullable = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LocalDateTimeCollections", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LocalTimeCollections",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Array = table.Column<string>(type: "TEXT", nullable: false),
+                    List = table.Column<string>(type: "TEXT", nullable: false),
+                    IList = table.Column<string>(type: "TEXT", nullable: false),
+                    IReadOnlyList = table.Column<string>(type: "TEXT", nullable: false),
+                    ArrayNullable = table.Column<string>(type: "TEXT", nullable: false),
+                    ListNullable = table.Column<string>(type: "TEXT", nullable: false),
+                    IListNullable = table.Column<string>(type: "TEXT", nullable: false),
+                    IReadOnlyListNullable = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LocalTimeCollections", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "NodaTimeTypes",
                 columns: table => new
                 {
@@ -27,6 +107,26 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "InstantCollections",
+                columns: new[] { "Id", "Array", "ArrayNullable", "IList", "IListNullable", "IReadOnlyList", "IReadOnlyListNullable", "List", "ListNullable" },
+                values: new object[] { 1, "[\"2020-10-10 23:42:16.321\",\"2021-02-05 14:06:05.789\"]", "[\"2020-10-10 23:42:16.321\",null,\"2021-02-05 14:06:05.789\",null]", "[\"2020-10-10 23:42:16.321\",\"2021-02-05 14:06:05.789\",\"2020-10-10 23:42:16.321\"]", "[\"2020-10-10 23:42:16.321\",null,\"2021-02-05 14:06:05.789\",null,\"2020-10-10 23:42:16.321\"]", "[\"2020-10-10 23:42:16.321\",\"2021-02-05 14:06:05.789\"]", "[\"2020-10-10 23:42:16.321\",null,\"2021-02-05 14:06:05.789\",null]", "[\"2020-10-10 23:42:16.321\",\"2021-02-05 14:06:05.789\"]", "[\"2020-10-10 23:42:16.321\",null,\"2021-02-05 14:06:05.789\",null]" });
+
+            migrationBuilder.InsertData(
+                table: "LocalDateCollections",
+                columns: new[] { "Id", "Array", "ArrayNullable", "IList", "IListNullable", "IReadOnlyList", "IReadOnlyListNullable", "List", "ListNullable" },
+                values: new object[] { 1, "[\"2020-10-10\",\"2021-02-05\"]", "[\"2020-10-10\",null,\"2021-02-05\",null]", "[\"2020-10-10\",\"2021-02-05\",\"2020-10-10\"]", "[\"2020-10-10\",null,\"2021-02-05\",null,\"2020-10-10\"]", "[\"2020-10-10\",\"2021-02-05\"]", "[\"2020-10-10\",null,\"2021-02-05\",null]", "[\"2020-10-10\",\"2021-02-05\"]", "[\"2020-10-10\",null,\"2021-02-05\",null]" });
+
+            migrationBuilder.InsertData(
+                table: "LocalDateTimeCollections",
+                columns: new[] { "Id", "Array", "ArrayNullable", "IList", "IListNullable", "IReadOnlyList", "IReadOnlyListNullable", "List", "ListNullable" },
+                values: new object[] { 1, "[\"2020-10-10 23:42:16.321\",\"2021-02-05 14:06:05.789\"]", "[\"2020-10-10 23:42:16.321\",null,\"2021-02-05 14:06:05.789\",null]", "[\"2020-10-10 23:42:16.321\",\"2021-02-05 14:06:05.789\",\"2020-10-10 23:42:16.321\"]", "[\"2020-10-10 23:42:16.321\",null,\"2021-02-05 14:06:05.789\",null,\"2020-10-10 23:42:16.321\"]", "[\"2020-10-10 23:42:16.321\",\"2021-02-05 14:06:05.789\"]", "[\"2020-10-10 23:42:16.321\",null,\"2021-02-05 14:06:05.789\",null]", "[\"2020-10-10 23:42:16.321\",\"2021-02-05 14:06:05.789\"]", "[\"2020-10-10 23:42:16.321\",null,\"2021-02-05 14:06:05.789\",null]" });
+
+            migrationBuilder.InsertData(
+                table: "LocalTimeCollections",
+                columns: new[] { "Id", "Array", "ArrayNullable", "IList", "IListNullable", "IReadOnlyList", "IReadOnlyListNullable", "List", "ListNullable" },
+                values: new object[] { 1, "[\"23:42:16.321\",\"14:06:05.789\"]", "[\"23:42:16.321\",null,\"14:06:05.789\",null]", "[\"23:42:16.321\",\"14:06:05.789\",\"23:42:16.321\"]", "[\"23:42:16.321\",null,\"14:06:05.789\",null,\"23:42:16.321\"]", "[\"23:42:16.321\",\"14:06:05.789\"]", "[\"23:42:16.321\",null,\"14:06:05.789\",null]", "[\"23:42:16.321\",\"14:06:05.789\"]", "[\"23:42:16.321\",null,\"14:06:05.789\",null]" });
+
+            migrationBuilder.InsertData(
                 table: "NodaTimeTypes",
                 columns: new[] { "Id", "Instant", "LocalDate", "LocalDateTime", "LocalTime" },
                 values: new object[] { 1, "2020-10-10 23:42:16.321", "2020-10-10", "2020-10-10 23:42:16.321", "23:42:16.321" });
@@ -35,6 +135,18 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "InstantCollections");
+
+            migrationBuilder.DropTable(
+                name: "LocalDateCollections");
+
+            migrationBuilder.DropTable(
+                name: "LocalDateTimeCollections");
+
+            migrationBuilder.DropTable(
+                name: "LocalTimeCollections");
+
             migrationBuilder.DropTable(
                 name: "NodaTimeTypes");
         }

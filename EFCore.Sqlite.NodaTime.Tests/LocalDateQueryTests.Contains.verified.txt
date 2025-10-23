@@ -1,0 +1,19 @@
+﻿[
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Parameters: {
+        @__list_0 (String?): ["2020-10-10","2019-01-01"]
+      },
+      Text:
+SELECT "n"."LocalDate"
+FROM "NodaTimeTypes" AS "n"
+WHERE "n"."LocalDate" IN (
+    SELECT "l"."value"
+    FROM json_each(@__list_0) AS "l"
+)
+LIMIT 2
+    }
+  }
+]

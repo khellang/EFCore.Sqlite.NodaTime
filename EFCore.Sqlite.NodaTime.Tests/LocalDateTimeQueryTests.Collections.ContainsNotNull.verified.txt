@@ -8,7 +8,7 @@ SELECT "l"."Id"
 FROM "LocalDateTimeCollections" AS "l"
 WHERE EXISTS (
     SELECT 1
-    FROM json_each("l"."IReadOnlyCollectionNullable") AS "i"
+    FROM json_each("l"."IListNullable") AS "i"
     WHERE "i"."value" IS NOT NULL)
 LIMIT 2
     }

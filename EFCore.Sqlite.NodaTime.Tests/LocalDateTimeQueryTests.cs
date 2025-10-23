@@ -13,7 +13,6 @@ public class LocalDateTimeQueryTests : QueryTests<LocalDateTime>
     public static readonly LocalDateTime[] CollectionValues =
     [
         Value,
-        new (2020, 11, 12, 9, 15, 30, 123),
         new (2021, 2, 5, 14, 6,5,789)
     ];
 
@@ -110,16 +109,10 @@ public class LocalDateTimeQueryTests : QueryTests<LocalDateTime>
         public Task ToDateTimeUnspecified() => VerifyMethod(x => x.ToDateTimeUnspecified());
     }
 
-    public class Collections : CollectionQueryTests<LocalDateTime>
+    public class Collections : CollectionsTests<LocalDateTime>
     {
         [Fact]
-        public void RoundTrip()
-        {
-            // Use JSON serialization to verify deep equality of collections
-            var expected = JsonSerializer.Serialize(NodaTimeContext.NewCollection(CollectionValues));
-            var actual = JsonSerializer.Serialize(Query.Single());
-            Assert.Equal(expected, actual);
-        }
+        public void RoundTrip() => VerifyEqual(NodaTimeContext.NewCollection(CollectionValues), Query.Single());
 
         [Fact]
         public void Update()
@@ -128,26 +121,27 @@ public class LocalDateTimeQueryTests : QueryTests<LocalDateTime>
             {
                 u.List.Clear();
                 u.Array = [Value];
-                u.IReadOnlyCollectionNullable = [null];
+                u.IList.RemoveAt(0);
+                u.IList.RemoveAt(1);
             });
         }
 
         [Fact]
-        public Task ArrayContains() => VerifyQuery(x => x.Array.Contains(Value));
+        public Task ContainsValue() => VerifyQuery(x => x.Array.Contains(Value));
 
         [Fact]
-        public Task ListContainsYear() => VerifyQuery(x =>
-            x.ListNullable.Any(d => d != null && d.Value.Year == 2020));
+        public Task ContainsYear() => VerifyQuery(x =>
+            x.IListNullable.Any(d => d != null && d.Value.Year == 2020));
 
         [Fact]
-        public Task CollectionContainsDay() => VerifyQuery(x =>
-            x.IReadOnlyCollectionNullable.Any(d => d!.Value.Day == Value.Day));
+        public Task ContainsDay() => VerifyQuery(x =>
+            x.ListNullable.Any(d => d!.Value.Day == Value.Day));
 
         [Fact]
-        public Task ArrayContainsNull() => VerifyQuery(x => x.ArrayNullable.Contains(null));
+        public Task ContainsNull() => VerifyQuery(x => x.ArrayNullable.Contains(null));
 
         [Fact]
-        public Task CollectionContainsNotNull() => VerifyQuery(x =>
-            x.IReadOnlyCollectionNullable.Any(d => d != null));
+        public Task ContainsNotNull() => VerifyQuery(x =>
+            x.IListNullable.Any(d => d != null));
     }
 }

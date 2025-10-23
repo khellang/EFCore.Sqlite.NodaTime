@@ -51,6 +51,15 @@ public sealed class NodaTimeContext : DbContext
         modelBuilder.Entity<NodaTimeTypesCollectionType<LocalDateTime>>()
             .ToTable("LocalDateTimeCollections")
             .HasData(NewCollection(LocalDateTimeQueryTests.CollectionValues));
+        modelBuilder.Entity<NodaTimeTypesCollectionType<LocalDate>>()
+            .ToTable("LocalDateCollections")
+            .HasData(NewCollection(LocalDateQueryTests.CollectionValues));
+        modelBuilder.Entity<NodaTimeTypesCollectionType<LocalTime>>()
+            .ToTable("LocalTimeCollections")
+            .HasData(NewCollection(LocalTimeQueryTests.CollectionValues));
+        modelBuilder.Entity<NodaTimeTypesCollectionType<Instant>>()
+            .ToTable("InstantCollections")
+            .HasData(NewCollection(InstantQueryTests.CollectionValues));
 
         var model = modelBuilder.Model;
 
@@ -63,7 +72,6 @@ public sealed class NodaTimeContext : DbContext
         Connection?.Dispose();
     }
 
-    [SuppressMessage("ReSharper", "UseCollectionExpression")]
     public static NodaTimeTypesCollectionType<T> NewCollection<T>(T[] items) where T : struct
     {
         var nullable = items.SelectMany(x => new T?[] { x, null }).ToArray();
@@ -72,17 +80,13 @@ public sealed class NodaTimeContext : DbContext
             Id = 1,
             Array = items.ToArray(),
             List = items.ToList(),
-            IList = items.ToList(),
+            IList = items.Append(items[0]).ToList(),
             IReadOnlyList = items.ToImmutableList(),
-            ICollection = items.ToList(),
-            IReadOnlyCollection = items.ToImmutableArray(),
 
             ArrayNullable = nullable.ToArray(),
             ListNullable = nullable.ToList(),
-            IListNullable = nullable.ToList(),
+            IListNullable = nullable.Append(items[0]).ToList(),
             IReadOnlyListNullable = nullable.ToImmutableList(),
-            ICollectionNullable = nullable.ToList(),
-            IReadOnlyCollectionNullable = nullable.ToImmutableArray(),
         };
     }
 }
