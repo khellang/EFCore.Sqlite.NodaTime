@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
@@ -8,7 +9,8 @@ using VerifyXunit;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite;
 
-public abstract class QueryTests<T> : IDisposable
+[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
+public abstract class QueryTests<T> : IDisposable where T : struct
 {
     protected QueryTests(Expression<Func<NodaTimeTypes, T>> selector)
     {

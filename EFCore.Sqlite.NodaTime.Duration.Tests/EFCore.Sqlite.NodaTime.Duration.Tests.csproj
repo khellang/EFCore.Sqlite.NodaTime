@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>EntityFrameworkCore.Sqlite.NodaTime.Duration.Tests</AssemblyName>
+    <RootNamespace>Microsoft.EntityFrameworkCore.Sqlite</RootNamespace>
+    <TargetFramework>net9.0</TargetFramework>
+    <NoWarn>$(NoWarn);EF1001;CS9057</NoWarn>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Verify.EntityFramework" />
+    <PackageReference Include="Verify.Xunit" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Specification.Tests" />
+    <PackageReference Include="coverlet.collector">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EFCore.Sqlite.NodaTime.Duration\EFCore.Sqlite.NodaTime.Duration.csproj" />
+    <ProjectReference Include="..\EFCore.Sqlite.NodaTime\EFCore.Sqlite.NodaTime.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="InstantArithmeticTests.Minus.verified.txt">
+      <DependentUpon>InstantArithmeticTests.cs</DependentUpon>
+    </None>
+    <None Update="InstantArithmeticTests.MinusNegative.verified.txt">
+      <DependentUpon>InstantArithmeticTests.cs</DependentUpon>
+    </None>
+    <None Update="InstantArithmeticTests.Plus.verified.txt">
+      <DependentUpon>InstantArithmeticTests.cs</DependentUpon>
+    </None>
+    <None Update="InstantArithmeticTests.Chain.verified.txt">
+      <DependentUpon>InstantArithmeticTests.cs</DependentUpon>
+    </None>
+    <None Update="InstantArithmeticTests.PlusNegative.verified.txt">
+      <DependentUpon>InstantArithmeticTests.cs</DependentUpon>
+    </None>
+    <None Update="InstantArithmeticTests.ChainGetCurrentInstantMinus.verified.txt">
+      <DependentUpon>InstantArithmeticTests.cs</DependentUpon>
+    </None>
+    <None Update="InstantArithmeticTests.ChainGetCurrentInstantPlus.verified.txt">
+      <DependentUpon>InstantArithmeticTests.cs</DependentUpon>
+    </None>
+  </ItemGroup>
+
+</Project>

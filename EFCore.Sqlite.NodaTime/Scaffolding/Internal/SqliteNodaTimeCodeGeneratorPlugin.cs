@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Scaffolding;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Scaffolding.Internal;
 
-public class SqliteNodaTimeCodeGeneratorPlugin : ProviderCodeGeneratorPlugin
+internal class SqliteNodaTimeCodeGeneratorPlugin : ProviderCodeGeneratorPlugin
 {
     public override MethodCallCodeFragment GenerateProviderOptions()
     {

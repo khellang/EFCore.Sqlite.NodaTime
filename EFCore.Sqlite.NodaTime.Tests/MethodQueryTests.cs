@@ -8,7 +8,7 @@ using VerifyXunit;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite;
 
-public abstract class MethodQueryTests<T> : QueryTests<T>
+public abstract class MethodQueryTests<T> : QueryTests<T> where T : struct
 {
     protected MethodQueryTests(Expression<Func<NodaTimeTypes, T>> selector) : base(selector)
     {
@@ -18,6 +18,7 @@ public abstract class MethodQueryTests<T> : QueryTests<T>
     {
         Recording.Start();
         var value = Query.Select(selector).Single();
+        // ReSharper disable once ExplicitCallerInfoArgument
         return Verifier.Verify(value, sourceFile: sourceFile);
     }
 }

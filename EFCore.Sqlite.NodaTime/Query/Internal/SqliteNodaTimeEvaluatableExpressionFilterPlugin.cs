@@ -7,7 +7,7 @@ using NodaTime;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Query.Internal;
 
-public class SqliteNodaTimeEvaluatableExpressionFilterPlugin : IEvaluatableExpressionFilterPlugin
+internal class SqliteNodaTimeEvaluatableExpressionFilterPlugin : IEvaluatableExpressionFilterPlugin
 {
     private static readonly MethodInfo _getCurrentInstantMethod =
         typeof(SystemClock).GetRuntimeMethod(nameof(SystemClock.GetCurrentInstant), Array.Empty<Type>())!;

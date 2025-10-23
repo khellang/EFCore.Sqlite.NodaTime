@@ -1,0 +1,16 @@
+﻿[
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
+SELECT "l"."Id"
+FROM "LocalDateTimeCollections" AS "l"
+WHERE '2020-10-10 23:42:16.321' IN (
+    SELECT "a"."value"
+    FROM json_each("l"."Array") AS "a"
+)
+LIMIT 2
+    }
+  }
+]

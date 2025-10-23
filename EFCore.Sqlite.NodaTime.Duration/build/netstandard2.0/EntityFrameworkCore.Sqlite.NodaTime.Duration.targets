@@ -1,0 +1,46 @@
+<Project>
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <EFCoreSqliteNodaTimeDurationFile>$(IntermediateOutputPath)EFCoreSqliteNodaTimeDuration$(DefaultLanguageSourceExtension)</EFCoreSqliteNodaTimeDurationFile>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="'$(Language)' == 'F#'">
+      <Choose>
+        <When Condition="'$(OutputType)' == 'Exe' OR '$(OutputType)' == 'WinExe'">
+          <PropertyGroup>
+            <CodeFragmentItemGroup>CompileBefore</CodeFragmentItemGroup>
+          </PropertyGroup>
+        </When>
+        <Otherwise>
+          <PropertyGroup>
+            <CodeFragmentItemGroup>CompileAfter</CodeFragmentItemGroup>
+          </PropertyGroup>
+        </Otherwise>
+      </Choose>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <CodeFragmentItemGroup>Compile</CodeFragmentItemGroup>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <Target Name="AddEFCoreSqliteNodaTimeDuration"
+          BeforeTargets="CoreCompile"
+          DependsOnTargets="PrepareForBuild"
+          Condition="'$(DesignTimeBuild)' != 'True'"
+          Inputs="$(MSBuildAllProjects)"
+          Outputs="$(EFCoreSqliteNodaTimeFile)">
+    <ItemGroup>
+      <EFCoreSqliteNodaTimeDurationServices Include="Microsoft.EntityFrameworkCore.Design.DesignTimeServicesReferenceAttribute">
+        <_Parameter1>Microsoft.EntityFrameworkCore.Sqlite.Design.SqliteNodaTimeDurationDesignTimeServices, EntityFrameworkCore.Sqlite.NodaTime.Duration</_Parameter1>
+        <_Parameter2>Microsoft.EntityFrameworkCore.Sqlite</_Parameter2>
+      </EFCoreSqliteNodaTimeDurationServices>
+    </ItemGroup>
+    <WriteCodeFragment AssemblyAttributes="@(EFCoreSqliteNodaTimeDurationServices)"
+                       Language="$(Language)"
+                       OutputFile="$(EFCoreSqliteNodaTimeDurationFile)">
+      <Output TaskParameter="OutputFile" ItemName="$(CodeFragmentItemGroup)" />
+      <Output TaskParameter="OutputFile" ItemName="FileWrites" />
+    </WriteCodeFragment>
+  </Target>
+</Project>

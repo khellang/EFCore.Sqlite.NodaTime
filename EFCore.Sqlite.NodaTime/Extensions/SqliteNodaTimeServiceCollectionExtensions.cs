@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
 
-public static class SqliteNodaTimeServiceCollectionExtensions
+internal static class SqliteNodaTimeServiceCollectionExtensions
 {
     public static IServiceCollection AddEntityFrameworkSqliteNodaTime(this IServiceCollection services)
     {

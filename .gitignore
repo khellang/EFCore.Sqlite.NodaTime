@@ -10,9 +10,7 @@
 [Bb]in/
 [Bb]uild/
 [Oo]bj/
-[Oo]bj/
-packages/*/
-Packages/*/
+[Pp]ackages/*
 packages.stable
 artifacts/
 # Roslyn cache directories

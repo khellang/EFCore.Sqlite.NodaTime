@@ -8,6 +8,8 @@ namespace Microsoft.EntityFrameworkCore.Sqlite;
 public class LocalTimeQueryTests : QueryTests<LocalTime>
 {
     public static readonly LocalTime Value = LocalDateTimeQueryTests.Value.TimeOfDay;
+    public static readonly LocalTime[] CollectionValues =
+        LocalDateTimeQueryTests.CollectionValues.Select(d => d.TimeOfDay).ToArray();
 
     public LocalTimeQueryTests() : base(x => x.LocalTime)
     {
@@ -67,5 +69,14 @@ public class LocalTimeQueryTests : QueryTests<LocalTime>
 
         [Fact]
         public Task ToTimeOnly() => VerifyMethod(x => x.ToTimeOnly());
+    }
+
+    public class Collections : CollectionsTests<LocalTime>
+    {
+        [Fact]
+        public void Roundtrip() => VerifyEqual(NodaTimeContext.NewCollection(CollectionValues), Query.Single());
+
+        [Fact]
+        public Task All() => VerifyQuery(x => x.List.All(l => l.Hour != 5));
     }
 }

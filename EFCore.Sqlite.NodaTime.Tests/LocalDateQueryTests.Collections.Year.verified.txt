@@ -1,0 +1,16 @@
+﻿[
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
+SELECT "l"."Id"
+FROM "LocalDateCollections" AS "l"
+WHERE EXISTS (
+    SELECT 1
+    FROM json_each("l"."ArrayNullable") AS "a"
+    WHERE CAST(strftime('%Y', "a"."value") AS INTEGER) = 2020)
+LIMIT 2
+    }
+  }
+]

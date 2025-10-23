@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using NodaTime;
+// ReSharper disable UnusedParameter.Global
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.EntityFrameworkCore;

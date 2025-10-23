@@ -1,0 +1,12 @@
+﻿[
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
+SELECT unixepoch("n"."Instant", 'subsec') - unixepoch("n"."Instant", 'subsec')
+FROM "NodaTimeTypes" AS "n"
+LIMIT 2
+    }
+  }
+]

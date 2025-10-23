@@ -12,6 +12,11 @@
     <LangVersion>latest</LangVersion>
     <Nullable>Enable</Nullable>
     <Features>strict</Features>
+
+    <PackageProjectUrl>https://www.learnentityframeworkcore.com/extensions/entityframeworkcore-sqlite-nodatime</PackageProjectUrl>
+    <PackageTags>Entity Framework Core;entity-framework-core;ef;efcore;orm;sql;sqlite;NodaTime</PackageTags>
+    <RepositoryUrl>https://github.com/khellang/EFCore.Sqlite.NodaTime</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>

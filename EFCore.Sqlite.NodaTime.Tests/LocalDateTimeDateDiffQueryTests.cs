@@ -23,6 +23,10 @@ public class LocalDateTimeDateDiffQueryTests : MethodQueryTests<LocalDateTime>
         .DateDiffWeek(x, LocalDateTimeQueryTests.Value.PlusWeeks(42)));
 
     [Fact]
+    public Task DateDiffDay() => VerifyMethod(x => EF.Functions
+        .DateDiffDay(x, LocalDateTimeQueryTests.Value.PlusDays(42)));
+
+    [Fact]
     public Task DateDiffHour() => VerifyMethod(x => EF.Functions
         .DateDiffHour(x, LocalDateTimeQueryTests.Value.PlusHours(42)));
 

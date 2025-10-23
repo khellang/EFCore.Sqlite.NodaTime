@@ -2,7 +2,7 @@
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal;
 
-public class SqliteLocalDateTimeTypeMapping() : SqliteTypeMapping<LocalDateTime>(SqlitePatterns.LocalDateTime)
+internal class SqliteLocalDateTimeTypeMapping() : SqliteNodaTimeTypeMapping<LocalDateTime>(SqlitePatterns.LocalDateTime)
 {
     public static readonly SqliteLocalDateTimeTypeMapping Default = new();
 }

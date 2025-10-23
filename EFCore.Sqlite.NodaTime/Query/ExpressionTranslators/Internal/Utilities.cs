@@ -6,7 +6,9 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
-namespace Microsoft.EntityFrameworkCore.Sqlite.Extensions;
+// ReSharper disable StringLiteralTypo
+
+namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Internal;
 
 internal static class Utilities
 {

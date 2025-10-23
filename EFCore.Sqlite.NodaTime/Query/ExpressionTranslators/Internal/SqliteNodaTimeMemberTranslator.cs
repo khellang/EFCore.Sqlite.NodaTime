@@ -3,12 +3,11 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using Microsoft.EntityFrameworkCore.Sqlite.Extensions;
 using NodaTime;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Query.ExpressionTranslators.Internal;
 
-public class SqliteNodaTimeMemberTranslator(ISqlExpressionFactory sqlExpressionFactory) : IMemberTranslator
+internal class SqliteNodaTimeMemberTranslator(ISqlExpressionFactory sqlExpressionFactory) : IMemberTranslator
 {
     private static readonly MemberInfo _systemClockInstance =
         typeof(SystemClock).GetRuntimeProperty(nameof(SystemClock.Instance))!;

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using NodaTime;
 using Xunit;
@@ -8,6 +9,12 @@ namespace Microsoft.EntityFrameworkCore.Sqlite;
 public class LocalDateTimeQueryTests : QueryTests<LocalDateTime>
 {
     public static readonly LocalDateTime Value = new(2020, 10, 10, 23, 42, 16, 321);
+
+    public static readonly LocalDateTime[] CollectionValues =
+    [
+        Value,
+        new (2021, 2, 5, 14, 6,5,789)
+    ];
 
     public LocalDateTimeQueryTests() : base(x => x.LocalDateTime)
     {
@@ -100,5 +107,41 @@ public class LocalDateTimeQueryTests : QueryTests<LocalDateTime>
 
         [Fact]
         public Task ToDateTimeUnspecified() => VerifyMethod(x => x.ToDateTimeUnspecified());
+    }
+
+    public class Collections : CollectionsTests<LocalDateTime>
+    {
+        [Fact]
+        public void RoundTrip() => VerifyEqual(NodaTimeContext.NewCollection(CollectionValues), Query.Single());
+
+        [Fact]
+        public void Update()
+        {
+            VerifyUpdate(u =>
+            {
+                u.List.Clear();
+                u.Array = [Value];
+                u.IList.RemoveAt(0);
+                u.IList.RemoveAt(1);
+            });
+        }
+
+        [Fact]
+        public Task ContainsValue() => VerifyQuery(x => x.Array.Contains(Value));
+
+        [Fact]
+        public Task ContainsYear() => VerifyQuery(x =>
+            x.IListNullable.Any(d => d != null && d.Value.Year == 2020));
+
+        [Fact]
+        public Task ContainsDay() => VerifyQuery(x =>
+            x.ListNullable.Any(d => d!.Value.Day == Value.Day));
+
+        [Fact]
+        public Task ContainsNull() => VerifyQuery(x => x.ArrayNullable.Contains(null));
+
+        [Fact]
+        public Task ContainsNotNull() => VerifyQuery(x =>
+            x.IListNullable.Any(d => d != null));
     }
 }

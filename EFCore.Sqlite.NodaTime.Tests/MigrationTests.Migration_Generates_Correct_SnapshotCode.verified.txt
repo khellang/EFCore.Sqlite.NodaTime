@@ -51,6 +51,234 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Migrations
                             LocalTime = "23:42:16.321"
                         });
                 });
+
+            modelBuilder.Entity("Microsoft.EntityFrameworkCore.Sqlite.NodaTimeTypesCollectionType<NodaTime.Instant>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.PrimitiveCollection<string>("Array")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("ArrayNullable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("IList")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("IListNullable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("IReadOnlyList")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("IReadOnlyListNullable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("List")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("ListNullable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InstantCollections", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Array = "[\"2020-10-10 23:42:16.321\",\"2021-02-05 14:06:05.789\"]",
+                            ArrayNullable = "[\"2020-10-10 23:42:16.321\",null,\"2021-02-05 14:06:05.789\",null]",
+                            IList = "[\"2020-10-10 23:42:16.321\",\"2021-02-05 14:06:05.789\",\"2020-10-10 23:42:16.321\"]",
+                            IListNullable = "[\"2020-10-10 23:42:16.321\",null,\"2021-02-05 14:06:05.789\",null,\"2020-10-10 23:42:16.321\"]",
+                            IReadOnlyList = "[\"2020-10-10 23:42:16.321\",\"2021-02-05 14:06:05.789\"]",
+                            IReadOnlyListNullable = "[\"2020-10-10 23:42:16.321\",null,\"2021-02-05 14:06:05.789\",null]",
+                            List = "[\"2020-10-10 23:42:16.321\",\"2021-02-05 14:06:05.789\"]",
+                            ListNullable = "[\"2020-10-10 23:42:16.321\",null,\"2021-02-05 14:06:05.789\",null]"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.EntityFrameworkCore.Sqlite.NodaTimeTypesCollectionType<NodaTime.LocalDate>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.PrimitiveCollection<string>("Array")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("ArrayNullable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("IList")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("IListNullable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("IReadOnlyList")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("IReadOnlyListNullable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("List")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("ListNullable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LocalDateCollections", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Array = "[\"2020-10-10\",\"2021-02-05\"]",
+                            ArrayNullable = "[\"2020-10-10\",null,\"2021-02-05\",null]",
+                            IList = "[\"2020-10-10\",\"2021-02-05\",\"2020-10-10\"]",
+                            IListNullable = "[\"2020-10-10\",null,\"2021-02-05\",null,\"2020-10-10\"]",
+                            IReadOnlyList = "[\"2020-10-10\",\"2021-02-05\"]",
+                            IReadOnlyListNullable = "[\"2020-10-10\",null,\"2021-02-05\",null]",
+                            List = "[\"2020-10-10\",\"2021-02-05\"]",
+                            ListNullable = "[\"2020-10-10\",null,\"2021-02-05\",null]"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.EntityFrameworkCore.Sqlite.NodaTimeTypesCollectionType<NodaTime.LocalDateTime>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.PrimitiveCollection<string>("Array")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("ArrayNullable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("IList")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("IListNullable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("IReadOnlyList")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("IReadOnlyListNullable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("List")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("ListNullable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LocalDateTimeCollections", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Array = "[\"2020-10-10 23:42:16.321\",\"2021-02-05 14:06:05.789\"]",
+                            ArrayNullable = "[\"2020-10-10 23:42:16.321\",null,\"2021-02-05 14:06:05.789\",null]",
+                            IList = "[\"2020-10-10 23:42:16.321\",\"2021-02-05 14:06:05.789\",\"2020-10-10 23:42:16.321\"]",
+                            IListNullable = "[\"2020-10-10 23:42:16.321\",null,\"2021-02-05 14:06:05.789\",null,\"2020-10-10 23:42:16.321\"]",
+                            IReadOnlyList = "[\"2020-10-10 23:42:16.321\",\"2021-02-05 14:06:05.789\"]",
+                            IReadOnlyListNullable = "[\"2020-10-10 23:42:16.321\",null,\"2021-02-05 14:06:05.789\",null]",
+                            List = "[\"2020-10-10 23:42:16.321\",\"2021-02-05 14:06:05.789\"]",
+                            ListNullable = "[\"2020-10-10 23:42:16.321\",null,\"2021-02-05 14:06:05.789\",null]"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.EntityFrameworkCore.Sqlite.NodaTimeTypesCollectionType<NodaTime.LocalTime>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.PrimitiveCollection<string>("Array")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("ArrayNullable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("IList")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("IListNullable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("IReadOnlyList")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("IReadOnlyListNullable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("List")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("ListNullable")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LocalTimeCollections", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Array = "[\"23:42:16.321\",\"14:06:05.789\"]",
+                            ArrayNullable = "[\"23:42:16.321\",null,\"14:06:05.789\",null]",
+                            IList = "[\"23:42:16.321\",\"14:06:05.789\",\"23:42:16.321\"]",
+                            IListNullable = "[\"23:42:16.321\",null,\"14:06:05.789\",null,\"23:42:16.321\"]",
+                            IReadOnlyList = "[\"23:42:16.321\",\"14:06:05.789\"]",
+                            IReadOnlyListNullable = "[\"23:42:16.321\",null,\"14:06:05.789\",null]",
+                            List = "[\"23:42:16.321\",\"14:06:05.789\"]",
+                            ListNullable = "[\"23:42:16.321\",null,\"14:06:05.789\",null]"
+                        });
+                });
 #pragma warning restore 612, 618
         }
     }

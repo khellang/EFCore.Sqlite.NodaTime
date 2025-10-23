@@ -1,0 +1,12 @@
+﻿[
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
+SELECT 2.0 * "n"."Duration" AS "Multiply", "n"."Duration" / 2.0 AS "Divide", -"n"."Duration" AS "Negate", "n"."Duration" + ("n"."Duration" / 3600.0) * 3600.0 AS "Add", "n"."Duration" - ("n"."Duration" / 3600.0) * 60.0 AS "Subtract"
+FROM "NodaTimeTypes" AS "n"
+LIMIT 2
+    }
+  }
+]

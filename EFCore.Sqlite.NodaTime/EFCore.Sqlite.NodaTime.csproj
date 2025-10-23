@@ -1,13 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageProjectUrl>https://www.learnentityframeworkcore.com/extensions/entityframeworkcore-sqlite-nodatime</PackageProjectUrl>
-    <PackageTags>Entity Framework Core;entity-framework-core;ef;efcore;orm;sql;sqlite;NodaTime</PackageTags>
     <Description>Adds support for NodaTime types when using SQLite with Entity Framework Core.</Description>
-    <RepositoryUrl>https://github.com/khellang/EFCore.Sqlite.NodaTime</RepositoryUrl>
     <RootNamespace>Microsoft.EntityFrameworkCore.Sqlite</RootNamespace>
     <AssemblyName>EntityFrameworkCore.Sqlite.NodaTime</AssemblyName>
     <PackageId>EntityFrameworkCore.Sqlite.NodaTime</PackageId>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
     <TargetFramework>net8.0</TargetFramework>
     <MinVerTagPrefix>v</MinVerTagPrefix>
   </PropertyGroup>
@@ -28,4 +24,9 @@
     <PackageReference Include="MinVer" />
     <PackageReference Include="NodaTime" />
   </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+  </ItemGroup>
+
 </Project>

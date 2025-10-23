@@ -24,7 +24,7 @@
       </PropertyGroup>
     </Otherwise>
   </Choose>
-  <Target Name="AddEFCoreNpgsqlNodaTime"
+  <Target Name="AddEFCoreSqliteNodaTime"
           BeforeTargets="CoreCompile"
           DependsOnTargets="PrepareForBuild"
           Condition="'$(DesignTimeBuild)' != 'True'"

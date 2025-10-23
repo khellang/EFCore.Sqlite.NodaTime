@@ -1,0 +1,26 @@
+﻿[
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
+SELECT "l"."Id", "l"."Array", "l"."ArrayNullable", "l"."IList", "l"."IListNullable", "l"."IReadOnlyList", "l"."IReadOnlyListNullable", "l"."List", "l"."ListNullable"
+FROM "LocalDateCollections" AS "l"
+LIMIT 2
+    }
+  },
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Parameters: {
+        @p0 (String): ["2020-10-11",null,"2021-02-06",null],
+        @p1 (Int32): 1
+      },
+      Text:
+UPDATE "LocalDateCollections" SET "IReadOnlyListNullable" = @p0
+WHERE "Id" = @p1
+RETURNING 1;
+    }
+  }
+]

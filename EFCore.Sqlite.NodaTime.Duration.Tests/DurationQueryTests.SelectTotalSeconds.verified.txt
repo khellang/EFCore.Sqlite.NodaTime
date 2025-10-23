@@ -1,0 +1,12 @@
+﻿[
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
+SELECT "n"."Duration"
+FROM "NodaTimeTypes" AS "n"
+LIMIT 2
+    }
+  }
+]
