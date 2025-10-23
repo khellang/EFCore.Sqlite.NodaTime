@@ -1,0 +1,11 @@
+﻿{
+  target: 42,
+  ef: {
+    Type: ReaderExecuted,
+    HasTransaction: false,
+    Text:
+SELECT CAST(JULIANDAY('2020-11-21 23:42:16.321') - JULIANDAY("n"."LocalDateTime") AS INTEGER)
+FROM "NodaTimeTypes" AS "n"
+LIMIT 2
+  }
+}
