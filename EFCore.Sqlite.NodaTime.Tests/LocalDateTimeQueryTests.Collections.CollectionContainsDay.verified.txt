@@ -1,0 +1,19 @@
+﻿[
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Parameters: {
+        @__Value_Day_0 (Int32): 10
+      },
+      Text:
+SELECT "l"."Id"
+FROM "LocalDateTimeCollections" AS "l"
+WHERE EXISTS (
+    SELECT 1
+    FROM json_each("l"."IReadOnlyCollectionNullable") AS "i"
+    WHERE CAST(strftime('%d', "i"."value") AS INTEGER) = @__Value_Day_0)
+LIMIT 2
+    }
+  }
+]

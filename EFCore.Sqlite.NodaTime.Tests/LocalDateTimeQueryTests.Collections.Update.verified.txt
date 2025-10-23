@@ -1,0 +1,28 @@
+﻿[
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
+SELECT "l"."Id", "l"."Array", "l"."ArrayNullable", "l"."ICollection", "l"."ICollectionNullable", "l"."IList", "l"."IListNullable", "l"."IReadOnlyCollection", "l"."IReadOnlyCollectionNullable", "l"."IReadOnlyList", "l"."IReadOnlyListNullable", "l"."List", "l"."ListNullable"
+FROM "LocalDateTimeCollections" AS "l"
+LIMIT 2
+    }
+  },
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Parameters: {
+        @p0 (String): ["2020-10-10 23:42:16.321"],
+        @p1 (String): [null],
+        @p2 (String): [],
+        @p3 (Int32): 1
+      },
+      Text:
+UPDATE "LocalDateTimeCollections" SET "Array" = @p0, "IReadOnlyCollectionNullable" = @p1, "List" = @p2
+WHERE "Id" = @p3
+RETURNING 1;
+    }
+  }
+]

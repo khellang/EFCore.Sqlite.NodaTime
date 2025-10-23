@@ -1,0 +1,16 @@
+﻿[
+  {
+    ef: {
+      Type: ReaderExecuted,
+      HasTransaction: false,
+      Text:
+SELECT "l"."Id"
+FROM "LocalDateTimeCollections" AS "l"
+WHERE EXISTS (
+    SELECT 1
+    FROM json_each("l"."ArrayNullable") AS "a"
+    WHERE "a"."value" IS NULL)
+LIMIT 2
+    }
+  }
+]

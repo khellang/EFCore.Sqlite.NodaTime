@@ -10,3 +10,5 @@ public class NodaTimeTypes
     public LocalDate LocalDate { get; set; }
     public LocalDateTime LocalDateTime { get; set; }
 }
+
+

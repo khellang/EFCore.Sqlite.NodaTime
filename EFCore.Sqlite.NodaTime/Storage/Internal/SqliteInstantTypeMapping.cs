@@ -2,7 +2,7 @@
 
 namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal;
 
-internal class SqliteInstantTypeMapping() : SqliteTypeMapping<Instant>(SqlitePatterns.Instant)
+internal class SqliteInstantTypeMapping() : SqliteNodaTimeTypeMapping<Instant>(SqlitePatterns.Instant)
 {
     public static readonly SqliteInstantTypeMapping Default = new();
 }

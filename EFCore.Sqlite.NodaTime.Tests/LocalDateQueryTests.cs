@@ -26,6 +26,13 @@ public class LocalDateQueryTests : QueryTests<LocalDate>
     public Task LessThan() => VerifyQuery(x => x < new LocalDate(2020, 12, 13));
 
     [Fact]
+    public Task Contains()
+    {
+        var list = new [] { Value, new LocalDate(2019, 1, 1) };
+        return VerifyQuery(x => list.Contains(x));
+    }
+
+    [Fact]
     public Task Update() => VerifyUpdate(x => x.LocalDate = x.LocalDate.PlusDays(2));
 
     public class Properties : QueryTests<LocalDate>

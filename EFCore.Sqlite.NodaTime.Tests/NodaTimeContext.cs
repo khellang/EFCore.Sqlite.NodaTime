@@ -1,7 +1,11 @@
+using System.Collections.Immutable;
 using System.Data.Common;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using NodaTime;
 using VerifyTests;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite;
@@ -44,6 +48,10 @@ public sealed class NodaTimeContext : DbContext
                 Id = 1,
             });
 
+        modelBuilder.Entity<NodaTimeTypesCollectionType<LocalDateTime>>()
+            .ToTable("LocalDateTimeCollections")
+            .HasData(NewCollection(LocalDateTimeQueryTests.CollectionValues));
+
         var model = modelBuilder.Model;
 
         model.RemoveAnnotation(CoreAnnotationNames.ProductVersion);
@@ -53,5 +61,28 @@ public sealed class NodaTimeContext : DbContext
     {
         base.Dispose();
         Connection?.Dispose();
+    }
+
+    [SuppressMessage("ReSharper", "UseCollectionExpression")]
+    public static NodaTimeTypesCollectionType<T> NewCollection<T>(T[] items) where T : struct
+    {
+        var nullable = items.SelectMany(x => new T?[] { x, null }).ToArray();
+        return new NodaTimeTypesCollectionType<T>
+        {
+            Id = 1,
+            Array = items.ToArray(),
+            List = items.ToList(),
+            IList = items.ToList(),
+            IReadOnlyList = items.ToImmutableList(),
+            ICollection = items.ToList(),
+            IReadOnlyCollection = items.ToImmutableArray(),
+
+            ArrayNullable = nullable.ToArray(),
+            ListNullable = nullable.ToList(),
+            IListNullable = nullable.ToList(),
+            IReadOnlyListNullable = nullable.ToImmutableList(),
+            ICollectionNullable = nullable.ToList(),
+            IReadOnlyCollectionNullable = nullable.ToImmutableArray(),
+        };
     }
 }

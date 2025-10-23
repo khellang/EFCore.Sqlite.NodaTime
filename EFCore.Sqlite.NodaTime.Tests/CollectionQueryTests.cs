@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
@@ -6,37 +6,36 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using VerifyTests;
 using VerifyXunit;
+using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Sqlite;
 
 [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
-public abstract class QueryTests<T> : IDisposable where T : struct
+public abstract class CollectionQueryTests<T> : IDisposable where T : struct
 {
-    protected QueryTests(Expression<Func<NodaTimeTypes, T>> selector)
+    protected CollectionQueryTests()
     {
-        Selector = selector;
         Db = NodaTimeContext.Create();
         Db.Database.EnsureCreated();
     }
 
-    private Expression<Func<NodaTimeTypes, T>> Selector { get; }
-
     private NodaTimeContext Db { get; }
 
-    protected IQueryable<T> Query => Db.NodaTimeTypes.Select(Selector);
+    protected IQueryable<NodaTimeTypesCollectionType<T>> Query => Db.Set<NodaTimeTypesCollectionType<T>>().AsQueryable();
 
-    protected Task VerifyUpdate(Action<NodaTimeTypes> mutator, [CallerFilePath] string sourceFile = "")
+    protected Task VerifyUpdate(Action<NodaTimeTypesCollectionType<T>> mutator, [CallerFilePath] string sourceFile = "")
     {
         Recording.Start();
-        mutator(Db.NodaTimeTypes.Single());
+        var set = Db.Set<NodaTimeTypesCollectionType<T>>();
+        mutator(set.Single());
         Db.SaveChanges();
         return Verifier.Verify(Recording.Stop(), sourceFile: sourceFile);
     }
 
-    protected Task VerifyQuery(Expression<Func<T, bool>> predicate, [CallerFilePath] string sourceFile = "")
+    protected Task VerifyQuery(Expression<Func<NodaTimeTypesCollectionType<T>, bool>> predicate, [CallerFilePath] string sourceFile = "")
     {
         Recording.Start();
-        _ = Query.Single(predicate);
+        _ = Query.Where(predicate).Select(x => x.Id).Single();
         return Verifier.Verify(Recording.Stop(), sourceFile: sourceFile);
     }
 
